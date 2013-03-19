@@ -28,7 +28,7 @@ public class Object2ByteArray {
 			buf = new byte[OWSP_LEN.TLV_V_VersionInfoRequest];
 			TLV_V_VersionInfoRequest versionInfoRequest = (TLV_V_VersionInfoRequest)obj;
 			LByteConvert.ushortToBytes(versionInfoRequest.getVersionMajor(), buf, 0);
-			LByteConvert.ushortToBytes(versionInfoRequest.getVersionMajor(), buf, 2);
+			LByteConvert.ushortToBytes(versionInfoRequest.getVersionMinor(), buf, 2);
 		} else if ( clazz == TLV_V_PhoneInfoRequest.class ) {
 			buf = new byte[OWSP_LEN.TLV_V_PhoneInfoRequest];
 			TLV_V_PhoneInfoRequest phoneInfoRequest = (TLV_V_PhoneInfoRequest)obj;
