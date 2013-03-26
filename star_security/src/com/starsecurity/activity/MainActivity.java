@@ -93,10 +93,12 @@ public class MainActivity extends Activity {
 				//videoView.setVideoURI(video);
 				videoView.start();
 				
+			} catch (IllegalStateException e1) {
+				e1.printStackTrace();
 			} catch (Exception e) {
 				
 				e.printStackTrace();
-			}
+			} 
 			
 			
 			
