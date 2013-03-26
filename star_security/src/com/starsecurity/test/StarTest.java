@@ -1,3 +1,12 @@
+/*
+ * FileName:StarTest.java
+ * 
+ * Package:com.starsecurity
+ * 
+ * Date:2013-03-22
+ * 
+ * Copyright: Copyright (c) 2013 Minz.Chan
+ */
 package com.starsecurity.test;
 
 import java.io.File;
@@ -27,12 +36,19 @@ import com.starsecurity.model.convert.ByteArray2Object;
 import com.starsecurity.model.convert.Object2ByteArray;
 import com.starsecurity.util.DataProcessUtil;
 
-
+/**
+ * @function     功能	  Android Junit测试用类
+ * @author       创建人                 陳明珍
+ * @date        创建日期           2013-03-22
+ * @author       修改人                 陳明珍
+ * @date        修改日期           2013-03-22
+ * @description 修改说明	             首次增加
+ */
 public class StarTest extends AndroidTestCase  {
 	
 	Socket socket = null;
 	OutputStream out = null;
-    InputStream in = null ;
+    InputStream in = null ; 
 	
 	@Override
 	public void setUp() throws Exception {
