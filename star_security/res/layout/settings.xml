@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ScrollView android:scrollbarSize="0.0px" android:scrollbarStyle="outsideOverlay" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="8.0dip" android:layout_alignParentLeft="true">
+        <LinearLayout android:gravity="center" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <RelativeLayout android:gravity="center" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:textSize="18.0px" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/IDS_HstRecord" android:layout_alignParentLeft="true" />
+                <Spinner android:id="@+id/set_spinner" android:layout_width="180.0dip" android:layout_height="wrap_content" android:layout_alignParentRight="true" />
+            </RelativeLayout>
+            <RelativeLayout android:gravity="center" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:textSize="18.0px" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/IDS_UserName" android:layout_alignParentLeft="true" />
+                <EditText android:id="@+id/set_username" android:layout_width="180.0dip" android:layout_height="40.0dip" android:hint="@string/IDS_UserName" android:layout_alignParentRight="true" />
+            </RelativeLayout>
+            <RelativeLayout android:gravity="center" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:textSize="18.0px" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/IDS_Password" />
+                <EditText android:id="@+id/set_password" android:layout_width="180.0dip" android:layout_height="40.0dip" android:hint="@string/IDS_Password" android:password="true" android:layout_alignParentRight="true" />
+            </RelativeLayout>
+            <RelativeLayout android:gravity="center" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:textSize="18.0px" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/IDS_Server" />
+                <EditText android:id="@+id/set_server" android:layout_width="180.0dip" android:layout_height="40.0dip" android:hint="@string/IDS_Server" android:layout_alignParentRight="true" />
+            </RelativeLayout>
+            <RelativeLayout android:gravity="center" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:textSize="18.0px" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/IDS_Port" />
+                <EditText android:id="@+id/set_port" android:layout_width="180.0dip" android:layout_height="40.0dip" android:hint="@string/IDS_Port" android:phoneNumber="true" android:layout_alignParentRight="true" />
+            </RelativeLayout>
+            <RelativeLayout android:gravity="center" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:textSize="18.0px" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="5.0dip" android:text="@string/IDS_DefaultChannel" />
+                <Spinner android:id="@+id/channel_spinner" android:layout_width="180.0dip" android:layout_height="wrap_content" android:layout_alignParentRight="true" />
+            </RelativeLayout>
+            <RelativeLayout android:gravity="center" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <TextView android:textSize="18.0px" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/IDS_RecordName" />
+                <EditText android:id="@+id/record_name" android:layout_width="180.0dip" android:layout_height="40.0dip" android:hint="@string/IDS_RecordName" android:layout_alignParentRight="true" />
+            </RelativeLayout>
+            <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <Button android:id="@+id/save_dele" android:layout_width="140.0dip" android:layout_height="wrap_content" android:layout_marginRight="40.0dip" android:text="@string/IDS_Btn_Save" android:layout_alignParentRight="true" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
