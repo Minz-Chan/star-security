@@ -44,7 +44,7 @@ public class MainActivity extends Activity {
 		
 
 		
-		//点击设置按钮时，进行页面跳转，这里采用startActivityForResult，在不释放当前界面的情况下开启新界面
+		//鐐瑰嚮璁剧疆鎸夐挳鏃讹紝杩涜椤甸潰璺宠浆锛岃繖閲岄噰鐢╯tartActivityForResult锛屽湪涓嶉噴鏀惧綋鍓嶇晫闈㈢殑鎯呭喌涓嬪紑鍚柊鐣岄潰
 		settingBtn.setOnClickListener(new Button.OnClickListener(){
 			@Override
 			public void onClick(View v) {
@@ -55,7 +55,7 @@ public class MainActivity extends Activity {
 		});
 	}
 	
-	//当新开启的设置界面结束跳转回来以后，处理设置界面的参数
+	//褰撴柊寮�鍚殑璁剧疆鐣岄潰缁撴潫璺宠浆鍥炴潵浠ュ悗锛屽鐞嗚缃晫闈㈢殑鍙傛暟
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch(resultCode){

@@ -1,3 +1,12 @@
+/*
+ * FileName:ByteArray2Object.java
+ * 
+ * Package:com.starsecurity
+ * 
+ * Date:2013-03-19
+ * 
+ * Copyright: Copyright (c) 2013 Minz.Chan
+ */
 package com.starsecurity.model.convert;
 
 import com.starsecurity.model.OWSP_AudioDataFormat;
@@ -18,21 +27,21 @@ import com.starsecurity.util.LByteConvert;
 
 /***
  * 
- * @function     ¹¦ÄÜ	  byteÊı×éÓë¸÷ClassÖ®¼äµÄ»¥×ª
- *     ÏîÄ¿½«ÊÕµ½µÄByteÊı×é½âÎöºó×ª»»Îª¶¨ÒåÖĞµÄ¸÷¸öClass
- * @author       ´´½¨ÈË                 Ğ¤Ô¶¶«
- * @date        ´´½¨ÈÕÆÚ           2013-03-20
- * @author       ĞŞ¸ÄÈË                 Ğ¤Ô¶¶«
- * @date        ĞŞ¸ÄÈÕÆÚ           2013-03-02
- * @description ĞŞ¸ÄËµÃ÷	             Ê×´ÎÔö¼Ó
+ * @function     åŠŸèƒ½	  byteæ•°ç»„ä¸å„Classä¹‹é—´çš„äº’è½¬
+ *     é¡¹ç›®å°†æ”¶åˆ°çš„Byteæ•°ç»„è§£æåè½¬æ¢ä¸ºå®šä¹‰ä¸­çš„å„ä¸ªClass
+ * @author       åˆ›å»ºäºº                 è‚–è¿œä¸œ
+ * @date        åˆ›å»ºæ—¥æœŸ           2013-03-20
+ * @author       ä¿®æ”¹äºº                 é™ˆæ˜ç
+ * @date        ä¿®æ”¹æ—¥æœŸ           2013-03-22
+ * @description ä¿®æ”¹è¯´æ˜	             é¦–æ¬¡å¢åŠ 
  */
 public class ByteArray2Object {
 	/***
 	 * 
-	 * @param clazz ĞèÒª×ª»»³ÉµÄClass
-	 * @param byteArray byteÊı×é
-	 * @param start Êı×é×ª»»ÆğÊ¼Î»ÖÃ
-	 * @param arrayLength Êı×é×ª»»³¤¶È
+	 * @param clazz éœ€è¦è½¬æ¢æˆçš„Class
+	 * @param byteArray byteæ•°ç»„
+	 * @param start æ•°ç»„è½¬æ¢èµ·å§‹ä½ç½®
+	 * @param arrayLength æ•°ç»„è½¬æ¢é•¿åº¦
 	 * @return
 	 */
 	public static Object convert2Object(Class clazz, byte byteArray[],int start,int arrayLength) {
@@ -78,11 +87,11 @@ public class ByteArray2Object {
 			TLV_V_DVSInfoRequest tlv_V_DVSInfoRequest = new TLV_V_DVSInfoRequest();
 			
 			int i = 0;
-			char[] companyIdentityArray = new char[TLV_Length.STR_LEN_16];			//¹«Ë¾Ê¶±ğÂë,×î¶à16¸ö×Ö·û,ºóÃæ²»×ã²¿·ÖÎªÊı×Ö0      (ÎªASCII×Ö·û´®)
-			char[] equipmentIdentityArray = new char[TLV_Length.STR_LEN_16];			//Éè±¸Ê¶±ğÂë,±¾×Ö¶ÎÖĞÎªDVSµÄÎïÀíµØÖ·,¼´MACµØÖ·,ºóÃæ²»×ã²¿·ÖÎªÊı×Ö0  (ÎªASCII×Ö·û´®)
-			char[] equipmentNameArray = new char[TLV_Length.STR_LEN_16];				//Éè±¸Ãû³Æ,×î¶à16¸ö×Ö·û,ºóÃæ²»×ã²¿·ÖÎªÊı×Ö0        (ÎªASCII×Ö·û´®)
-			char[] equipmentVersionArray = new char[TLV_Length.STR_LEN_16];			//Éè±¸µÄÈí¼ş°æ±¾,×î¶à16¸ö×Ö·û, ºóÃæ²»×ã²¿·ÖÎªÊı×Ö0 (ÎªASCII×Ö·û´®)
-			OWSP_DATE equipmentDate = new OWSP_DATE();							//Éè±¸µÄ³ö³§ÈÕÆÚ20090120
+			char[] companyIdentityArray = new char[TLV_Length.STR_LEN_16];			//å…¬å¸è¯†åˆ«ç ,æœ€å¤š16ä¸ªå­—ç¬¦,åé¢ä¸è¶³éƒ¨åˆ†ä¸ºæ•°å­—0      (ä¸ºASCIIå­—ç¬¦ä¸²)
+			char[] equipmentIdentityArray = new char[TLV_Length.STR_LEN_16];			//è®¾å¤‡è¯†åˆ«ç ,æœ¬å­—æ®µä¸­ä¸ºDVSçš„ç‰©ç†åœ°å€,å³MACåœ°å€,åé¢ä¸è¶³éƒ¨åˆ†ä¸ºæ•°å­—0  (ä¸ºASCIIå­—ç¬¦ä¸²)
+			char[] equipmentNameArray = new char[TLV_Length.STR_LEN_16];				//è®¾å¤‡åç§°,æœ€å¤š16ä¸ªå­—ç¬¦,åé¢ä¸è¶³éƒ¨åˆ†ä¸ºæ•°å­—0        (ä¸ºASCIIå­—ç¬¦ä¸²)
+			char[] equipmentVersionArray = new char[TLV_Length.STR_LEN_16];			//è®¾å¤‡çš„è½¯ä»¶ç‰ˆæœ¬,æœ€å¤š16ä¸ªå­—ç¬¦, åé¢ä¸è¶³éƒ¨åˆ†ä¸ºæ•°å­—0 (ä¸ºASCIIå­—ç¬¦ä¸²)
+			OWSP_DATE equipmentDate = new OWSP_DATE();							//è®¾å¤‡çš„å‡ºå‚æ—¥æœŸ20090120
 
 			for (i = 0; i < TLV_Length.STR_LEN_16; i++) {
 				companyIdentityArray[i] = (char) tempByteArray[i];
@@ -126,14 +135,14 @@ public class ByteArray2Object {
 			
 			TLV_V_StreamDataFormat tlv_V_StreamDataFormat = new TLV_V_StreamDataFormat();
 			
-			tlv_V_StreamDataFormat.setVideoChannel((short)LByteConvert.bytesToUbyte(tempByteArray, 0));		// ÊÓÆµÍ¨µÀºÅ
-			tlv_V_StreamDataFormat.setAudioChannel((short)LByteConvert.bytesToUbyte(tempByteArray, 1));		// ÒôÆµÍ¨µÀºÅ
-			tlv_V_StreamDataFormat.setDataType((short)LByteConvert.bytesToUbyte(tempByteArray, 2));			// Á÷Êı¾İÀàĞÍ, È¡Öµ¼ûStreamDataType
-			tlv_V_StreamDataFormat.setReserve((short)LByteConvert.bytesToUbyte(tempByteArray, 3));			// ±£Áô
+			tlv_V_StreamDataFormat.setVideoChannel((short)LByteConvert.bytesToUbyte(tempByteArray, 0));		// è§†é¢‘é€šé“å·
+			tlv_V_StreamDataFormat.setAudioChannel((short)LByteConvert.bytesToUbyte(tempByteArray, 1));		// éŸ³é¢‘é€šé“å·
+			tlv_V_StreamDataFormat.setDataType((short)LByteConvert.bytesToUbyte(tempByteArray, 2));			// æµæ•°æ®ç±»å‹, å–å€¼è§StreamDataType
+			tlv_V_StreamDataFormat.setReserve((short)LByteConvert.bytesToUbyte(tempByteArray, 3));			// ä¿ç•™
 			
-			// ÊÓÆµ¸ñÊ½
+			// è§†é¢‘æ ¼å¼
 			OWSP_VideoDataFormat videoFormat = new OWSP_VideoDataFormat();									
-			videoFormat.setCodecId(LByteConvert.bytesToUint(tempByteArray, 4));								// FOUR CC code£¬¡¯H264¡¯
+			videoFormat.setCodecId(LByteConvert.bytesToUint(tempByteArray, 4));								// FOUR CC codeï¼Œâ€™H264â€™
 			videoFormat.setBitrate(LByteConvert.bytesToUint(tempByteArray, 4 + 4));							// bps
 			videoFormat.setWidth(LByteConvert.bytesToUshort(tempByteArray, 4 + 8));							// image widht
 			videoFormat.setHeight(LByteConvert.bytesToUshort(tempByteArray, 4 + 10));						// image height
@@ -141,7 +150,7 @@ public class ByteArray2Object {
 			videoFormat.setColorDepth((short)LByteConvert.bytesToUbyte(tempByteArray, 4 + 13));				// should be 24 bits
 			videoFormat.setReserve(LByteConvert.bytesToUshort(tempByteArray, 4 + 14));						// reserve
 			
-			// ÒôÆµ¸ñÊ½
+			// éŸ³é¢‘æ ¼å¼
 			OWSP_AudioDataFormat audioFormat = new OWSP_AudioDataFormat();  								
 			audioFormat.setSamplesPerSecond(LByteConvert.bytesToUint(tempByteArray, 20));					// samples per second
 			audioFormat.setBitrate(LByteConvert.bytesToUint(tempByteArray, 20 + 4));						// bps

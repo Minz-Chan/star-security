@@ -1,3 +1,12 @@
+/*
+ * FileName:Object2ByteArray.java
+ * 
+ * Package:com.starsecurity
+ * 
+ * Date:2013-03-19
+ * 
+ * Copyright: Copyright (c) 2013 Minz.Chan
+ */
 package com.starsecurity.model.convert;
 
 import com.starsecurity.model.OWSP_LEN;
@@ -9,6 +18,14 @@ import com.starsecurity.model.TLV_V_VersionInfoRequest;
 import com.starsecurity.util.BByteConvert;
 import com.starsecurity.util.LByteConvert;
 
+/**
+ * @function     功能	  将对象转换为byte数组用于网络传输
+ * @author       创建人                 陳明珍
+ * @date        创建日期           2013-03-19
+ * @author       修改人                 陳明珍
+ * @date        修改日期           2013-03-19
+ * @description 修改说明	             首次增加
+ */
 public class Object2ByteArray {
 	public static byte[] convert2ByteArr(Class clazz, Object obj) {
 		byte[] buf = null;

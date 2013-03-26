@@ -1,5 +1,5 @@
 /*
- * FileName:BByteConvert.java
+ * FileName:LByteConvert.java
  * 
  * Package:com.starsecurity
  * 
@@ -10,26 +10,26 @@
 package com.starsecurity.util;
 
 /**
- * @function     ¹¦ÄÜ	  byteÊı×éÓë¸÷ÖÖÊı¾İÀàĞÍ¼äµÄ»¥×ª
- *     ¹¤×÷ÏîÄ¿ĞèÒªÔÚ java ºÍ c/c++ Ö®¼ä½øĞĞ socket Í¨ĞÅ£¬ socket Í¨ĞÅÊÇÒÔ×Ö½ÚÁ÷»òÕß×Ö½Ú°ü
- * ½øĞĞµÄ£¬ socket·¢ËÍ·½Ğë½«Êı¾İ×ª»»Îª×Ö½ÚÁ÷»òÕß×Ö½Ú°ü£¬¶ø½ÓÊÕ·½Ôò½«×Ö½ÚÁ÷ºÍ×Ö½Ú°üÔÙ×ª»»»Ø
- * ÏàÓ¦µÄÊı¾İÀàĞÍ¡£Èç¹û·¢ËÍ·½ºÍ½ÓÊÕ·½¶¼ÊÇÍ¬ÖÖÓïÑÔ£¬ÔòÒ»°ãÖ»Éæ¼°µ½×Ö½ÚĞòµÄµ÷Õû¡£¶ø¶ÔÓÚ java
- * ºÍ c/c++µÄÍ¨ĞÅ£¬ÔòÇé¿ö¾ÍÒª¸´ÔÓÒ»Ğ©£¬Ö÷ÒªÊÇÒòÎª java ÖĞÃ»ÓĞ unsigned ÀàĞÍ£¬²¢ÇÒ javaºÍcÔÚ
- * Ä³Ğ©Êı¾İÀàĞÍÉÏµÄ³¤¶È²»Ò»ÖÂ¡£±¾Àà¾ÍÊÇÕë¶ÔÕâÖÖÇé¿ö£¬ÕûÀíÁË java Êı¾İÀàĞÍºÍÍøÂç×Ö½ÚÁ÷(
- * Little-Endian)»ò×Ö½Ú°ü ( Ïàµ±ÓÚ java µÄ byte Êı×é ) Ö®¼ä×ª»»·½·¨¡£
- * @author       ´´½¨ÈË                 êÃ÷Õä
- * @date        ´´½¨ÈÕÆÚ           2013-03-19
- * @author       ĞŞ¸ÄÈË                 êÃ÷Õä
- * @date        ĞŞ¸ÄÈÕÆÚ           2013-03-19
- * @description ĞŞ¸ÄËµÃ÷	             Ê×´ÎÔö¼Ó
+ * @function     åŠŸèƒ½	  byteæ•°ç»„ä¸å„ç§æ•°æ®ç±»å‹é—´çš„äº’è½¬
+ *     å·¥ä½œé¡¹ç›®éœ€è¦åœ¨ java å’Œ c/c++ ä¹‹é—´è¿›è¡Œ socket é€šä¿¡ï¼Œ socket é€šä¿¡æ˜¯ä»¥å­—èŠ‚æµæˆ–è€…å­—èŠ‚åŒ…
+ * è¿›è¡Œçš„ï¼Œ socketå‘é€æ–¹é¡»å°†æ•°æ®è½¬æ¢ä¸ºå­—èŠ‚æµæˆ–è€…å­—èŠ‚åŒ…ï¼Œè€Œæ¥æ”¶æ–¹åˆ™å°†å­—èŠ‚æµå’Œå­—èŠ‚åŒ…å†è½¬æ¢å›
+ * ç›¸åº”çš„æ•°æ®ç±»å‹ã€‚å¦‚æœå‘é€æ–¹å’Œæ¥æ”¶æ–¹éƒ½æ˜¯åŒç§è¯­è¨€ï¼Œåˆ™ä¸€èˆ¬åªæ¶‰åŠåˆ°å­—èŠ‚åºçš„è°ƒæ•´ã€‚è€Œå¯¹äº java
+ * å’Œ c/c++çš„é€šä¿¡ï¼Œåˆ™æƒ…å†µå°±è¦å¤æ‚ä¸€äº›ï¼Œä¸»è¦æ˜¯å› ä¸º java ä¸­æ²¡æœ‰ unsigned ç±»å‹ï¼Œå¹¶ä¸” javaå’Œcåœ¨
+ * æŸäº›æ•°æ®ç±»å‹ä¸Šçš„é•¿åº¦ä¸ä¸€è‡´ã€‚æœ¬ç±»å°±æ˜¯é’ˆå¯¹è¿™ç§æƒ…å†µï¼Œæ•´ç†äº† java æ•°æ®ç±»å‹å’Œç½‘ç»œå­—èŠ‚æµ(
+ * Little-Endian)æˆ–å­—èŠ‚åŒ… ( ç›¸å½“äº java çš„ byte æ•°ç»„ ) ä¹‹é—´è½¬æ¢æ–¹æ³•ã€‚
+ * @author       åˆ›å»ºäºº                 é™³æ˜ç
+ * @date        åˆ›å»ºæ—¥æœŸ           2013-03-19
+ * @author       ä¿®æ”¹äºº                 é™³æ˜ç
+ * @date        ä¿®æ”¹æ—¥æœŸ           2013-03-19
+ * @description ä¿®æ”¹è¯´æ˜	             é¦–æ¬¡å¢åŠ 
  */
 public class LByteConvert {
 	
 	/** 
-     * ³¤ÕûĞÍ×ªbyteÊı×é 
+     * é•¿æ•´å‹è½¬byteæ•°ç»„ 
      *  
-     * @param n ³¤ÕûĞÍÊı
-     * @return ×ª»»ºóµÄbyteÊı×é 
+     * @param n é•¿æ•´å‹æ•°
+     * @return è½¬æ¢åçš„byteæ•°ç»„ 
      */  
     public static byte[] longToBytes(long n) {  
         byte[] b = new byte[8];  
@@ -45,11 +45,11 @@ public class LByteConvert {
     }  
   
     /** 
-     * ³¤ÕûĞÍ×ªbyteÊı×é 
+     * é•¿æ•´å‹è½¬byteæ•°ç»„ 
      *  
-     * @param n ³¤ÕûĞÍÊı×Ö 
-     * @param array ×ª»»ºóµÄbyteÊı×é 
-     * @param offset ´ÓµÚoffsetÎ»¿ªÊ¼×ª»» 
+     * @param n é•¿æ•´å‹æ•°å­— 
+     * @param array è½¬æ¢åçš„byteæ•°ç»„ 
+     * @param offset ä»ç¬¬offsetä½å¼€å§‹è½¬æ¢ 
      */  
     public static void longToBytes(long n, byte[] array, int offset) {  
         array[0 + offset] = (byte) (n & 0xff);  
@@ -63,10 +63,10 @@ public class LByteConvert {
     }  
   
     /** 
-     * byteÊı×é×ª³¤ÕûĞÍ 
+     * byteæ•°ç»„è½¬é•¿æ•´å‹ 
      *  
-     * @param array Òª×ª»»µÄbyteÊı×é
-     * @return ×ª»»ºóµÄ³¤ÕûĞÍÊı×Ö
+     * @param array è¦è½¬æ¢çš„byteæ•°ç»„
+     * @return è½¬æ¢åçš„é•¿æ•´å‹æ•°å­—
      */  
     public static long bytesToLong(byte[] array) {  
         return ((((long) array[7] & 0xff) << 56) | (((long) array[6] & 0xff) << 48) | (((long) array[5] & 0xff) << 40)  
@@ -75,11 +75,11 @@ public class LByteConvert {
     }  
   
     /** 
-     * byteÊı×é×ª³¤ÕûĞÍÊı×Ö 
+     * byteæ•°ç»„è½¬é•¿æ•´å‹æ•°å­— 
      *  
-     * @param array Òª×ª»»µÄbyteÊı×é 
-     * @param offset ´ÓµÚoffset¿ªÊ¼×ª»» 
-     * @return ×ª»»ºóµÄ³¤ÕûĞÍÊı×Ö 
+     * @param array è¦è½¬æ¢çš„byteæ•°ç»„ 
+     * @param offset ä»ç¬¬offsetå¼€å§‹è½¬æ¢ 
+     * @return è½¬æ¢åçš„é•¿æ•´å‹æ•°å­— 
      */  
     public static long bytesToLong(byte[] array, int offset) {  
         return ((((long) array[offset + 7] & 0xff) << 56) | (((long) array[offset + 6] & 0xff) << 48)  
@@ -89,10 +89,10 @@ public class LByteConvert {
     }  
   
     /**
-     * ÕûĞÍ×ªbyteÊı×é
+     * æ•´å‹è½¬byteæ•°ç»„
      * 
-     * @param n Òª×ª»»µÄÕûĞÍÊı
-     * @return ×ª»»ºóµÄbyteÊı×é
+     * @param n è¦è½¬æ¢çš„æ•´å‹æ•°
+     * @return è½¬æ¢åçš„byteæ•°ç»„
      */
     public static byte[] intToBytes(int n) {  
         byte[] b = new byte[4];  
@@ -104,11 +104,11 @@ public class LByteConvert {
     }  
   
     /**
-     * ÕûĞÍ×ªbyteÊı×é
+     * æ•´å‹è½¬byteæ•°ç»„
      * 
-     * @param n Òª×ª»»µÄÕûĞÍÊı
-     * @param array ×ª»»ºóµÄbyteÊı×é
-     * @param offset ´ÓµÚoffsetÎ»¿ªÊ¼×ª»»
+     * @param n è¦è½¬æ¢çš„æ•´å‹æ•°
+     * @param array è½¬æ¢åçš„byteæ•°ç»„
+     * @param offset ä»ç¬¬offsetä½å¼€å§‹è½¬æ¢
      */
     public static void intToBytes(int n, byte[] array, int offset) {  
         array[0 + offset] = (byte) (n & 0xff);  
@@ -118,21 +118,21 @@ public class LByteConvert {
     }  
   
     /** 
-     * byteÊı×é×ªÕûĞÍ
+     * byteæ•°ç»„è½¬æ•´å‹
      * 
-     * @param b Òª×ª»»µÄbyteÊı×é
-     * @return ×ª»»ºóµÄÕûĞÍ
+     * @param b è¦è½¬æ¢çš„byteæ•°ç»„
+     * @return è½¬æ¢åçš„æ•´å‹
      */  
     public static int bytesToInt(byte b[]) {  
         return b[0] & 0xff | (b[1] & 0xff) << 8 | (b[2] & 0xff) << 16 | (b[3] & 0xff) << 24;  
     }  
   
     /** 
-     * byteÊı×é×ªint 
+     * byteæ•°ç»„è½¬int 
      *  
-     * @param b Òª×ª»»µÄbyteÊı×é 
-     * @param offset ´ÓÊı×éµÄµÚ¼¸Î»¿ªÊ¼×ª 
-     * @return ×ª»»ºóµÄÕûĞÍÊı 
+     * @param b è¦è½¬æ¢çš„byteæ•°ç»„ 
+     * @param offset ä»æ•°ç»„çš„ç¬¬å‡ ä½å¼€å§‹è½¬ 
+     * @return è½¬æ¢åçš„æ•´å‹æ•° 
      */  
     public static int bytesToInt(byte b[], int offset) {  
         return b[offset + 0] & 0xff | (b[offset + 1] & 0xff) << 8 | (b[offset + 2] & 0xff) << 16  
@@ -140,10 +140,10 @@ public class LByteConvert {
     }  
   
     /** 
-     * ÎŞ·ûºÅÕûĞÍ×ªbyteÊı×é 
+     * æ— ç¬¦å·æ•´å‹è½¬byteæ•°ç»„ 
      *  
-     * @param n Òª×ª»»µÄÕûĞÍ 
-     * @return ×ª»»ºóµÄbyteÊı×é 
+     * @param n è¦è½¬æ¢çš„æ•´å‹ 
+     * @return è½¬æ¢åçš„byteæ•°ç»„ 
      */  
     public static byte[] uintToBytes(long n) {  
         byte[] b = new byte[4];  
@@ -157,11 +157,11 @@ public class LByteConvert {
   
 
     /**
-     * ÎŞ·ûºÅÕûĞÍ×ªbyteÊı×é
+     * æ— ç¬¦å·æ•´å‹è½¬byteæ•°ç»„
      * 
-     * @param n Òª×ª»»µÄ³¤ÕûĞÍÊı
-     * @param array ×ª»»ºóµÄbyteÊı×é
-     * @param offset ´ÓµÚoffsetÎ»¿ªÊ¼×ª»» 
+     * @param n è¦è½¬æ¢çš„é•¿æ•´å‹æ•°
+     * @param array è½¬æ¢åçš„byteæ•°ç»„
+     * @param offset ä»ç¬¬offsetä½å¼€å§‹è½¬æ¢ 
      */
     public static void uintToBytes(long n, byte[] array, int offset) {  
         array[0 + offset] = (byte) (n);  
@@ -171,10 +171,10 @@ public class LByteConvert {
     }  
   
     /**
-     * byteÊı×é×éÎŞ·ûºÅÕûĞÍ
+     * byteæ•°ç»„ç»„æ— ç¬¦å·æ•´å‹
      * 
-     * @param array Òª×ª»»µÄbyteÊı×é
-     * @return ×ª»»ºóµÄ³¤ÕûĞÍÊı
+     * @param array è¦è½¬æ¢çš„byteæ•°ç»„
+     * @return è½¬æ¢åçš„é•¿æ•´å‹æ•°
      */
     public static long bytesToUint(byte[] array) {  
         return ((long) (array[0] & 0xff)) | ((long) (array[1] & 0xff)) << 8 | ((long) (array[2] & 0xff)) << 16  
@@ -182,11 +182,11 @@ public class LByteConvert {
     }  
   
     /**
-     * byteÊı×é×éÎŞ·ûºÅÕûĞÍ
+     * byteæ•°ç»„ç»„æ— ç¬¦å·æ•´å‹
      * 
-     * @param array Òª×ª»»µÄbyteÊı×é
-     * @param offset ´ÓµÚoffsetÎ»¿ªÊ¼×ª»»
-     * @return ×ª»»ºóµÄ³¤ÕûĞÍÊı
+     * @param array è¦è½¬æ¢çš„byteæ•°ç»„
+     * @param offset ä»ç¬¬offsetä½å¼€å§‹è½¬æ¢
+     * @return è½¬æ¢åçš„é•¿æ•´å‹æ•°
      */
     public static long bytesToUint(byte[] array, int offset) {  
         return ((long) (array[offset + 0] & 0xff)) | ((long) (array[offset + 1] & 0xff)) << 8  
@@ -194,10 +194,10 @@ public class LByteConvert {
     }  
   
     /**
-     * ¶ÌÕûĞÍ×ªbyteÊı×é
+     * çŸ­æ•´å‹è½¬byteæ•°ç»„
      * 
-     * @param n Òª×ª»»µÄ¶ÌÕûĞÍÊı
-     * @return ×ª»»ºóµÄbyteÊı×é
+     * @param n è¦è½¬æ¢çš„çŸ­æ•´å‹æ•°
+     * @return è½¬æ¢åçš„byteæ•°ç»„
      */
     public static byte[] shortToBytes(short n) {  
         byte[] b = new byte[2];  
@@ -207,11 +207,11 @@ public class LByteConvert {
     }  
   
     /**
-     * ¶ÌÕûĞÍ×ªbyteÊı×é
+     * çŸ­æ•´å‹è½¬byteæ•°ç»„
      * 
-     * @param n Òª×ª»»µÄ¶ÌÕûĞÍÊı
-     * @param array ×ª»»ºóµÄbyteÊı×é
-     * @param offset ´ÓµÚoffsetÎ»¿ªÊ¼×ª»»
+     * @param n è¦è½¬æ¢çš„çŸ­æ•´å‹æ•°
+     * @param array è½¬æ¢åçš„byteæ•°ç»„
+     * @param offset ä»ç¬¬offsetä½å¼€å§‹è½¬æ¢
      */
     public static void shortToBytes(short n, byte[] array, int offset) {  
         array[offset + 0] = (byte) (n & 0xff);  
@@ -219,31 +219,31 @@ public class LByteConvert {
     }  
   
     /**
-     * byteÊı×é×ª¶ÌÕûĞÍÊı
+     * byteæ•°ç»„è½¬çŸ­æ•´å‹æ•°
      * 
-     * @param b Òª×ª»»µÄbyteÊı×é
-     * @return ×ª»»ºóµÄ¶ÌÕûĞÍÊı
+     * @param b è¦è½¬æ¢çš„byteæ•°ç»„
+     * @return è½¬æ¢åçš„çŸ­æ•´å‹æ•°
      */
     public static short bytesToShort(byte[] b) {  
         return (short) (b[0] & 0xff | (b[1] & 0xff) << 8);  
     }  
   
     /**
-     * byteÊı×é×ª¶ÌÕûĞÍÊı
+     * byteæ•°ç»„è½¬çŸ­æ•´å‹æ•°
      * 
-     * @param b Òª×ª»»µÄbyteÊı×é
-     * @param offset ´ÓµÚoffsetÎ»¿ªÊ¼×ª»»
-     * @return ×ª»»ºóµÄ¶ÌÕûĞÍÊı
+     * @param b è¦è½¬æ¢çš„byteæ•°ç»„
+     * @param offset ä»ç¬¬offsetä½å¼€å§‹è½¬æ¢
+     * @return è½¬æ¢åçš„çŸ­æ•´å‹æ•°
      */
     public static short bytesToShort(byte[] b, int offset) {  
         return (short) (b[offset + 0] & 0xff | (b[offset + 1] & 0xff) << 8);  
     }  
   
     /**
-     * ÎŞ·ûºÅ¶ÌÕûĞÍ×ªbyteÊı×é
+     * æ— ç¬¦å·çŸ­æ•´å‹è½¬byteæ•°ç»„
      * 
-     * @param n Òª×ª»»µÄÕûĞÍÊı
-     * @return ×ª»»ºóµÄbyteÊı×é
+     * @param n è¦è½¬æ¢çš„æ•´å‹æ•°
+     * @return è½¬æ¢åçš„byteæ•°ç»„
      */
     public static byte[] ushortToBytes(int n) {  
         byte[] b = new byte[2];  
@@ -253,11 +253,11 @@ public class LByteConvert {
     }  
   
     /**
-     * ÎŞ·ûºÅ¶ÌÕûĞÍ×ªbyteÊı×é
+     * æ— ç¬¦å·çŸ­æ•´å‹è½¬byteæ•°ç»„
      * 
-     * @param n Òª×ª»»µÄÕûĞÍÊı
-     * @param array ×ª»»ºóµÄbyteÊı×é
-     * @param offset ´ÓµÚoffsetÎ»¿ªÊ¼×ª»»
+     * @param n è¦è½¬æ¢çš„æ•´å‹æ•°
+     * @param array è½¬æ¢åçš„byteæ•°ç»„
+     * @param offset ä»ç¬¬offsetä½å¼€å§‹è½¬æ¢
      */
     public static void ushortToBytes(int n, byte[] array, int offset) {  
         array[offset + 0] = (byte) (n & 0xff);  
@@ -265,31 +265,31 @@ public class LByteConvert {
     }  
   
     /**
-     * byteÊı×é×ªÎŞ·ûºÅ¶ÌÕûĞÍ
+     * byteæ•°ç»„è½¬æ— ç¬¦å·çŸ­æ•´å‹
      * 
-     * @param b Òª×ª»»µÄbyteÊı×é
-     * @return ÕûĞÍÊı
+     * @param b è¦è½¬æ¢çš„byteæ•°ç»„
+     * @return æ•´å‹æ•°
      */
     public static int bytesToUshort(byte b[]) {  
         return b[0] & 0xff | (b[1] & 0xff) << 8;  
     }  
   
     /**
-     * byteÊı×é×éÎŞ·ûºÅ¶ÌÕûĞÍÊı
+     * byteæ•°ç»„ç»„æ— ç¬¦å·çŸ­æ•´å‹æ•°
      * 
-     * @param b Òª×ª»»µÄbyteÊı×é
-     * @param offset ´ÓµÚoffsetÎ»¿ªÊ¼×ª»»
-     * @return ×ª»»ºóµÄÎŞ·ûºÅ¶ÌÕûĞÍÊı
+     * @param b è¦è½¬æ¢çš„byteæ•°ç»„
+     * @param offset ä»ç¬¬offsetä½å¼€å§‹è½¬æ¢
+     * @return è½¬æ¢åçš„æ— ç¬¦å·çŸ­æ•´å‹æ•°
      */
     public static int bytesToUshort(byte b[], int offset) {  
         return b[offset + 0] & 0xff | (b[offset + 1] & 0xff) << 8;  
     }  
   
     /**
-     * ÎŞ·ûºÅ×Ö½ÚĞÍ×ªbyteÊı×é
+     * æ— ç¬¦å·å­—èŠ‚å‹è½¬byteæ•°ç»„
      * 
-     * @param n Òª×ª»»µÄÕûĞÍÊı
-     * @return ×ª»»ºóµÄbyteÊı×é
+     * @param n è¦è½¬æ¢çš„æ•´å‹æ•°
+     * @return è½¬æ¢åçš„byteæ•°ç»„
      */
     public static byte[] ubyteToBytes(int n) {  
         byte[] b = new byte[1];  
@@ -298,35 +298,35 @@ public class LByteConvert {
     }  
   
     /**
-     * ÎŞ·ûºÅ×Ö½ÚĞÍ×ªbyteÊı×é
+     * æ— ç¬¦å·å­—èŠ‚å‹è½¬byteæ•°ç»„
      * 
-     * @param n Òª×ª»»µÄÕûĞÍÊı
-     * @param array ×ª»»ºóµÄbyteÊı×é
-     * @param offset ´ÓµÚoffsetÎ»¿ªÊ¼×ª»»
+     * @param n è¦è½¬æ¢çš„æ•´å‹æ•°
+     * @param array è½¬æ¢åçš„byteæ•°ç»„
+     * @param offset ä»ç¬¬offsetä½å¼€å§‹è½¬æ¢
      */
     public static void ubyteToBytes(int n, byte[] array, int offset) {  
         array[offset] = (byte) (n & 0xff);  
     }  
   
     /**
-     * byteÊı×é×ªÎŞ·ûºÅ×Ö½ÚĞÍ
+     * byteæ•°ç»„è½¬æ— ç¬¦å·å­—èŠ‚å‹
      * 
-     * @param array ×ª»»µÄÊı×é
-     * @return ×ª»»ºóµÄÎŞ·ûºÅ×Ö½ÚĞÍÕûÊı
+     * @param array è½¬æ¢çš„æ•°ç»„
+     * @return è½¬æ¢åçš„æ— ç¬¦å·å­—èŠ‚å‹æ•´æ•°
      */
     public static int bytesToUbyte(byte[] array) {  
         return array[0] & 0xff;  
     }  
   
     /**
-     * byteÊı×é×ªÎŞ·ûºÅ×Ö½ÚĞÍ
+     * byteæ•°ç»„è½¬æ— ç¬¦å·å­—èŠ‚å‹
      * 
-     * @param array Òª×ª»»µÄbyteÊı×é
-     * @param offset ´ÓµÚoffsetÎ»¿ªÊ¼×ª»»
-     * @return ×ª»»ºóµÄÎŞ·ûºÅ×Ö½ÚĞÍÕûÊı
+     * @param array è¦è½¬æ¢çš„byteæ•°ç»„
+     * @param offset ä»ç¬¬offsetä½å¼€å§‹è½¬æ¢
+     * @return è½¬æ¢åçš„æ— ç¬¦å·å­—èŠ‚å‹æ•´æ•°
      */
     public static int bytesToUbyte(byte[] array, int offset) {  
         return array[offset] & 0xff;  
     }  
-    // char ÀàĞÍ¡¢ float¡¢double ÀàĞÍºÍ byte[] Êı×éÖ®¼äµÄ×ª»»¹ØÏµÎ´ÊµÏÖ 
+    // char ç±»å‹ã€ floatã€double ç±»å‹å’Œ byte[] æ•°ç»„ä¹‹é—´çš„è½¬æ¢å…³ç³»æœªå®ç° 
 }

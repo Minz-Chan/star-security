@@ -37,12 +37,12 @@ import com.starsecurity.model.convert.Object2ByteArray;
 import com.starsecurity.util.DataProcessUtil;
 
 /**
- * @function     ¹¦ÄÜ	  Android Junit²âÊÔÓÃÀà
- * @author       ´´½¨ÈË                 êÃ÷Õä
- * @date        ´´½¨ÈÕÆÚ           2013-03-22
- * @author       ĞŞ¸ÄÈË                 êÃ÷Õä
- * @date        ĞŞ¸ÄÈÕÆÚ           2013-03-22
- * @description ĞŞ¸ÄËµÃ÷	             Ê×´ÎÔö¼Ó
+ * @function     åŠŸèƒ½	  Android Junitæµ‹è¯•ç”¨ç±»
+ * @author       åˆ›å»ºäºº                 é™³æ˜ç
+ * @date        åˆ›å»ºæ—¥æœŸ           2013-03-22
+ * @author       ä¿®æ”¹äºº                 é™³æ˜ç
+ * @date        ä¿®æ”¹æ—¥æœŸ           2013-03-22
+ * @description ä¿®æ”¹è¯´æ˜	             é¦–æ¬¡å¢åŠ 
  */
 public class StarTest extends AndroidTestCase  {
 	
@@ -190,14 +190,14 @@ public class StarTest extends AndroidTestCase  {
 		in.read(tlvContent);
 		
 		while(!tlvContent.equals("")){
-			//µÃµ½°ü³¤µÄÊı¾İuiLengt
-			int nLeft=(int) owspPacketHeader.getPacket_length()-4; //Î´´¦ÀíµÄ×Ö½ÚÊı
+			//å¾—åˆ°åŒ…é•¿çš„æ•°æ®uiLengt
+			int nLeft=(int) owspPacketHeader.getPacket_length()-4; //æœªå¤„ç†çš„å­—èŠ‚æ•°
 			int nLen_hdr=OWSP_LEN.TLV_HEADER;
 			int flag = 0;
-			//Ñ­»·´¦ÀíËùÓĞµÄTLVl 
+			//å¾ªç¯å¤„ç†æ‰€æœ‰çš„TLVl 
 			while(nLeft>nLen_hdr)
 			{
-				//´¦ÀíTLVÍ·memcpy(&tlv_hdr,buf,nLen_hdr);
+				//å¤„ç†TLVå¤´memcpy(&tlv_hdr,buf,nLen_hdr);
 				TLV_HEADER tlv_Header = (TLV_HEADER) ByteArray2Object.convert2Object(TLV_HEADER.class, tlvContent, flag, OWSP_LEN.TLV_HEADER);
 				
 				//
@@ -209,7 +209,7 @@ public class StarTest extends AndroidTestCase  {
 				
 				nLeft-=nLen_hdr;
 				flag+=nLen_hdr;
-				//´¦ÀíTLVµÄV²¿·Ö
+				//å¤„ç†TLVçš„Véƒ¨åˆ†
 				if(tlv_Header.getTlv_type() == TLV_T_Command.TLV_T_VERSION_INFO_REQUEST){
 					tlv_V_VersionInfoRequest = (TLV_V_VersionInfoRequest) ByteArray2Object.convert2Object(TLV_V_VersionInfoRequest.class, tlvContent, flag, OWSP_LEN.TLV_V_VersionInfoRequest);
 					System.out.println(tlv_V_VersionInfoRequest);
@@ -264,8 +264,8 @@ public class StarTest extends AndroidTestCase  {
 		
 		byte[] readBuf1 = new byte[1024];
 		in.read(readBuf1);
-		//·ÖÎö°ü
-		int flag = 0;//¼ÇÂ¼ÒÑ·ÖÎöµ½Êı×éµÚ¼¸Î»
+		//åˆ†æåŒ…
+		int flag = 0;//è®°å½•å·²åˆ†æåˆ°æ•°ç»„ç¬¬å‡ ä½
 		
 		//Packet Header, len = 8
 		OwspPacketHeader owspPacketHeader = (OwspPacketHeader) ByteArray2Object.convert2Object(OwspPacketHeader.class, readBuf,flag,OWSP_LEN.OwspPacketHeader);
