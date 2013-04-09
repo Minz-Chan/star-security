@@ -9,14 +9,19 @@
  */
 package com.starsecurity.test;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.nio.ByteBuffer;
 
 import junit.framework.Assert;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.test.AndroidTestCase;
 
 import com.starsecurity.model.OWSP_LEN;
@@ -35,6 +40,10 @@ import com.starsecurity.model.TLV_Version;
 import com.starsecurity.model.convert.ByteArray2Object;
 import com.starsecurity.model.convert.Object2ByteArray;
 import com.starsecurity.util.DataProcessUtil;
+import com.tvt.p2pplayer.BMPImage;
+import com.tvt.p2pplayer.P2PPlayerH264Decode;
+import com.tvt.p2pplayer.VideoView;
+
 
 /**
  * @function     功能	  Android Junit测试用类
@@ -52,14 +61,67 @@ public class StarTest extends AndroidTestCase  {
 	
 	@Override
 	public void setUp() throws Exception {
+		/*
  		socket = new Socket("113.250.29.219", 8080);  
         System.out.println("Socket=" + socket);  
         
 		out = socket.getOutputStream();
-		in = socket.getInputStream();
+		in = socket.getInputStream();*/
+		int i = 0;  
+		i++;
+		i++;
 	}
 
-	
+	public void testJni() throws Throwable{
+		
+		int i = 0;
+		
+		i++;
+		i = 1 + i;
+		//assertTrue( 1 + 1 == 2);
+		
+		P2PPlayerH264Decode decoder = new P2PPlayerH264Decode(); 
+		
+
+		
+		decoder.InitDecode();
+		
+		
+		decoder.Cleanup();
+		
+		
+		File file1 = new File("/sdcard/test.mp4");
+		int file_len = (int)file1.length();
+		
+		int width = 352;
+		int height = 288;
+		BMPImage.Init(width, height);
+		
+		byte[] byte1 = new byte[file_len];
+		FileInputStream fileInputStream1 = new FileInputStream(file1);
+		fileInputStream1.read(byte1, 0, file_len);
+		 
+		ByteArrayOutputStream outstream = new ByteArrayOutputStream();
+		outstream.write(byte1);
+		
+		byte[] arrayOfByte19 = outstream.toByteArray();
+		byte[] arrayOfByte21 = decoder.DecodeOneFrame(arrayOfByte19, arrayOfByte19.length, width, height);
+	      
+	      long l2 = System.currentTimeMillis();
+
+	      int result = decoder.GetDecodeResult();
+	      if (decoder.GetDecodeResult() == arrayOfByte19.length)
+	      {
+	        byte[] arrayOfByte22 = new BMPImage(arrayOfByte21).getByte();
+	        Bitmap localBitmap1 = BitmapFactory.decodeByteArray(arrayOfByte22, 0, arrayOfByte22.length);
+	        
+	        //VideoView localVideoView = this.videoView;
+	        //localVideoView.setBitmap(localBitmap1);
+	      }
+	      
+	      
+	      ByteBuffer pInBuffer = ByteBuffer.allocate(51200);//分配50k的缓存 
+	}
 
 	public void testSomething() throws Throwable {  
 		
@@ -249,57 +311,7 @@ public class StarTest extends AndroidTestCase  {
 		
 		fout.close();
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		/*
-		byte[] readBuf = new byte[2048];
-		in.read(readBuf);
-		System.out.println("Recv: " + readBuf.toString());  
-		
-		byte[] readBuf1 = new byte[1024];
-		in.read(readBuf1);
-		//分析包
-		int flag = 0;//记录已分析到数组第几位
-		
-		//Packet Header, len = 8
-		OwspPacketHeader owspPacketHeader = (OwspPacketHeader) ByteArray2Object.convert2Object(OwspPacketHeader.class, readBuf,flag,OWSP_LEN.OwspPacketHeader);
-		flag+=OWSP_LEN.OwspPacketHeader;
-		
-		//TLV_HEADER +  TLV_V_VersionInfoRequest, len = 4 + 4
-		TLV_HEADER tlv_Header1 = (TLV_HEADER) ByteArray2Object.convert2Object(TLV_HEADER.class, readBuf, flag, OWSP_LEN.TLV_HEADER);
-		flag+=OWSP_LEN.TLV_HEADER;
-		TLV_V_VersionInfoRequest tlv_V_VersionInfoRequest = (TLV_V_VersionInfoRequest) ByteArray2Object.convert2Object(TLV_V_VersionInfoRequest.class, readBuf, flag, OWSP_LEN.TLV_V_VersionInfoRequest);
-		flag+=OWSP_LEN.TLV_V_VersionInfoRequest;
-		
-		//TLV_HEADER + TLV_V_DVSInfoRequest, len = 4 + 72
-		TLV_HEADER tlv_Header2 = (TLV_HEADER) ByteArray2Object.convert2Object(TLV_HEADER.class, readBuf, flag, OWSP_LEN.TLV_HEADER);
-		flag+=OWSP_LEN.TLV_HEADER;
-		TLV_V_DVSInfoRequest tlv_V_DVSInfoRequest = (TLV_V_DVSInfoRequest) ByteArray2Object.convert2Object(TLV_V_DVSInfoRequest.class, readBuf, flag, OWSP_LEN.TLV_V_DVSInfoRequest);
-		flag+=OWSP_LEN.TLV_V_DVSInfoRequest;
-		
-		//TLV_HEADER + TLV_V_DVSInfoRequest, len = 4 + 4
-		TLV_HEADER tlv_Header3 = (TLV_HEADER) ByteArray2Object.convert2Object(TLV_HEADER.class, readBuf, flag, OWSP_LEN.TLV_HEADER);
-		flag+=OWSP_LEN.TLV_HEADER;
-		TLV_V_ChannelResponse tlv_V_ChannelResponse = (TLV_V_ChannelResponse) ByteArray2Object.convert2Object(TLV_V_ChannelResponse.class, readBuf, flag, OWSP_LEN.TLV_V_ChannelResponse);
-		flag+=OWSP_LEN.TLV_V_ChannelResponse;
-		
-		// TLV_HEADER + TLV_V_StreamDataFormat, len = 4 + (4 + 16 + 20) = 44
-		TLV_HEADER tlv_Header4 = (TLV_HEADER) ByteArray2Object.convert2Object(TLV_HEADER.class, readBuf, flag, OWSP_LEN.TLV_HEADER);
-		flag+=OWSP_LEN.TLV_HEADER;
-		TLV_V_StreamDataFormat tlv_V_StreamDataFormat = (TLV_V_StreamDataFormat) ByteArray2Object.convert2Object(TLV_V_StreamDataFormat.class, readBuf, flag, OWSP_LEN.TLV_V_StreamDataFormat);
-		flag+=OWSP_LEN.TLV_V_StreamDataFormat;
-		
-		//TLV_HEADER + TLV_V_VideoFrameInfo, len = 4 + 12 
-		TLV_HEADER tlv_Header5 = (TLV_HEADER) ByteArray2Object.convert2Object(TLV_HEADER.class, readBuf, flag, OWSP_LEN.TLV_HEADER);
-		flag+=OWSP_LEN.TLV_HEADER;
-		TLV_V_VideoFrameInfo tlv_V_VideoFrameInfo = (TLV_V_VideoFrameInfo) ByteArray2Object.convert2Object(TLV_V_VideoFrameInfo.class, readBuf, flag, OWSP_LEN.TLV_V_VideoFrameInfo);
-		*/
+
 		Assert.assertTrue(1 == 1);  
     } 
 	
