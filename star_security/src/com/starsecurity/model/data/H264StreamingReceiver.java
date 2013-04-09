@@ -10,6 +10,9 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import android.view.View;
+
+import com.starsecurity.h264.VideoView;
 import com.starsecurity.model.OWSP_LEN;
 import com.starsecurity.model.OwspPacketHeader;
 import com.starsecurity.model.TLV_HEADER;
@@ -26,17 +29,29 @@ import com.starsecurity.model.TLV_Version;
 import com.starsecurity.model.convert.ByteArray2Object;
 import com.starsecurity.model.convert.Object2ByteArray;
 import com.starsecurity.util.DataProcessUtil;
+import com.starsecurity.util.H264DecodeUtil;
 
 public class H264StreamingReceiver implements Runnable {
 
+	VideoView v;
 	PipedOutputStream pipedOutStream = new PipedOutputStream();
 	
 	public PipedOutputStream getOutStream() {
 		return pipedOutStream;
 	}
 	
+	
+	public void setVideoView(View view) {
+		
+		this.v = (VideoView) view;
+		
+	}
+	
+	
+	
 	@Override
 	public void run() {
+		/*
 		File f = new File("/sdcard/test.264");
 		
 		try {
@@ -48,9 +63,15 @@ public class H264StreamingReceiver implements Runnable {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+		}*/
+		
+		if(v == null) {
+			return;
 		}
 		
+		H264DecodeUtil h264 = new H264DecodeUtil();
 		
+		h264.init(320, 288);
 		
 		Socket socket = null;
 		OutputStream socketWriter = null;
@@ -235,30 +256,39 @@ public class H264StreamingReceiver implements Runnable {
 						tlv_V_VideoFrameInfo = (TLV_V_VideoFrameInfo) ByteArray2Object.convert2Object(TLV_V_VideoFrameInfo.class, tlvContent, flag, OWSP_LEN.TLV_V_VideoFrameInfo);
 						System.out.println(tlv_V_VideoFrameInfo);
 					} else if ( tlv_Header.getTlv_type() == TLV_T_Command.TLV_T_VIDEO_IFRAME_DATA ) {
-						//FileOutputStream fout = new FileOutputStream(new File("/sdcard/test.264"), true);
+						
 						byte[] tmp = (byte[]) ByteArray2Object.convert2Object(TLV_V_VideoData.class, tlvContent, flag, tlv_Header.getTlv_len());
-						pipedOutStream.write(tmp);
-						pipedOutStream.flush();
-						//pipedOutStream.close();
-						//pipedOutStream.close();
-						//fout.close();
+						
+						int result = h264.decodePacket(tmp, tmp.length, v.getmPixel());
+						if(result == 1) {
+							v.postInvalidate();
+						}
+						
+
+					
 					} else if ( tlv_Header.getTlv_type() == TLV_T_Command.TLV_T_VIDEO_PFRAME_DATA ) {
-						//FileOutputStream fout = new FileOutputStream(new File("/sdcard/test.264"), true);
+						
 						byte[] tmp = (byte[]) ByteArray2Object.convert2Object(TLV_V_VideoData.class, tlvContent, flag, tlv_Header.getTlv_len());
-						pipedOutStream.write(tmp);
-						pipedOutStream.flush();
-						//pipedOutStream.close();
-						//fout.close();
+						
+						int result = h264.decodePacket(tmp, tmp.length, v.getmPixel());
+						if(result == 1) {
+							v.postInvalidate();
+						}
+						
+						
 					}
 					nLeft-=tlv_Header.getTlv_len();
 					flag+=tlv_Header.getTlv_len();
 				}
 				
+				/* 该部分须检测所收的包的正确性 */
+				packetHeaderBuf = null;			
 				packetHeaderBuf = new byte[8];
 				socketReader.read(packetHeaderBuf);
 				owspPacketHeader = (OwspPacketHeader) ByteArray2Object.convert2Object(OwspPacketHeader.class, packetHeaderBuf,0,OWSP_LEN.OwspPacketHeader);
 				//tlvContent = new byte[(int) owspPacketHeader.getPacket_length() - 4];
-				//tlvContent.
+				
+				/* 上一部分须保证接收下来的包的正确性，防止出现lenDataRead < 0的情况 */
 				lenDataRead = (int) owspPacketHeader.getPacket_length() - 4;
 				socketReader.read(tlvContent, 0, lenDataRead);
 				
@@ -271,6 +301,8 @@ public class H264StreamingReceiver implements Runnable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}  
+ 		
+ 		h264.uninit();
 
 	}
 

@@ -3,7 +3,7 @@ package com.starsecurity.h264;
 public class H264Decoder {
 	
 	static {
-        System.loadLibrary("H264Android");
+        System.loadLibrary("H264Decoder");
     }
 
 	private static native int InitDecoder(int width, int height);

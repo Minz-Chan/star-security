@@ -92,10 +92,12 @@ public class MainActivity extends Activity {
 		
 		
 		mVideoView = (VideoView)findViewById(R.id.p2p_view);
-
 		settingBtn = (Button) findViewById(R.id.btn_linear_setting);
 		
+		mVideoView.init();
 
+		H264StreamingReceiver hStreamRecv = new H264StreamingReceiver();
+		hStreamRecv.setVideoView(mVideoView);
 		
 		//点击设置按钮时，进行页面跳转，这里采用startActivityForResult，在不释放当前界面的情况下开启新界面
 		settingBtn.setOnClickListener(new Button.OnClickListener(){
@@ -107,6 +109,8 @@ public class MainActivity extends Activity {
 			}
 		});
 		
+		
+		/*
 		PipedOutputStream pipedOutstream  = new PipedOutputStream();
 		PipedInputStream pipedInstream = null;
 		try {
@@ -114,9 +118,7 @@ public class MainActivity extends Activity {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		H264StreamingReceiver hStreamRecv = new H264StreamingReceiver();
-		
+
 		PipedOutputStream pipedOutSteam = hStreamRecv.getOutStream();
 		PipedInputStream pipedInStream = mVideoView.getInputStream();
 	
@@ -124,10 +126,11 @@ public class MainActivity extends Activity {
 			pipedInStream.connect(pipedOutSteam);
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
 		
-		mVideoView.PlayVideo("/sdcard/test.264");
+		//mVideoView.PlayVideo("/sdcard/test.264");
 		new Thread(hStreamRecv).start();
+
 		
 	}
 	
