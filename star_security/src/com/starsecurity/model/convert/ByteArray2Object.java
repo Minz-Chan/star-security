@@ -25,7 +25,7 @@ import com.starsecurity.model.TLV_V_VideoFrameInfo;
 import com.starsecurity.util.BByteConvert;
 import com.starsecurity.util.LByteConvert;
 
-/***
+/**
  * 
  * @function     功能	  byte数组与各Class之间的互转
  *     项目将收到的Byte数组解析后转换为定义中的各个Class
@@ -36,7 +36,7 @@ import com.starsecurity.util.LByteConvert;
  * @description 修改说明	             首次增加
  */
 public class ByteArray2Object {
-	/***
+	/**
 	 * 
 	 * @param clazz 需要转换成的Class
 	 * @param byteArray byte数组

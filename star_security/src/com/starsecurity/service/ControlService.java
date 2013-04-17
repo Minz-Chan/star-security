@@ -1,9 +1,7 @@
 package com.starsecurity.service;
 
-import java.net.Socket;
 
 public interface ControlService {
-	//public int loginCheck();
 	
 	public int playVideo();
 	

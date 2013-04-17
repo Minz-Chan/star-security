@@ -85,14 +85,15 @@ public class H264DecodeUtil {
         return result;
     }  
 	
+
 	/**
-     * 将从文件读出来的缓冲数组(SockBuf)合并进解码缓存数组(NalBuf)，当找到一个开始字时，停止读取返回偏移
-     * @param NalBuf 解码缓存数组
-     * @param NalBufUsed 解码缓存数组已读取的数据
-     * @param SockBuf 读取的文件缓冲数组
-     * @param SockBufUsed 文件缓冲数组已读取的数据
-     * @param SockRemain 文件缓冲数组还剩余的数据
-     * @return 开始字的偏移
+     * Merge SockBuf into NalBuf, return the offset when trail(start code, 0x00000001) is found
+     * @param NalBuf buffer array for decoding
+     * @param NalBufUsed length of NalBuf data read
+     * @param SockBuf buffer array read from file
+     * @param SockBufUsed length of SockBuf data read
+     * @param SockRemain length of data unread(remain)
+     * @return position of trail(0x00000001)
      */
     int MergeBuffer(byte[] NalBuf, int NalBufUsed, byte[] SockBuf, int SockBufUsed, int SockRemain) {
     	int  i = 0;
