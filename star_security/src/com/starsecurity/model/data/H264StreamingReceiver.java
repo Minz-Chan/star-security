@@ -79,7 +79,7 @@ public class H264StreamingReceiver implements Runnable {
 	    
 	    
  		try {
-			socket = new Socket("119.86.159.57", 8080);
+			socket = new Socket("119.86.151.82", 8080);
 			System.out.println("Socket=" + socket);  
 		        
 			socketWriter = socket.getOutputStream();
@@ -144,7 +144,7 @@ public class H264StreamingReceiver implements Runnable {
 			loginRequest.setPassword("123456".toCharArray());
 			loginRequest.setDeviceId(1);
 			loginRequest.setFlag((short)1);
-			loginRequest.setChannel((short)1);
+			loginRequest.setChannel((short)0);
 			loginRequest.setReserve(0);
 			
 			/* Header */
@@ -263,8 +263,6 @@ public class H264StreamingReceiver implements Runnable {
 						if(result == 1) {
 							v.postInvalidate();
 						}
-						
-
 					
 					} else if ( tlv_Header.getTlv_type() == TLV_T_Command.TLV_T_VIDEO_PFRAME_DATA ) {
 						

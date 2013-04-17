@@ -29,6 +29,7 @@ import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
+import android.widget.TextView;
 //import android.widget.VideoView;
 
 
@@ -37,6 +38,9 @@ import android.widget.RelativeLayout.LayoutParams;
 //import io.vov.vitamio.widget.VideoView;
 
 import com.starsecurity.R;
+import com.starsecurity.component.Connection;
+import com.starsecurity.component.ConnectionManager;
+import com.starsecurity.component.ViewManager;
 import com.starsecurity.h264.VideoView;
 import com.starsecurity.model.OWSP_LEN;
 import com.starsecurity.model.OwspPacketHeader;
@@ -54,6 +58,8 @@ import com.starsecurity.model.TLV_Version;
 import com.starsecurity.model.convert.ByteArray2Object;
 import com.starsecurity.model.convert.Object2ByteArray;
 import com.starsecurity.model.data.H264StreamingReceiver;
+import com.starsecurity.service.ControlService;
+import com.starsecurity.service.impl.ControlServiceImpl;
 import com.starsecurity.test.StarTest;
 import com.starsecurity.util.DataProcessUtil;
 
@@ -66,7 +72,9 @@ public class MainActivity extends Activity {
 	private String port;
 	
 	private String path = "http://devimages.apple.com/iphone/samples/bipbop/gear1/prog_index.m3u8";
-	private VideoView mVideoView;
+	
+	
+	private ControlService controlService =  new ControlServiceImpl("conn1");
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +83,12 @@ public class MainActivity extends Activity {
 		
 		
 		setContentView(R.layout.activity_main);
+		
+		/*
+		if (android.os.Build.VERSION.SDK_INT > 9) {
+		    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+		    StrictMode.setThreadPolicy(policy);
+		}*?
 		
 		/*
 		LayoutInflater lif = getLayoutInflater();
@@ -91,13 +105,26 @@ public class MainActivity extends Activity {
 	    
 		
 		
-		mVideoView = (VideoView)findViewById(R.id.p2p_view);
-		settingBtn = (Button) findViewById(R.id.btn_linear_setting);
+		VideoView mVideoView = (VideoView)findViewById(R.id.p2p_view);
+		TextView ipView =  (TextView)findViewById(R.id.ip_text);
+		TextView msgView = (TextView)findViewById(R.id.help_msg);
 		
 		mVideoView.init();
+		
+		ViewManager v = ViewManager.getInstance();
+		v.bindVideoView(mVideoView);
+		v.bindIpTextView(ipView);
+		v.bindHelpMsgView(msgView);
+		
+		
+		settingBtn = (Button) findViewById(R.id.btn_linear_setting);
+		
+		
+		
 
-		H264StreamingReceiver hStreamRecv = new H264StreamingReceiver();
-		hStreamRecv.setVideoView(mVideoView);
+		//H264StreamingReceiver hStreamRecv = new H264StreamingReceiver();
+		//hStreamRecv.setVideoView(mVideoView);
+		//new Thread(hStreamRecv).start();
 		
 		//点击设置按钮时，进行页面跳转，这里采用startActivityForResult，在不释放当前界面的情况下开启新界面
 		settingBtn.setOnClickListener(new Button.OnClickListener(){
@@ -129,7 +156,7 @@ public class MainActivity extends Activity {
 		}*/
 		
 		//mVideoView.PlayVideo("/sdcard/test.264");
-		new Thread(hStreamRecv).start();
+		
 
 		
 	}
@@ -145,7 +172,15 @@ public class MainActivity extends Activity {
 			server = bundle.getString("serverStr");
 			port = bundle.getString("portStr");
 			
+			Connection conn = ConnectionManager.getConnection("conn1");
+			conn.setUsername("admin");
+			conn.setPassword("123456");
+			conn.setSvr_ip("113.250.4.193");
+			conn.setPort(Integer.valueOf(8080));
+			conn.setChannel_no(0);
 			
+			
+			controlService.playVideo();
 			
 			/*
 			StarTest test = new StarTest();
