@@ -1,7 +1,25 @@
+/*
+ * FileName:H264DecodeUtil.java
+ * 
+ * Package:com.starsecurity.util
+ * 
+ * Date:2013-04-13
+ * 
+ * Copyright: Copyright (c) 2013 Minz.Chan
+ */
 package com.starsecurity.util;
 
 import com.starsecurity.h264.H264Decoder;
 
+/**
+ * @function     功能	  h264码流解码工具类
+ *     本类对H264Decoder解码类进行封装，使得更易于解码时进行调用。
+ * @author       创建人                陈明珍
+ * @date        创建日期           2013-04-13
+ * @author       修改人                陈明珍
+ * @date        修改日期           2013-04-15
+ * @description 修改说明	   对解码函数进行二次封装
+ */
 public class H264DecodeUtil {
 	H264Decoder decoder = new H264Decoder();       
 	byte [] NalBuf = new byte[65536]; // 64k
@@ -22,6 +40,13 @@ public class H264DecodeUtil {
 		return decoder.uninit();
 	}
 
+	/**
+	 * decode array buffer of h264 video stream data, the minimum decode unit should be a NAL unit
+	 * @param packet an array of byte that contains a complete NAL unit(should be starting with 0x00000001)
+	 * @param len the length of packet
+	 * @param byteBitmap an array buffer used to store the decoded data
+	 * @return return 1 if successful; otherwise, it returns 0
+	 */
 	public int decodePacket(byte[] packet, int len, byte[] byteBitmap)   
     {   
 		int result = 0;
@@ -54,12 +79,12 @@ public class H264DecodeUtil {
 						if ((NalBuf[4] & 0x1F) == 7) { // if pps
 							bFindPPS = false;
 						} else {				// if NAL unit sequence is not 'sps, pps, ...', reread from buffer
-			   				NalBuf[0]=0;
-		    				NalBuf[1]=0;
-		    				NalBuf[2]=0;
-		    				NalBuf[3]=1;
+			   				NalBuf[0] = 0;
+		    				NalBuf[1] = 0;
+		    				NalBuf[2] = 0;
+		    				NalBuf[3] = 1;
 		    				
-		    				NalBufUsed=4;
+		    				NalBufUsed = 4;
 		    				
 							break;
 						}
@@ -73,12 +98,12 @@ public class H264DecodeUtil {
 		            }
 				}
 
-				NalBuf[0]=0;
-				NalBuf[1]=0;
-				NalBuf[2]=0;
-				NalBuf[3]=1;
+				NalBuf[0] = 0;
+				NalBuf[1] = 0;
+				NalBuf[2] = 0;
+				NalBuf[3] = 1;
 				
-				NalBufUsed=4;
+				NalBufUsed = 4;
 			}		
 		} 
 

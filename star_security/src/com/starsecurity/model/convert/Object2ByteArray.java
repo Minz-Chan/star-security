@@ -1,7 +1,7 @@
 /*
  * FileName:Object2ByteArray.java
  * 
- * Package:com.starsecurity
+ * Package:com.starsecurity.model.convert
  * 
  * Date:2013-03-19
  * 
@@ -19,12 +19,14 @@ import com.starsecurity.util.BByteConvert;
 import com.starsecurity.util.LByteConvert;
 
 /**
- * @function     ¹¦ÄÜ	  ½«¶ÔÏó×ª»»ÎªbyteÊı×éÓÃÓÚÍøÂç´«Êä
- * @author       ´´½¨ÈË                 êÃ÷Õä
- * @date        ´´½¨ÈÕÆÚ           2013-03-19
- * @author       ĞŞ¸ÄÈË                 êÃ÷Õä
- * @date        ĞŞ¸ÄÈÕÆÚ           2013-03-19
- * @description ĞŞ¸ÄËµÃ÷	             Ê×´ÎÔö¼Ó
+ * 
+ * @function     åŠŸèƒ½	  å°†å„ç±»è½¬æ¢æˆbyteæ•°ç»„ä»¥ä¾¿ç½‘ç»œä¼ è¾“
+ *     å¯¹é¡¹ç›®ä¸­ç”¨åˆ°çš„æ•°æ®ç»“æ„è¿›è¡Œå­—èŠ‚åºåˆ—åŒ–ï¼Œä½¿å…¶å®¹æ˜“åœ¨ç½‘ç»œä¸­è¿›è¡Œä¼ è¾“
+ * @author       åˆ›å»ºäºº                 é™ˆæ˜ç
+ * @date        åˆ›å»ºæ—¥æœŸ           2013-03-19
+ * @author       ä¿®æ”¹äºº                 é™ˆæ˜ç
+ * @date        ä¿®æ”¹æ—¥æœŸ           2013-03-19
+ * @description ä¿®æ”¹è¯´æ˜	             é¦–æ¬¡å¢åŠ 
  */
 public class Object2ByteArray {
 	public static byte[] convert2ByteArr(Class clazz, Object obj) {

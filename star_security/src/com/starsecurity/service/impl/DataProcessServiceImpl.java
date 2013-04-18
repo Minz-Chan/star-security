@@ -1,3 +1,12 @@
+/*
+ * FileName:DataProcessServiceImpl.java
+ * 
+ * Package:com.starsecurity.service.impl
+ * 
+ * Date:2013-04-15
+ * 
+ * Copyright: Copyright (c) 2013 Minz.Chan
+ */
 package com.starsecurity.service.impl;
 
 import com.starsecurity.component.ViewManager;
@@ -15,6 +24,14 @@ import com.starsecurity.model.convert.ByteArray2Object;
 import com.starsecurity.service.DataProcessService;
 import com.starsecurity.util.H264DecodeUtil;
 
+/**
+ * @function     功能	  数据处理接口实现类
+ * @author       创建人              陈明珍
+ * @date        创建日期           2013-04-15
+ * @author       修改人              陈明珍
+ * @date        修改日期           2013-04-15
+ * @description 修改说明	          首次增加
+ */
 public class DataProcessServiceImpl implements DataProcessService {
 	private VideoView v = ViewManager.getInstance().getVideoView();
 	private H264DecodeUtil h264 = new H264DecodeUtil();

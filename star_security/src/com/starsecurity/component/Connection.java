@@ -1,3 +1,12 @@
+/*
+ * FileName:Connection.java
+ * 
+ * Package:com.starsecurity.component
+ * 
+ * Date:2013-04-14
+ * 
+ * Copyright: Copyright (c) 2013 Minz.Chan
+ */
 package com.starsecurity.component;
 
 import java.io.IOException;
@@ -16,16 +25,29 @@ import com.starsecurity.model.TLV_Version;
 import com.starsecurity.model.convert.Object2ByteArray;
 import com.starsecurity.util.DataProcessUtil;
 
+/**
+ * @function     功能	  	连接信息类
+ *     此类提供连接(connect)、关闭连接(close)以及登录验证(loginCheck)等接口
+ * @author       创建人              陈明珍
+ * @date        创建日期           2013-04-14
+ * @author       修改人              陈明珍
+ * @date        修改日期           2013-04-14
+ * @description 修改说明	          首次增加
+ */
 public class Connection {
-	private String username;
-	private String password;
-	private String svr_ip;
-	private int port;
-	private int channel_no;
+	private String username;		// dvr端登录用户名
+	private String password;		// dvr端登录密码
+	private String svr_ip;			// dvr端IP
+	private int port;				// dvr端口
+	private int channel_no;			// dvr通道号
 	
-	private int connect_state;		// 1 连接成功； 0 连接失败
+	private int connect_state;		// 当前连接状态：1 连接成功； 0 连接失败
 	private Socket sock = null;
 	
+	/**
+	 * 建立连接
+	 * @return 返回1，表示成功；返回0，表示失败
+	 */
 	public int connect() {
 		int result = 1;
 		
@@ -46,6 +68,10 @@ public class Connection {
 		return result;
 	}
 	
+	/**
+	 * 关闭连接
+	 * @return 返回1，表示成功；返回0，表示失败
+	 */
 	public int close() {
 		int result = 1;
 		
@@ -62,6 +88,10 @@ public class Connection {
 		return result;
 	}
 	
+	/**
+	 * 登录请求验证
+	 * @return
+	 */
 	public int loginCheck() {
 		int result = 1;
 		

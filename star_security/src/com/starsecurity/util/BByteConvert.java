@@ -1,7 +1,7 @@
 /*
  * FileName:BByteConvert.java
  * 
- * Package:com.starsecurity
+ * Package:com.starsecurity.util
  * 
  * Date:2013-03-19
  * 

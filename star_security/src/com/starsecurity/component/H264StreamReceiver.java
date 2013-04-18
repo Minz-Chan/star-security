@@ -1,3 +1,12 @@
+/*
+ * FileName:H264StreamReceiver.java
+ * 
+ * Package:com.starsecurity.component
+ * 
+ * Date:2013-04-16
+ * 
+ * Copyright: Copyright (c) 2013 Minz.Chan
+ */
 package com.starsecurity.component;
 
 import java.io.IOException;
@@ -9,7 +18,14 @@ import com.starsecurity.model.convert.ByteArray2Object;
 import com.starsecurity.service.DataProcessService;
 import com.starsecurity.service.impl.DataProcessServiceImpl;
 
-
+/**
+ * @function     功能	  h264码流接收线程类
+ * @author       创建人                陈明珍
+ * @date        创建日期           2013-04-16
+ * @author       修改人                陈明珍
+ * @date        修改日期           2013-04-16
+ * @description 修改说明	            首次增加
+ */
 public class H264StreamReceiver implements Runnable {
 	private String conn_name;
 	private Socket sock;
@@ -26,10 +42,9 @@ public class H264StreamReceiver implements Runnable {
 	public void run() {
 		
 		Connection conn = ConnectionManager.getConnection(conn_name);
-		if(conn.connect() != 1) {
+		if(conn.connect() != 1) {		// 建立连接
 			conn.setConnect_state(0);
 			ViewManager.getInstance().setIpText(conn.getSvr_ip());
-			
 			ViewManager.getInstance().setHelpMsg("无法连接到远程主机...");
 			return;
 		} else {
@@ -39,7 +54,7 @@ public class H264StreamReceiver implements Runnable {
 		}
 
 	    
-	    conn.loginCheck();
+	    conn.loginCheck();						// 登录验证
 	    
 	    InputStream socketReader = null; 
 	    sock = conn.getSock();
@@ -72,7 +87,7 @@ public class H264StreamReceiver implements Runnable {
 				/* 处理接收到的数据 */
 				dataProcessService.process(tlvContent, (int)owspPacketHeader.getPacket_length());
 				
-				/* 检测是否 */
+				/* 检测连接状态 */
 				if (conn.getConnect_state() == 0) {
 					break;
 				}
@@ -92,8 +107,7 @@ public class H264StreamReceiver implements Runnable {
 				
 			
 				
-				/* 上一部分须保证接收下来的包的正确性，防止出现lenDataRead < 0的情况 */
-				
+				/* 上一部分须保证接收下来的包的正确性，防止出现owspPacketHeader.getPacket_length() - 4 < 0的情况 */
 				socketReader.read(tlvContent, 0, (int) owspPacketHeader.getPacket_length() - 4);
 				
 			}

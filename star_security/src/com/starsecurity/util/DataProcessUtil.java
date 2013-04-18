@@ -1,7 +1,7 @@
 /*
  * FileName:DataProcessUtil.java
  * 
- * Package:com.starsecurity
+ * Package:com.starsecurity.util
  * 
  * Date:2013-03-19
  * 
@@ -11,7 +11,7 @@ package com.starsecurity.util;
 
 /***
  * 
- * @function     功能	 用于存放项目中使用的一些工具方法
+ * @function     功能	用于存放项目中使用的一些工具方法
  * @author       创建人                 陈明珍
  * @date        创建日期           2013-03-19
  * @author       修改人                 陈明珍

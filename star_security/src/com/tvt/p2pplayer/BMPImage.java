@@ -5,6 +5,16 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
+/**
+ * @function     功能	  	   位图构造类
+ *     位图文件可看作由位图文件头(bitmap-file header)、位图信息头(bitmap-information header)、
+ * 彩色表(color table)和定义位图的字节阵列。此类通过相关头信息和位图字节阵列构造完整位图文件。
+ * @author       创建人                 陳明珍
+ * @date        创建日期           2013-03-22
+ * @author       修改人                 陳明珍
+ * @date        修改日期           2013-03-24
+ * @description 修改说明	             首次增加
+ */
 public class BMPImage {
 	  private static final int BITMAPFILEHEADER_SIZE = 14;
 	  private static final int BITMAPINFOHEADER_SIZE = 40;
@@ -81,6 +91,23 @@ public class BMPImage {
 	    }
 	  }
 
+	  /**
+	   * 重置图像数据缓冲区
+	   */
+	  public void clear()
+	  {
+	    this.bmpBuffer.clear();
+	  }
+
+	  /**
+	   * 获取位置完整字节序列
+	   * @return 位图的完整字节序列
+	   */
+	  public byte[] getByte()
+	  {
+	    return this.bmpBuffer.array();
+	  }
+	  
 	  private static byte[] intToDWord(int paramInt)
 	  {
 	    byte[] arrayOfByte = new byte[4];
@@ -97,15 +124,5 @@ public class BMPImage {
 	    arrayOfByte[0] = (byte)(paramInt & 0xFF);
 	    arrayOfByte[1] = (byte)(paramInt >> 8 & 0xFF);
 	    return arrayOfByte;
-	  }
-
-	  public void clear()
-	  {
-	    this.bmpBuffer.clear();
-	  }
-
-	  public byte[] getByte()
-	  {
-	    return this.bmpBuffer.array();
 	  }
 }

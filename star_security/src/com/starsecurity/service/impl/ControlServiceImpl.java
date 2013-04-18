@@ -1,3 +1,12 @@
+/*
+ * FileName:ControlServiceImpl.java
+ * 
+ * Package:com.starsecurity.service.impl
+ * 
+ * Date:2013-04-15
+ * 
+ * Copyright: Copyright (c) 2013 Minz.Chan
+ */
 package com.starsecurity.service.impl;
 
 
@@ -7,6 +16,14 @@ import com.starsecurity.component.H264StreamReceiver;
 import com.starsecurity.service.ControlService;
 
 
+/**
+ * @function     功能	  控制操作接口实现类
+ * @author       创建人              陈明珍
+ * @date        创建日期           2013-04-15
+ * @author       修改人              陈明珍
+ * @date        修改日期           2013-04-15
+ * @description 修改说明	          首次增加
+ */
 public class ControlServiceImpl implements ControlService {
 	private String conn_name = null;
 	private Socket client = null;
@@ -18,9 +35,6 @@ public class ControlServiceImpl implements ControlService {
 
 	}
 
-
-	
-
 	@Override
 	public int playVideo() {
 		new Thread(new H264StreamReceiver(conn_name)).start();
@@ -30,7 +44,7 @@ public class ControlServiceImpl implements ControlService {
 	@Override
 	public int stopVideo() {
 		ConnectionManager.getConnection(conn_name).close();
-		return 0;
+		return 1;
 	}
 
 	@Override
@@ -59,8 +73,21 @@ public class ControlServiceImpl implements ControlService {
 
 	@Override
 	public int switchChannel(int channel_no) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		
+		if (ConnectionManager.getConnection(conn_name).getConnect_state() == 1) {
+			// 发送TLV_V_ChannelRequest数据包
+		} else {
+			
+			
+		}
+		
+		/*
+		if (ConnectionManager.getConnection(conn_name).close() == 1) {
+			ConnectionManager.getConnection(conn_name).setChannel_no(channel_no);
+			return playVideo();
+		}*/
+		return result;
 	}
 	
 	

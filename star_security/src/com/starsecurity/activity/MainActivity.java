@@ -66,12 +66,9 @@ import com.starsecurity.util.DataProcessUtil;
 public class MainActivity extends Activity {
 
 	private Button settingBtn;
-	private String username;
-	private String password;
-	private String server;
-	private String port;
+	 
 	
-	private String path = "http://devimages.apple.com/iphone/samples/bipbop/gear1/prog_index.m3u8";
+	//private String path = "http://devimages.apple.com/iphone/samples/bipbop/gear1/prog_index.m3u8";
 	
 	
 	private ControlService controlService =  new ControlServiceImpl("conn1");
@@ -167,10 +164,10 @@ public class MainActivity extends Activity {
 		switch(resultCode){
 		case Activity.RESULT_OK:
 			Bundle bundle = data.getExtras();
-			username = bundle.getString("usernameStr");
-			password = bundle.getString("passwordStr");
-			server = bundle.getString("serverStr");
-			port = bundle.getString("portStr");
+			String username = bundle.getString("usernameStr");
+			String password = bundle.getString("passwordStr");
+			String server = bundle.getString("serverStr");
+			String port = bundle.getString("portStr");
 			
 			Connection conn = ConnectionManager.getConnection("conn1");
 			conn.setUsername("admin");
