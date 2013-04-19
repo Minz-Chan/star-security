@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference android:title="@string/IDS_Select_one" android:key="k_slect_record" android:summary="@string/IDS_Select_one" />
+    <EditTextPreference android:singleLine="true" android:title="@string/IDS_UserName" android:key="k_username" />
+    <EditTextPreference android:password="true" android:singleLine="true" android:title="@string/IDS_Password" android:key="k_passwrold" />
+    <EditTextPreference android:singleLine="true" android:title="@string/IDS_Server" android:key="k_ipadress" />
+    <EditTextPreference android:singleLine="true" android:title="@string/IDS_Port" android:key="k_port" />
+    <EditTextPreference android:singleLine="true" android:title="@string/IDS_RecordName" android:key="k_recordname" />
+    <EditTextPreference android:title="@string/IDS_VERSION" android:selectable="false" android:summary="Version:V5.5.0" />
+</PreferenceScreen>

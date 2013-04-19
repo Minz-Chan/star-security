@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference android:title="@string/ddns_server" android:key="ddns_server" />
+    <EditTextPreference android:title="@string/ddns_port" android:key="ddns_port" />
+    <EditTextPreference android:title="@string/user_id" android:key="ddbs_userid" />
+    <EditTextPreference android:password="true" android:title="@string/ddns_passworld" android:key="password" />
+    <EditTextPreference android:title="@string/ddns_devicename" android:key="device_name" />
+</PreferenceScreen>
