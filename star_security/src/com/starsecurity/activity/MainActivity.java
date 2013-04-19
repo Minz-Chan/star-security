@@ -1,84 +1,162 @@
 package com.starsecurity.activity;
 
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
-import java.io.PrintStream;
-import java.net.Socket;
-import java.net.UnknownHostException;
-
-import junit.framework.Assert;
-
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
-//import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
-import android.widget.MediaController;
-import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
-//import android.widget.VideoView;
-
-
-//import io.vov.vitamio.MediaPlayer;
-//import io.vov.vitamio.widget.MediaController;
-//import io.vov.vitamio.widget.VideoView;
 
 import com.starsecurity.R;
 import com.starsecurity.component.Connection;
 import com.starsecurity.component.ConnectionManager;
 import com.starsecurity.component.ViewManager;
 import com.starsecurity.h264.VideoView;
-import com.starsecurity.model.OWSP_LEN;
-import com.starsecurity.model.OwspPacketHeader;
-import com.starsecurity.model.TLV_HEADER;
-import com.starsecurity.model.TLV_T_Command;
-import com.starsecurity.model.TLV_V_ChannelResponse;
-import com.starsecurity.model.TLV_V_DVSInfoRequest;
-import com.starsecurity.model.TLV_V_LoginRequest;
-import com.starsecurity.model.TLV_V_PhoneInfoRequest;
-import com.starsecurity.model.TLV_V_StreamDataFormat;
-import com.starsecurity.model.TLV_V_VersionInfoRequest;
-import com.starsecurity.model.TLV_V_VideoData;
-import com.starsecurity.model.TLV_V_VideoFrameInfo;
-import com.starsecurity.model.TLV_Version;
-import com.starsecurity.model.convert.ByteArray2Object;
-import com.starsecurity.model.convert.Object2ByteArray;
-import com.starsecurity.model.data.H264StreamingReceiver;
 import com.starsecurity.service.ControlService;
 import com.starsecurity.service.impl.ControlServiceImpl;
-import com.starsecurity.test.StarTest;
-import com.starsecurity.util.DataProcessUtil;
 
 public class MainActivity extends Activity {
-
+	//最底端按钮组
+	/***
+	 * 播放按钮
+	 */
+	private Button playBtn;
+	/***
+	 * 截屏按钮
+	 */
+	private Button captureBtn;
+	/***
+	 * 全屏按钮
+	 */
+	private Button fullScreenBtn;
+	/***
+	 * 通道换组按钮
+	 */
+	private Button groupBtn;
+	/***
+	 * 云台设置按钮
+	 */
+	private Button ddnsBtn;
+	/***
+	 * 设置按钮
+	 */
 	private Button settingBtn;
-	 
-	
+
+	//控制按钮组
+	/***
+	 * 控制向上按钮
+	 */
+	private Button controlUpBtn;
+	/***
+	 * 控制向下按钮
+	 */
+	private Button controlDownBtn;
+	/***
+	 * 控制向左按钮
+	 */
+	private Button controlLeftBtn;
+	/***
+	 * 控制向右按钮
+	 */
+	private Button controlRightBtn;
+	/***
+	 * 放大按钮
+	 */
+	private Button zoomAddBtn;
+	/***
+	 * 缩小按钮
+	 */
+	private Button zoomBtn;
+	/***
+	 * 光圈放大按钮
+	 */
+	private Button focusAddBtn;
+	/***
+	 * 光圈缩小按钮
+	 */
+	private Button focusBtn;
+	/***
+	 * 焦点放大按钮
+	 */
+	private Button jujiaoAddBtn;
+	/***
+	 * 焦点缩小按钮
+	 */
+	private Button jujiaoBtn;
 	//private String path = "http://devimages.apple.com/iphone/samples/bipbop/gear1/prog_index.m3u8";
+	//通道切换按钮
+	/***
+	 * 第一通道
+	 */
+	private Button channelOne;
+	/***
+	 * 第二通道
+	 */
+	private Button channelTwo;
+	/***
+	 * 第三通道
+	 */
+	private Button channelThree;
+	/***
+	 * 第四通道
+	 */
+	private Button channelFour;
 	
+	private String settingUsername;
+	private String settingPassword;
+	private String settingServer;
+	private String settingPort;
+
+	private String ddns_server;
+	private String ddns_port;
+	private String user_id;
+	private String ddns_password;
+	private String ddns_devicename;
 	
 	private ControlService controlService =  new ControlServiceImpl("conn1");
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+
+		/*
+		if (android.os.Build.VERSION.SDK_INT > 9) {
+		    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+		    StrictMode.setThreadPolicy(policy);
+		}*?
 		
+		/*
+		LayoutInflater lif = getLayoutInflater();
+	    ViewGroup layout = (ViewGroup)lif.inflate(R.layout.activity_main, null);
 		
+	    mVideoView = new VideoView(this);
+	    
+	    LayoutParams p = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
+	    p.addRule(RelativeLayout.ABOVE, R.id.help_msg);
+	    p.addRule(RelativeLayout.BELOW, R.id.ip_text);
+	    layout.addView(mVideoView, p);
+	    
+	    mVideoView.setBackgroundColor(Color.BLUE);*/
 		
+		VideoView mVideoView = (VideoView)findViewById(R.id.p2p_view);
+		TextView ipView =  (TextView)findViewById(R.id.ip_text);
+		TextView msgView = (TextView)findViewById(R.id.help_msg);
+		
+		mVideoView.init();
+		
+		ViewManager v = ViewManager.getInstance();
+		v.bindVideoView(mVideoView);
+		v.bindIpTextView(ipView);
+		v.bindHelpMsgView(msgView);
+		
+		playBtn = (Button) findViewById(R.id.btn_linear_left);
+		captureBtn = (Button) findViewById(R.id.btn_linear_capture);
+		fullScreenBtn = (Button) findViewById(R.id.btn_linear_full);
+		groupBtn = (Button) findViewById(R.id.btn_linear_group);
+		ddnsBtn = (Button) findViewById(R.id.btn_linear_ddns);
+		settingBtn = (Button) findViewById(R.id.btn_linear_setting);
 		setContentView(R.layout.activity_main);
 		
 		/*
@@ -99,29 +177,12 @@ public class MainActivity extends Activity {
 	    layout.addView(mVideoView, p);
 	    
 	    mVideoView.setBackgroundColor(Color.BLUE);*/
-	    
 		
-		
-		VideoView mVideoView = (VideoView)findViewById(R.id.p2p_view);
-		TextView ipView =  (TextView)findViewById(R.id.ip_text);
-		TextView msgView = (TextView)findViewById(R.id.help_msg);
-		
-		mVideoView.init();
-		
-		ViewManager v = ViewManager.getInstance();
-		v.bindVideoView(mVideoView);
-		v.bindIpTextView(ipView);
-		v.bindHelpMsgView(msgView);
-		
-		
-		settingBtn = (Button) findViewById(R.id.btn_linear_setting);
-		
-		
-		
-
 		//H264StreamingReceiver hStreamRecv = new H264StreamingReceiver();
 		//hStreamRecv.setVideoView(mVideoView);
 		//new Thread(hStreamRecv).start();
+		
+		
 		
 		//点击设置按钮时，进行页面跳转，这里采用startActivityForResult，在不释放当前界面的情况下开启新界面
 		settingBtn.setOnClickListener(new Button.OnClickListener(){
@@ -162,40 +223,39 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch(resultCode){
-		case Activity.RESULT_OK:
-			Bundle bundle = data.getExtras();
-			String username = bundle.getString("usernameStr");
-			String password = bundle.getString("passwordStr");
-			String server = bundle.getString("serverStr");
-			String port = bundle.getString("portStr");
-			
-			Connection conn = ConnectionManager.getConnection("conn1");
-			conn.setUsername("admin");
-			conn.setPassword("123456");
-			conn.setSvr_ip("113.250.4.193");
-			conn.setPort(Integer.valueOf(8080));
-			conn.setChannel_no(0);
-			
-			
-			controlService.playVideo();
-			
-			/*
-			StarTest test = new StarTest();
-			try {
-				test.setUp();
-				try {
-					test.testSomething();
-				} catch (Throwable e) {
-					e.printStackTrace();
+			case Activity.RESULT_OK:
+				if(data!=null){
+					Bundle bundle = data.getExtras();
+					settingUsername = bundle.getString("usernameStr");
+					settingPassword = bundle.getString("passwordStr");
+					settingServer = bundle.getString("serverStr");
+					settingPort = bundle.getString("portStr");
+					
+					Connection conn = ConnectionManager.getConnection("conn1");
+					conn.setUsername("admin");
+					conn.setPassword("123456");
+					conn.setSvr_ip("119.86.155.165");
+					conn.setPort(Integer.valueOf(8080));
+					conn.setChannel_no(0);
+					
+					controlService.playVideo();
 				}
-				test.tearDown();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}*/
-		
-			
-			
-			break;
+				break;
+			case Activity.RESULT_CANCELED:
+					if(data!=null){
+						Bundle bundle1 = data.getExtras();
+						ddns_server = bundle1.getString("ddns_serverStr");
+						ddns_port = bundle1.getString("ddns_portStr");
+						user_id = bundle1.getString("user_idStr");
+						ddns_password = bundle1.getString("ddns_passwordStr");
+						ddns_devicename = bundle1.getString("ddns_devicenameStr");
+						System.out.println("ddns_server"+ddns_server);
+						System.out.println("ddns_port"+ddns_port);
+						System.out.println("user_id"+user_id);
+						System.out.println("ddns_password"+ddns_password);
+						System.out.println("ddns_devicename"+ddns_devicename);
+					}
+					break;
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
@@ -206,8 +266,5 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	} 
-	
-
-
 	
 }
