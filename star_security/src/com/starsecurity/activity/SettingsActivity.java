@@ -3,12 +3,24 @@ package com.starsecurity.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.starsecurity.R;
 
+/***
+ * 
+ * è®¾ç½®ç•Œé¢æ§åˆ¶
+ * @author  	åˆ›å»ºäºº                 è‚–è¿œä¸œ
+ * @date        åˆ›å»ºæ—¥æœŸ           2013-03-18
+ * @author      ä¿®æ”¹äºº                 è‚–è¿œä¸œ
+ * @date        ä¿®æ”¹æ—¥æœŸ           2013-03-18
+ * @description ä¿®æ”¹è¯´æ˜	             é¦–æ¬¡å¢åŠ 
+ *
+ */
 public class SettingsActivity extends Activity {
 
 	private Button save_deleButton;
@@ -28,7 +40,7 @@ public class SettingsActivity extends Activity {
 		serverEditText = (EditText) findViewById(R.id.set_server);
 		portEditText = (EditText) findViewById(R.id.set_port);
 		
-		//µã»÷±£´æ°´Å¥Ê±£¬½«ÉèÖÃµÄ²ÎÊı´«»ØÔ­½çÃæ
+		//save/deleteæŒ‰é’®çš„å“åº”
 		save_deleButton.setOnClickListener(new Button.OnClickListener(){
 			@Override
 			public void onClick(View v) {		
@@ -49,4 +61,13 @@ public class SettingsActivity extends Activity {
 		});
 	}
 	
+    /***
+     * è½½å…¥Menu
+     */
+    @Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.settingsactivitymenu, menu);
+		return true;
+	}
 }
