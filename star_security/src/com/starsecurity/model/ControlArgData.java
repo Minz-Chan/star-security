@@ -1,11 +1,21 @@
 package com.starsecurity.model;
 
-//u_int8 * data;		//array of data followed.
-//size = sizeof(PTZArgData);
-//������������ң�ǣ�浽�ٶȵĻ�����ˮƽ�ٶ�arg1����ֱ�ٶ�arg2��
-//�����Ԥ��λ�Ļ��������ڼ���Ԥ��λʹ��arg1����
-//��������Ԥ��λ�������ڼ���Ԥ��λʹ��arg1���������0xffffffff��ʾ���ȫ��
-//������Զ�Ѳ����arg1=1��ʾ������0��ʾֹͣ
+/***
+ * 
+ * u_int8 * data;		
+ * array of data followed.
+ * size = sizeof(PTZArgData);
+ * 如果是上下左右，牵涉到速度的话，有水平速度arg1，垂直速度arg2；
+ * 如果是预置位的话，操作第几个预制位使用arg1标明
+ * 如果是清除预置位，操作第几个预置位使用arg1标明，如果0xffffffff表示清除全部
+ * 如果是自动巡航，arg1=1表示启动，0表示停止
+ * @author  	创建人                 肖远东
+ * @date        创建日期           2013-03-18
+ * @author      修改人                 肖远东
+ * @date        修改日期           2013-03-18
+ * @description 修改说明	             首次增加
+ *
+ */
 public class ControlArgData {
 	private long arg1;
 	private long arg2;

@@ -1,14 +1,23 @@
 package com.starsecurity.model;
 
-//±¨¾¯ÖÖÀà£¬Ä¿Ç°Ö»Ö§³ÖÌ½Í·±¨¾¯£¬Ò²¾ÍÊÇATC_INFRARED
+/***
+ * 
+ * æŠ¥è­¦ç§ç±»ï¼Œç›®å‰åªæ”¯æŒæ¢å¤´æŠ¥è­¦ï¼Œä¹Ÿå°±æ˜¯ATC_INFRARED
+ * @author  	åˆ›å»ºäºº                 è‚–è¿œä¸œ
+ * @date        åˆ›å»ºæ—¥æœŸ           2013-03-18
+ * @author      ä¿®æ”¹äºº                 è‚–è¿œä¸œ
+ * @date        ä¿®æ”¹æ—¥æœŸ           2013-03-18
+ * @description ä¿®æ”¹è¯´æ˜	             é¦–æ¬¡å¢åŠ 
+ *
+ */
 public class AlertTypeCode {
-	public final static int ATC_VIDEO = 0;	//ÊÓÆµÖ¡Ô¤²â
-	public final static int ATC_DEVICE_SERSTART = 1;	/* Éè±¸Æô¶¯ */	
-	public final static int ATC_MOTION = 2;						/* ÒÆ¶¯Õì²â±¨¾¯ */
-	public final static int ATC_VIDEOLOST = 3;				/* ÊÓÆµ¶ªÊ§±¨¾¯ */
-	public final static int ATC_DISKFULL = 4;					/* Ó²ÅÌÂú±¨¾¯ */
-	public final static int ATC_HIDEALARM=5;					/* ÊÓÆµÕÚµ²±¨¾¯ */	
-	public final static int ATC_STOP = 6;							/* ·şÎñÆ÷Í£Ö¹ */
-	public final static int ATC_SDERROR = 7;         	/* SD¿¨Òì³£*/
-	public final static int ATC_INFRARED = 20;					//¿ª¹ØÁ¿Ì½Í·£¨±ÈÈçºìÍâÌ½Í·£©
+	public final static int ATC_VIDEO = 0;	//è§†é¢‘å¸§é¢„æµ‹
+	public final static int ATC_DEVICE_SERSTART = 1;	/* è®¾å¤‡å¯åŠ¨ */	
+	public final static int ATC_MOTION = 2;						/* ç§»åŠ¨ä¾¦æµ‹æŠ¥è­¦ */
+	public final static int ATC_VIDEOLOST = 3;				/* è§†é¢‘ä¸¢å¤±æŠ¥è­¦ */
+	public final static int ATC_DISKFULL = 4;					/* ç¡¬ç›˜æ»¡æŠ¥è­¦ */
+	public final static int ATC_HIDEALARM=5;					/* è§†é¢‘é®æŒ¡æŠ¥è­¦ */	
+	public final static int ATC_STOP = 6;						/* æœåŠ¡å™¨åœæ­¢ */
+	public final static int ATC_SDERROR = 7;         	/* SDå¡å¼‚å¸¸*/
+	public final static int ATC_INFRARED = 20;					//å¼€å…³é‡æ¢å¤´ï¼ˆæ¯”å¦‚çº¢å¤–æ¢å¤´ï¼‰
 }

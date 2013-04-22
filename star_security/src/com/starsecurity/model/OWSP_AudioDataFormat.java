@@ -1,6 +1,15 @@
 package com.starsecurity.model;
 
-/* specify the format of audio, this info is sent to server immidiately after StreamDataFormat or VideoDataFormat*/
+/***
+ * 
+ * specify the format of audio, this info is sent to server immidiately after StreamDataFormat or VideoDataFormat
+ * @author  	创建人                 肖远东
+ * @date        创建日期           2013-03-18
+ * @author      修改人                 肖远东
+ * @date        修改日期           2013-03-18
+ * @description 修改说明	             首次增加
+ *
+ */
 public class OWSP_AudioDataFormat {
 	private long samplesPerSecond;		//samples per second
 	private long bitrate;			//bps

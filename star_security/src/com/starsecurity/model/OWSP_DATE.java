@@ -1,10 +1,19 @@
 package com.starsecurity.model;
 
-/* ���ڶ��� */
+/***
+ * 
+ * 日期定义
+ * @author  	创建人                 肖远东
+ * @date        创建日期           2013-03-18
+ * @author      修改人                 肖远东
+ * @date        修改日期           2013-03-18
+ * @description 修改说明	             首次增加
+ *
+ */
 public class OWSP_DATE {
-	private int m_year;			//��,2009
-	private short m_month;		//��,1-12
-	private short m_day;			//��,1-31
+	private int m_year;			//年,2009
+	private short m_month;		//月,1-12
+	private short m_day;		//日,1-31
 	public int getM_year() {
 		return m_year;
 	}

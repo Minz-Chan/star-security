@@ -1,24 +1,33 @@
 package com.starsecurity.model;
 
-//ÔÆÌ¨¿ØÖÆÂë,È¡Öµ·¶Î§Îª0~255
+/***
+ * 
+ * äº‘å°æ§åˆ¶ç ,å–å€¼èŒƒå›´ä¸º0~255
+ * @author  	åˆ›å»ºäºº                 è‚–è¿œä¸œ
+ * @date        åˆ›å»ºæ—¥æœŸ           2013-03-18
+ * @author      ä¿®æ”¹äºº                 è‚–è¿œä¸œ
+ * @date        ä¿®æ”¹æ—¥æœŸ           2013-03-18
+ * @description ä¿®æ”¹è¯´æ˜	             é¦–æ¬¡å¢åŠ 
+ *
+ */
 public class OWSP_ACTIONCode {
-	public final static int OWSP_ACTION_MD_STOP = 0;            // Í£Ö¹ÔË¶¯
+	public final static int OWSP_ACTION_MD_STOP = 0;            // åœæ­¢è¿åŠ¨
 	public final static int OWSP_ACTION_ZOOMReduce=5;
 	public final static int OWSP_ACTION_ZOOMADD=6;
-	public final static int OWSP_ACTION_FOCUSADD=7;   //½¹¾à
+	public final static int OWSP_ACTION_FOCUSADD=7;   //ç„¦è·
 	public final static int OWSP_ACTION_FOCUSReduce=8;
-	public final static int OWSP_ACTION_MD_UP=9;                    // ÏòÉÏ
-	public final static int OWSP_ACTION_MD_DOWN=10;             // ÏòÏÂ
-	public final static int OWSP_ACTION_MD_LEFT=11;             // Ïò×ó
-	public final static int OWSP_ACTION_MD_RIGHT=12;           // ÏòÓÒ
-	public final static int OWSP_ACTION_Circle_Add = 13;   //¹âÈ¦
-	public final static int OWSP_ACTION_Circle_Reduce = 14;    //
-	public final static int OWSP_ACTION_AUTO_CRUISE = 15;//×Ô¶¯Ñ²º½
-	public final static int OWSP_ACTION_GOTO_PRESET_POSITION = 16; 	//Ìø×ªÔ¤ÖÃÎ»
-	public final static int OWSP_ACTION_SET_PRESET_POSITION = 17;	//ÉèÖÃÔ¤ÖÃÎ»µã
-	public final static int OWSP_ACTION_CLEAR_PRESET_POSITION = 18; //Çå³ıÔ¤ÖÃÎ»µã
+	public final static int OWSP_ACTION_MD_UP=9;                // å‘ä¸Š
+	public final static int OWSP_ACTION_MD_DOWN=10;             // å‘ä¸‹
+	public final static int OWSP_ACTION_MD_LEFT=11;             // å‘å·¦
+	public final static int OWSP_ACTION_MD_RIGHT=12;            // å‘å³
+	public final static int OWSP_ACTION_Circle_Add = 13;  		//å…‰åœˆ
+	public final static int OWSP_ACTION_Circle_Reduce = 14;     //
+	public final static int OWSP_ACTION_AUTO_CRUISE = 15;		//è‡ªåŠ¨å·¡èˆª
+	public final static int OWSP_ACTION_GOTO_PRESET_POSITION = 16; 	//è·³è½¬é¢„ç½®ä½
+	public final static int OWSP_ACTION_SET_PRESET_POSITION = 17;	//è®¾ç½®é¢„ç½®ä½ç‚¹
+	public final static int OWSP_ACTION_CLEAR_PRESET_POSITION = 18; //æ¸…é™¤é¢„ç½®ä½ç‚¹
 	public final static int OWSP_ACTION_ACTION_RESET = 20;
-	public final static int OWSP_ACTION_TV_SWITCH = 128;	//ÇĞ»»ÊÓÆµÔ´,ÏûÏ¢²ÎÊıÎªINT*,1--TV, 2--SV,3--CV1, 4--CV2 
-	public final static int OWSP_ACTION_TV_TUNER = 129;		//ÇĞ»»ÆµµÀ, ÏûÏ¢²ÎÊıÎªINT*, ÎªÆµµÀºÅ
-	public final static int OWSP_ACTION_TV_SET_QUALITY  = 130;		//»­ÖÊÉèÖÃ, ÁÁ¶È,É«¶È,±¥ºÍ¶È,¶Ô±È¶È½á¹¹Ìå
+	public final static int OWSP_ACTION_TV_SWITCH = 128;	//åˆ‡æ¢è§†é¢‘æº,æ¶ˆæ¯å‚æ•°ä¸ºINT*,1--TV, 2--SV,3--CV1, 4--CV2 
+	public final static int OWSP_ACTION_TV_TUNER = 129;		//åˆ‡æ¢é¢‘é“, æ¶ˆæ¯å‚æ•°ä¸ºINT*, ä¸ºé¢‘é“å·
+	public final static int OWSP_ACTION_TV_SET_QUALITY  = 130;		//ç”»è´¨è®¾ç½®, äº®åº¦,è‰²åº¦,é¥±å’Œåº¦,å¯¹æ¯”åº¦ç»“æ„ä½“
 }
