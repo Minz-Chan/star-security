@@ -11,4 +11,7 @@ public class OWSP_LEN {
 	public static final int TLV_V_ChannelResponse = 4;
 	public static final int TLV_V_StreamDataFormat = 40;
 	public static final int TLV_V_VideoFrameInfo = 12;
+	public static final int TLV_V_ChannelRequest = 8;
+	public static final int TLV_V_ControlRequest = 8;
+	public static final int TLV_V_ControlResponse = 4;
 }

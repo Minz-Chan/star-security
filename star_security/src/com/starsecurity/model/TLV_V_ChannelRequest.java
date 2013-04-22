@@ -1,14 +1,14 @@
 package com.starsecurity.model;
 
 /* 
-Í¨µÀÇëÇóÐ­Òé 
+Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð­ï¿½ï¿½ 
 Streaming server -> Device
 */
 public class TLV_V_ChannelRequest {
 	private long deviceId;
-	private int sourceChannel;	//Ô´Í¨µÀID
-	private int destChannel;		//ÇÐ»»µÄÄ¿µÄÍ¨µÀID
-	private int[] reserve = new int[2];
+	private short sourceChannel;	//Ô´Í¨ï¿½ï¿½ID
+	private short destChannel;		//ï¿½Ð»ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½Í¨ï¿½ï¿½ID
+	private short[] reserve = new short[2];
 	public long getDeviceId() {
 		return deviceId;
 	}
@@ -18,19 +18,19 @@ public class TLV_V_ChannelRequest {
 	public int getSourceChannel() {
 		return sourceChannel;
 	}
-	public void setSourceChannel(int sourceChannel) {
-		this.sourceChannel = sourceChannel;
-	}
-	public int getDestChannel() {
+	public short getDestChannel() {
 		return destChannel;
 	}
-	public void setDestChannel(int destChannel) {
+	public void setDestChannel(short destChannel) {
 		this.destChannel = destChannel;
 	}
-	public int[] getReserve() {
+	public short[] getReserve() {
 		return reserve;
 	}
-	public void setReserve(int[] reserve) {
+	public void setReserve(short[] reserve) {
 		this.reserve = reserve;
-	}		
+	}
+	public void setSourceChannel(short sourceChannel) {
+		this.sourceChannel = sourceChannel;
+	}
 }
