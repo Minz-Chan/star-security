@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.starsecurity.R;
 import com.starsecurity.component.Connection;
@@ -120,25 +121,6 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
-		/*
-		if (android.os.Build.VERSION.SDK_INT > 9) {
-		    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-		    StrictMode.setThreadPolicy(policy);
-		}*?
-		
-		/*
-		LayoutInflater lif = getLayoutInflater();
-	    ViewGroup layout = (ViewGroup)lif.inflate(R.layout.activity_main, null);
-		
-	    mVideoView = new VideoView(this);
-	    
-	    LayoutParams p = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
-	    p.addRule(RelativeLayout.ABOVE, R.id.help_msg);
-	    p.addRule(RelativeLayout.BELOW, R.id.ip_text);
-	    layout.addView(mVideoView, p);
-	    
-	    mVideoView.setBackgroundColor(Color.BLUE);*/
 		
 		VideoView mVideoView = (VideoView)findViewById(R.id.p2p_view);
 		TextView ipView =  (TextView)findViewById(R.id.ip_text);
@@ -156,67 +138,29 @@ public class MainActivity extends Activity {
 		fullScreenBtn = (Button) findViewById(R.id.btn_linear_full);
 		groupBtn = (Button) findViewById(R.id.btn_linear_group);
 		ddnsBtn = (Button) findViewById(R.id.btn_linear_ddns);
-		settingBtn = (Button) findViewById(R.id.btn_linear_setting);
-		setContentView(R.layout.activity_main);
-		
-		/*
-		if (android.os.Build.VERSION.SDK_INT > 9) {
-		    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-		    StrictMode.setThreadPolicy(policy);
-		}*?
-		
-		/*
-		LayoutInflater lif = getLayoutInflater();
-	    ViewGroup layout = (ViewGroup)lif.inflate(R.layout.activity_main, null);
-		
-	    mVideoView = new VideoView(this);
-	    
-	    LayoutParams p = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
-	    p.addRule(RelativeLayout.ABOVE, R.id.help_msg);
-	    p.addRule(RelativeLayout.BELOW, R.id.ip_text);
-	    layout.addView(mVideoView, p);
-	    
-	    mVideoView.setBackgroundColor(Color.BLUE);*/
-		
-		//H264StreamingReceiver hStreamRecv = new H264StreamingReceiver();
-		//hStreamRecv.setVideoView(mVideoView);
-		//new Thread(hStreamRecv).start();
-		
-		
+		settingBtn = (Button) findViewById(R.id.btn_linear_setting);		
 		
 		//点击设置按钮时，进行页面跳转，这里采用startActivityForResult，在不释放当前界面的情况下开启新界面
 		settingBtn.setOnClickListener(new Button.OnClickListener(){
+
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent();
 				intent.setClass(MainActivity.this, SettingsActivity.class);
 				startActivityForResult(intent,0);
 			}
+			
 		});
 		
-		
-		/*
-		PipedOutputStream pipedOutstream  = new PipedOutputStream();
-		PipedInputStream pipedInstream = null;
-		try {
-			pipedInstream = new PipedInputStream(pipedOutstream);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		PipedOutputStream pipedOutSteam = hStreamRecv.getOutStream();
-		PipedInputStream pipedInStream = mVideoView.getInputStream();
-	
-		try {
-			pipedInStream.connect(pipedOutSteam);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}*/
-		
-		//mVideoView.PlayVideo("/sdcard/test.264");
-		
-
-		
+		ddnsBtn.setOnClickListener(new Button.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				intent.setClass(MainActivity.this, DdbssettingActivity.class);
+				startActivityForResult(intent,0);
+			}
+		});
+				
 	}
 	
 	//当新开启的设置界面结束跳转回来以后，处理设置界面的参数
