@@ -14,11 +14,12 @@ import com.starsecurity.component.Connection;
 import com.starsecurity.component.ConnectionManager;
 import com.starsecurity.component.ViewManager;
 import com.starsecurity.h264.VideoView;
+import com.starsecurity.model.DVRDevice;
 import com.starsecurity.service.ControlService;
 import com.starsecurity.service.impl.ControlServiceImpl;
 
 public class MainActivity extends Activity {
-	//最底端按钮组
+	//底端按钮组
 	/***
 	 * 播放按钮
 	 */
@@ -104,16 +105,21 @@ public class MainActivity extends Activity {
 	 */
 	private Button channelFour;
 	
+	/***
+	 * 存放用户选择好平台后的设备信息
+	 */
+	private DVRDevice dvrDevice;
+	/***
+	 * 存放收藏夹设置信息
+	 */
 	private String settingUsername;
 	private String settingPassword;
 	private String settingServer;
 	private String settingPort;
-
-	private String ddns_server;
-	private String ddns_port;
-	private String user_id;
-	private String ddns_password;
-	private String ddns_devicename;
+	/***
+	 * 存放界面显示的通道切换组的页面
+	 */
+	private static int page = 0;
 	
 	private ControlService controlService =  new ControlServiceImpl("conn1");
 	
@@ -133,25 +139,54 @@ public class MainActivity extends Activity {
 		v.bindIpTextView(ipView);
 		v.bindHelpMsgView(msgView);
 		
+		//通道切换按钮组与界面关联
+		channelOne = (Button) findViewById(R.id.btn_number_1);
+		channelTwo = (Button) findViewById(R.id.btn_number_2);
+		channelThree = (Button) findViewById(R.id.btn_number_3);
+		channelFour = (Button) findViewById(R.id.btn_number_4);
+		
+		//底端按钮组与界面关联
 		playBtn = (Button) findViewById(R.id.btn_linear_left);
 		captureBtn = (Button) findViewById(R.id.btn_linear_capture);
 		fullScreenBtn = (Button) findViewById(R.id.btn_linear_full);
 		groupBtn = (Button) findViewById(R.id.btn_linear_group);
 		ddnsBtn = (Button) findViewById(R.id.btn_linear_ddns);
-		settingBtn = (Button) findViewById(R.id.btn_linear_setting);		
+		settingBtn = (Button) findViewById(R.id.btn_linear_setting);	
 		
-		//点击设置按钮时，进行页面跳转，这里采用startActivityForResult，在不释放当前界面的情况下开启新界面
+		//点击通道换组按钮时，先验证该平台支持的通道组数，然后根据验证改变通道选择
+		groupBtn.setOnClickListener(new Button.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				if(dvrDevice!=null){
+					switch(page){
+					case 0:
+						if(Integer.parseInt(dvrDevice.getChannelNumber())>4)
+							switchChannelBtnImages(1);
+						break;
+					case 1:
+						if(Integer.parseInt(dvrDevice.getChannelNumber())==8)
+							switchChannelBtnImages(0);
+						if(Integer.parseInt(dvrDevice.getChannelNumber())>8)
+							switchChannelBtnImages(2);
+						break;
+					case 2:
+						switchChannelBtnImages(0);
+						break;
+					}
+				}
+			}
+		});
+		
+		//点击设置按钮时，进入设置页面，这里采用startActivityForResult，在不释放当前界面的情况下开启新界面
 		settingBtn.setOnClickListener(new Button.OnClickListener(){
-
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent();
 				intent.setClass(MainActivity.this, SettingsActivity.class);
 				startActivityForResult(intent,0);
 			}
-			
 		});
-		
+		//点击云台设置按钮时，进入云台设置，这里采用startActivityForResult，在不释放当前界面的情况下开启新界面
 		ddnsBtn.setOnClickListener(new Button.OnClickListener(){
 			@Override
 			public void onClick(View v) {
@@ -162,12 +197,47 @@ public class MainActivity extends Activity {
 		});
 				
 	}
+	/***
+	 * 用于切换界面中的通道图标
+	 * @param index 需要转换的页面
+	 * @return
+	 */
+	private int switchChannelBtnImages(int index){
+		switch(index){
+			case 0:
+				channelOne.setBackgroundDrawable(getResources().getDrawable(R.drawable.control_number1));
+				channelTwo.setBackgroundDrawable(getResources().getDrawable(R.drawable.number_two));
+				channelThree.setBackgroundDrawable(getResources().getDrawable(R.drawable.number_three));
+				channelFour.setBackgroundDrawable(getResources().getDrawable(R.drawable.number_four));
+				page=0;
+				break;
+			case 1:
+				channelOne.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_number5));
+				channelTwo.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_number6));
+				channelThree.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_number7));
+				channelFour.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_number8));
+				page=1;
+				break;
+			case 2:
+				channelOne.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_number9));
+				channelTwo.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_number10));
+				channelThree.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_number11));
+				channelFour.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_number12));
+				page=2;
+				break;
+		}
+		return 1;
+	}
 	
-	//当新开启的设置界面结束跳转回来以后，处理设置界面的参数
+	/***
+	 * 当新开启的设置界面结束跳转回来以后，处理设置界面的参数
+	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch(resultCode){
 			case Activity.RESULT_OK:
+				//将通道选择按钮组还原为初始状态
+				switchChannelBtnImages(0);
 				if(data!=null){
 					Bundle bundle = data.getExtras();
 					settingUsername = bundle.getString("usernameStr");
@@ -176,30 +246,37 @@ public class MainActivity extends Activity {
 					settingPort = bundle.getString("portStr");
 					
 					Connection conn = ConnectionManager.getConnection("conn1");
-					conn.setUsername("admin");
-					conn.setPassword("123456");
-					conn.setSvr_ip("119.86.157.230");
-					conn.setPort(Integer.valueOf(8080));
-					conn.setChannel_no(0);
-					
+//					conn.setUsername("admin");
+//					conn.setPassword("123456");
+//					conn.setSvr_ip("116.252.168.3");
+//					conn.setPort(Integer.valueOf("8080"));
+//					conn.setChannel_no(1);
+					conn.setUsername(settingUsername);
+					conn.setPassword(settingPassword);
+					conn.setSvr_ip(settingServer);
+					conn.setPort(Integer.valueOf(settingPort));
+					//该参数暂时使用预设，待完善
+					conn.setChannel_no(1);
 					controlService.playVideo();
 				}
 				break;
-			case Activity.RESULT_CANCELED:
-					if(data!=null){
-						Bundle bundle1 = data.getExtras();
-						ddns_server = bundle1.getString("ddns_serverStr");
-						ddns_port = bundle1.getString("ddns_portStr");
-						user_id = bundle1.getString("user_idStr");
-						ddns_password = bundle1.getString("ddns_passwordStr");
-						ddns_devicename = bundle1.getString("ddns_devicenameStr");
-						System.out.println("ddns_server"+ddns_server);
-						System.out.println("ddns_port"+ddns_port);
-						System.out.println("user_id"+user_id);
-						System.out.println("ddns_password"+ddns_password);
-						System.out.println("ddns_devicename"+ddns_devicename);
+			case Activity.RESULT_FIRST_USER:
+				//将通道选择按钮组还原为初始状态
+				switchChannelBtnImages(0);
+				//用户选择云台设备后，进行播放
+				if(data!=null){
+					dvrDevice = (DVRDevice) data.getSerializableExtra("DVRDevice");
+					if(dvrDevice!=null){
+						Connection conn = ConnectionManager.getConnection("conn1");
+						conn.setUsername(dvrDevice.getLoginUsername());
+						conn.setPassword(dvrDevice.getLoginPassword());
+						conn.setSvr_ip(dvrDevice.getLoginIP());
+						conn.setPort(Integer.valueOf(dvrDevice.getMobliePhonePort()));
+						conn.setChannel_no(Integer.valueOf(dvrDevice.getStarChannel()));
+						controlService.playVideo();
 					}
-					break;
+				}
+				break;
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}

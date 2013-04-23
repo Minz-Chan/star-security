@@ -83,6 +83,9 @@ public class DdbssettingActivity extends PreferenceActivity {
             return super.onKeyDown(keyCode, event);
     }
 	
+    /***
+     * 加载Menu按钮
+     */
     @Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
