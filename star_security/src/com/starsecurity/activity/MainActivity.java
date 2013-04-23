@@ -178,7 +178,7 @@ public class MainActivity extends Activity {
 					Connection conn = ConnectionManager.getConnection("conn1");
 					conn.setUsername("admin");
 					conn.setPassword("123456");
-					conn.setSvr_ip("113.250.10.28");
+					conn.setSvr_ip("119.86.157.230");
 					conn.setPort(Integer.valueOf(8080));
 					conn.setChannel_no(0);
 					

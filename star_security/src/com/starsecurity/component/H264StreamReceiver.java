@@ -53,12 +53,21 @@ public class H264StreamReceiver implements Runnable {
 			ViewManager.getInstance().setHelpMsg("连接远程主机成功！");
 		}
 
-	    
+	    System.out.println("=================== loginCheck begin ==================");
+		
 	    conn.loginCheck();						// 登录验证
+	    
+	    System.out.println("=================== loginCheck end ==================");
 	    
 	    InputStream socketReader = null; 
 	    sock = conn.getSock();
 	    
+	    try {
+			Thread.currentThread().sleep(500);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
  		try {
 
  			socketReader = sock.getInputStream();
@@ -69,6 +78,8 @@ public class H264StreamReceiver implements Runnable {
 			
  			int i = 0;
 			
+ 			System.out.println("=================== get common packet start ==================");
+ 			
 			// 获取公共包头头（ packet_length、packet_seq）
 			byte[] packetHeaderBuf = new byte[8];
 			socketReader.read(packetHeaderBuf);
@@ -77,22 +88,29 @@ public class H264StreamReceiver implements Runnable {
 				return;
 			}
 			
+			System.out.println("=================== get common packet end ==================");
 			
+			
+			System.out.println("=================== get packet start ==================");
 			// 根据包长度读取包内容
 			byte[] tlvContent = new byte[65536];
 			socketReader.read(tlvContent, 0, (int) owspPacketHeader.getPacket_length() - 4);
+			System.out.println("=================== get packet: " + ((int) owspPacketHeader.getPacket_length() - 4) + "bytes ==================");
+			System.out.println("=================== get packet end ==================");
 			
 			while(!tlvContent.equals("")){
 				
 				/* 处理接收到的数据 */
 				dataProcessService.process(tlvContent, (int)owspPacketHeader.getPacket_length());
 				
+				System.out.println("=================== finish data process ==================");
+				
 				/* 检测连接状态 */
 				if (conn.getConnect_state() == 0) {
 					break;
 				}
 				
-				
+				System.out.println("=================== get another common packet start ==================");
 				/* 该部分须检测所收的包的正确性 */
 				do {
 					// 数据重置
@@ -105,10 +123,15 @@ public class H264StreamReceiver implements Runnable {
 					
 				} while(!(owspPacketHeader.getPacket_length() >= 4 && owspPacketHeader.getPacket_length() < 65536 && owspPacketHeader.getPacket_seq() > 0));
 				
-			
+				System.out.println("=================== get another common packet end ==================");
+				
+				System.out.println("=================== get another packet  start ==================");
 				
 				/* 上一部分须保证接收下来的包的正确性，防止出现owspPacketHeader.getPacket_length() - 4 < 0的情况 */
 				socketReader.read(tlvContent, 0, (int) owspPacketHeader.getPacket_length() - 4);
+				System.out.println("=================== get another packet: " + ((int) owspPacketHeader.getPacket_length() - 4) + "bytes ==================");
+				
+				System.out.println("=================== get another packet end ==================");
 				
 			}
 			

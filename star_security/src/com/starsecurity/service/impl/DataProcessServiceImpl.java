@@ -62,6 +62,8 @@ public class DataProcessServiceImpl implements DataProcessService {
 			nLeft -= nLen_hdr;
 			flag += nLen_hdr;
 			
+			System.out.println("=================== TLV_HEADER TYPE: " + tlv_Header.getTlv_type() + " ==================");
+			
 			// 处理TLV的V部分
 			if(tlv_Header.getTlv_type() == TLV_T_Command.TLV_T_VERSION_INFO_REQUEST){
 				TLV_V_VersionInfoRequest tlv_V_VersionInfoRequest;
@@ -92,23 +94,25 @@ public class DataProcessServiceImpl implements DataProcessService {
 				tlv_V_VideoFrameInfo = (TLV_V_VideoFrameInfo) ByteArray2Object.convert2Object(TLV_V_VideoFrameInfo.class, data, flag, OWSP_LEN.TLV_V_VideoFrameInfo);
 				System.out.println(tlv_V_VideoFrameInfo);
 			} else if ( tlv_Header.getTlv_type() == TLV_T_Command.TLV_T_VIDEO_IFRAME_DATA ) {
-				
+				System.out.println("*********************** I Frame process start  *************************");
 				byte[] tmp = (byte[]) ByteArray2Object.convert2Object(TLV_V_VideoData.class, data, flag, tlv_Header.getTlv_len());
 				
 				int result = h264.decodePacket(tmp, tmp.length, v.getmPixel());
 				if(result == 1) {
 					v.postInvalidate();
+					System.out.println("*********************** update video: I Frame  *************************");
 				}
-			
+				System.out.println("*********************** I Frame process end  *************************");
 			} else if ( tlv_Header.getTlv_type() == TLV_T_Command.TLV_T_VIDEO_PFRAME_DATA ) {
-				
+				System.out.println("*********************** P Frame process start  *************************");
 				byte[] tmp = (byte[]) ByteArray2Object.convert2Object(TLV_V_VideoData.class, data, flag, tlv_Header.getTlv_len());
 				
 				int result = h264.decodePacket(tmp, tmp.length, v.getmPixel());
 				if(result == 1) {
 					v.postInvalidate();
+					System.out.println("*********************** update video: P Frame  *************************");
 				}
-				
+				System.out.println("*********************** P Frame process end  *************************");
 				
 			}
 			nLeft -= tlv_Header.getTlv_len();
