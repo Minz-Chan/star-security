@@ -1,16 +1,25 @@
 package com.starsecurity.model;
 
-/* response result */
+/***
+ * 
+ * response result
+ * @author  	åˆ›å»ºäºº                 è‚–è¿œä¸œ
+ * @date        åˆ›å»ºæ—¥æœŸ           2013-03-18
+ * @author      ä¿®æ”¹äºº                 è‚–è¿œä¸œ
+ * @date        ä¿®æ”¹æ—¥æœŸ           2013-03-18
+ * @description ä¿®æ”¹è¯´æ˜	             é¦–æ¬¡å¢åŠ 
+ *
+ */
 public class ResponseCode {
-	final static int _RESPONSECODE_SUCC	= 0x01;		//	³É¹¦
-	final static int _RESPONSECODE_USER_PWD_ERROR = 0x02;		//  ÓÃ»§Ãû»òÃÜÂë´í
-	final static int _RESPONSECODE_PDA_VERSION_ERROR = 0x04;		//	°æ±¾²»Ò»ÖÂ
+	final static int _RESPONSECODE_SUCC	= 0x01;		//æˆåŠŸ
+	final static int _RESPONSECODE_USER_PWD_ERROR = 0x02;		//ç”¨æˆ·åæˆ–å¯†ç é”™
+	final static int _RESPONSECODE_PDA_VERSION_ERROR = 0x04;	//ç‰ˆæœ¬ä¸ä¸€è‡´
 	final static int _RESPONSECODE_MAX_USER_ERROR = 0x05;	
-	final static int _RESPONSECODE_DEVICE_OFFLINE = 0x06;		//	Éè±¸ÒÑ¾­ÀëÏß
-	final static int _RESPONSECODE_DEVICE_HAS_EXIST = 0x07;		//  Éè±¸ÒÑ¾­´æÔÚ
-	final static int _RESPONSECODE_DEVICE_OVERLOAD = 0x08;		//  Éè±¸ĞÔÄÜ³¬ÔØ(Éè±¸Ã¦)
-	final static int _RESPONSECODE_INVALID_CHANNLE = 0x09;		//  Éè±¸²»Ö§³ÖµÄÍ¨µÀ
-	final static int _RESPONSECODE_PROTOCOL_ERROR = 0X0A;		//Ğ­Òé½âÎö³ö´í
-	final static int _RESPONSECODE_NOT_START_ENCODE =0X0B;		//Î´Æô¶¯±àÂë
-	final static int _RESPONSECODE_TASK_DISPOSE_ERROR = 0X0C;		//ÈÎÎñ´¦Àí¹ı³Ì³ö´í
+	final static int _RESPONSECODE_DEVICE_OFFLINE = 0x06;		//è®¾å¤‡å·²ç»ç¦»çº¿
+	final static int _RESPONSECODE_DEVICE_HAS_EXIST = 0x07;		//è®¾å¤‡å·²ç»å­˜åœ¨
+	final static int _RESPONSECODE_DEVICE_OVERLOAD = 0x08;		//è®¾å¤‡æ€§èƒ½è¶…è½½(è®¾å¤‡å¿™)
+	final static int _RESPONSECODE_INVALID_CHANNLE = 0x09;		//è®¾å¤‡ä¸æ”¯æŒçš„é€šé“	
+	final static int _RESPONSECODE_PROTOCOL_ERROR = 0X0A;		//åè®®è§£æå‡ºé”™
+	final static int _RESPONSECODE_NOT_START_ENCODE =0X0B;		//æœªå¯åŠ¨ç¼–ç 
+	final static int _RESPONSECODE_TASK_DISPOSE_ERROR = 0X0C;	//ä»»åŠ¡å¤„ç†è¿‡ç¨‹å‡ºé”™
 }

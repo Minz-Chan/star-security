@@ -1,14 +1,23 @@
 package com.starsecurity.model;
 
-/* À©Õ¹±¨¾¯Ğ­Òé£¬Éè±¸·¢µ½·şÎñÆ÷ */
+/***
+ * 
+ * æ‰©å±•æŠ¥è­¦åè®®ï¼Œè®¾å¤‡å‘åˆ°æœåŠ¡å™¨
+ * @author  	åˆ›å»ºäºº                 è‚–è¿œä¸œ
+ * @date        åˆ›å»ºæ—¥æœŸ           2013-03-18
+ * @author      ä¿®æ”¹äºº                 è‚–è¿œä¸œ
+ * @date        ä¿®æ”¹æ—¥æœŸ           2013-03-18
+ * @description ä¿®æ”¹è¯´æ˜	             é¦–æ¬¡å¢åŠ 
+ *
+ */
 public class TLV_V_AlertRequest {
 	private long deviceId;   	// device id generating by the remote device
 	private short channelId;   	// channel id 
-	private short alertType;   	// ±¨¾¯ÖÖÀà£¬²Î¼û _AlertTypeCode
-	private short alertLevel;   // ±¨¾¯¼¶±ğ£¬²Î¼û _AlertLevelCode
-	private short reserve;    	//±£Áô
-	private short[] localTime = new short[14];			//±¨¾¯Ê±±¾µØÊ±¼ä×Ö·û´®£¬¸ñÊ½Îªyyyymmddhhmmss,Èç"20080919132059"´ú±í2008Äê9ÔÂ19ÈÕ13µã20·Ö59Ãë£¬Ê±¼ä¾«¶ÈÎªÃë
-	private int size;     		// array of data size followed£¬default =  0
+	private short alertType;   	// æŠ¥è­¦ç§ç±»ï¼Œå‚è§ _AlertTypeCode
+	private short alertLevel;   // æŠ¥è­¦çº§åˆ«ï¼Œå‚è§ _AlertLevelCode
+	private short reserve;    	//ä¿ç•™
+	private short[] localTime = new short[14];			//æŠ¥è­¦æ—¶æœ¬åœ°æ—¶é—´å­—ç¬¦ä¸²ï¼Œæ ¼å¼ä¸ºyyyymmddhhmmss,å¦‚"20080919132059"ä»£è¡¨2008å¹´9æœˆ19æ—¥13ç‚¹20åˆ†59ç§’ï¼Œæ—¶é—´ç²¾åº¦ä¸ºç§’
+	private int size;     		// array of data size followedï¿½ï¿½default =  0
 	public long getDeviceId() {
 		return deviceId;
 	}

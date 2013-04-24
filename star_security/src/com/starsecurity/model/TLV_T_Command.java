@@ -1,51 +1,61 @@
 package com.starsecurity.model;
 
-/* TLV ÀàĞÍÃüÁî×Ö */
+
+/***
+ * 
+ * TLV ç±»å‹å‘½ä»¤
+ * @author  	åˆ›å»ºäºº                 è‚–è¿œä¸œ
+ * @date        åˆ›å»ºæ—¥æœŸ           2013-03-18
+ * @author      ä¿®æ”¹äºº                 è‚–è¿œä¸œ
+ * @date        ä¿®æ”¹æ—¥æœŸ           2013-03-18
+ * @description ä¿®æ”¹è¯´æ˜	             é¦–æ¬¡å¢åŠ 
+ *
+ */
 public class TLV_T_Command {
 	public final static int TLV_T_VERSION_INFO_ANSWER = 39;
 	public final static int TLV_T_VERSION_INFO_REQUEST = 40;
 	public final static int TLV_T_LOGIN_REQUEST = 41;
 	public final static int TLV_T_LOGIN_ANSWER = 42;
 	public final static int TLV_T_TOTAL_CHANNEL = 43;		//NOT USED
-	public final static int TLV_T_SENDDATA_REQUEST = 44;		//Í¨µÀÇëÇó
-	public final static int TLV_T_SENDDATA_ANSWER = 45;		//Í¨µÀÇëÇóÓ¦´ğ
+	public final static int TLV_T_SENDDATA_REQUEST = 44;		//é€šé“è¯·æ±‚
+	public final static int TLV_T_SENDDATA_ANSWER = 45;		//é€šé“è¯·æ±‚åº”ç­”
 	public final static int TLV_T_TOTAL_CHANEL_ANSWER = 46;	//Not used
-	public final static int TLV_T_SUSPENDSENDDATA_REQUEST = 47;		//Í£Ö¹·¢ËÍÊı¾İ
+	public final static int TLV_T_SUSPENDSENDDATA_REQUEST = 47;		//åœæ­¢å‘é€æ•°æ®
 	public final static int TLV_T_SUSPENDSENDDATA_ANSWER = 48;
-	public final static int TLV_T_DEVICE_KEEP_ALIVE	= 49;		//ĞÄÌø°ü
+	public final static int TLV_T_DEVICE_KEEP_ALIVE	= 49;		//å¿ƒè·³åŒ…
 	public final static int TLV_T_DEVICE_FORCE_EXIT	= 50;		
-	public final static int TLV_T_CONTROL_REQUEST = 51;		//ÔÆÌ¨µÈ¿ØÖÆÇëÇó
-	public final static int TLV_T_CONTROL_ANSWER = 52;		//ÔÆÌ¨µÈÏìÓ¦
-	public final static int TLV_T_RECORD_REQUEST = 53;		//Â¼ÏñÇëÇó
+	public final static int TLV_T_CONTROL_REQUEST = 51;		//äº‘å°ç­‰æ§åˆ¶è¯·æ±‚
+	public final static int TLV_T_CONTROL_ANSWER = 52;		//äº‘å°ç­‰å“åº”
+	public final static int TLV_T_RECORD_REQUEST = 53;		//å½•åƒè¯·æ±‚
 	public final static int TLV_T_RECORD_ANSWER	= 54;
-	public final static int TLV_T_DEVICE_SETTING_REQUEST = 55;		//Éè±¸²ÎÊıÉèÖÃÇëÇó
-	public final static int TLV_T_DEVICE_SETTING_ANSWER	= 56;		//Éè±¸²ÎÊıÉèÖÃÓ¦´ğ
-	public final static int TLV_T_KEEP_ALIVE_ANSWER	= 57;		//ĞÄÌø°üÏìÓ¦
-	public final static int TLV_T_DEVICE_RESET = 58;		//Í¨ÖªÉè±¸ÖØÆô
-	public final static int TLV_T_DEVICE_RESET_ANSWER = 59;	//Éè±¸½ÓÊÕµ½ÖØÆôÃüÁîºóµÄÏìÓ¦£¬Í¨³£²»ÓÃ·¢³ö
-	public final static int TLV_T_ALERT_REQUEST = 60;   //±¨¾¯ÇëÇó£¬ÓÉÉè±¸·¢³ö
-	public final static int TLV_T_ALERT_ANSWER = 61;   //±¨¾¯ÇëÇó»ØÓ¦£¬ÓÉ·şÎñÆ÷·¢³ö£¬Í¨³£¿ÉÒÔ²»ÓÃ·¢³ö
-	public final static int TLV_T_ALERT_SEND_PHOTO = 62;   //±¨¾¯ºó£¬Éè±¸²É¼¯µ±Ê±µÄÍ¼Æ¬£¬·¢ËÍµ½·şÎñÆ÷
-	public final static int TLV_T_ALERT_SEND_PHOTO_ANSWER = 63;   //Éè±¸·¢ËÍMSG_CMD_ALERT_SEND_PHOTOºó£¬·şÎñÆ÷µÄ»ØÓ¦
-	public final static int TLV_T_CHANNLE_REQUEST = 64;   		//ÇĞ»»µ½ÁíÒ»Í¨µÀ
-	public final static int TLV_T_CHANNLE_ANSWER = 65;   		//ÇĞ»»ÁíÒ»Í¨µÀÓ¦´ğ
-	public final static int TLV_T_SUSPEND_CHANNLE_REQUEST = 66;   		//¹ÒÆğÄ³Ò»Í¨µÀ
-	public final static int TLV_T_SUSPEND_CHANNLE_ANSWER = 67;   		//Ó¦´ğ
-	public final static int TLV_T_VALIDATE_REQUEST = 68;   		//³ÌĞòÑéÖ¤ÇëÇó
-	public final static int TLV_T_VALIDATE_ANSWER = 69;   		//Ó¦´ğ
-	public final static int TLV_T_DVS_INFO_REQUEST = 70;			//Éè±¸DVSÍ¨ÖªÁ¬½Ó·½Éè±¸ĞÅÏ¢ÇëÇó
+	public final static int TLV_T_DEVICE_SETTING_REQUEST = 55;		//è®¾å¤‡å‚æ•°è®¾ç½®è¯·æ±‚
+	public final static int TLV_T_DEVICE_SETTING_ANSWER	= 56;		//è®¾å¤‡å‚æ•°è®¾ç½®åº”ç­”
+	public final static int TLV_T_KEEP_ALIVE_ANSWER	= 57;		//å¿ƒè·³åŒ…å“åº”
+	public final static int TLV_T_DEVICE_RESET = 58;		//é€šçŸ¥è®¾å¤‡é‡å¯
+	public final static int TLV_T_DEVICE_RESET_ANSWER = 59;	//è®¾å¤‡æ¥æ”¶åˆ°é‡å¯å‘½ä»¤åçš„å“åº”ï¼Œé€šå¸¸ä¸ç”¨å‘å‡º
+	public final static int TLV_T_ALERT_REQUEST = 60;   //æŠ¥è­¦è¯·æ±‚ï¼Œç”±è®¾å¤‡å‘å‡º
+	public final static int TLV_T_ALERT_ANSWER = 61;    //æŠ¥è­¦è¯·æ±‚å›åº”ï¼Œç”±æœåŠ¡å™¨å‘å‡ºï¼Œé€šå¸¸å¯ä»¥ä¸ç”¨å‘å‡º
+	public final static int TLV_T_ALERT_SEND_PHOTO = 62;   //æŠ¥è­¦åï¼Œè®¾å¤‡é‡‡é›†å½“æ—¶çš„å›¾ç‰‡ï¼Œå‘é€åˆ°æœåŠ¡å™¨
+	public final static int TLV_T_ALERT_SEND_PHOTO_ANSWER = 63;   //è®¾å¤‡å‘é€MSG_CMD_ALERT_SEND_PHOTOåï¼ŒæœåŠ¡å™¨çš„å›åº”
+	public final static int TLV_T_CHANNLE_REQUEST = 64;   		///åˆ‡æ¢åˆ°å¦ä¸€é€šé“
+	public final static int TLV_T_CHANNLE_ANSWER = 65;   		//åˆ‡æ¢å¦ä¸€é€šé“åº”ç­”
+	public final static int TLV_T_SUSPEND_CHANNLE_REQUEST = 66;   		//æŒ‚èµ·æŸä¸€é€šé“
+	public final static int TLV_T_SUSPEND_CHANNLE_ANSWER = 67;   		//åº”ç­”
+	public final static int TLV_T_VALIDATE_REQUEST = 68;   		//ç¨‹åºéªŒè¯è¯·æ±‚
+	public final static int TLV_T_VALIDATE_ANSWER = 69;   		//åº”ç­”
+	public final static int TLV_T_DVS_INFO_REQUEST = 70;		//è®¾å¤‡DVSé€šçŸ¥è¿æ¥æ–¹è®¾å¤‡ä¿¡æ¯è¯·æ±‚
 	public final static int TLV_T_DVS_INFO_ANSWER = 71;			//
-	public final static int TLV_T_PHONE_INFO_REQUEST = 72;			//ÊÖ»úÍ¨ÖªÁ¬½Ó·½ÊÖ»úĞÅÏ¢ÇëÇó
+	public final static int TLV_T_PHONE_INFO_REQUEST = 72;			//æ‰‹æœºé€šçŸ¥è¿æ¥æ–¹æ‰‹æœºä¿¡æ¯è¯·æ±‚
 	public final static int TLV_T_PHONE_INFO_ANSWER	= 73;			//
 
 	//vod & live
-	public final static int TLV_T_AUDIO_INFO	= 0x61;   //97		ÒôÆµĞÅÏ¢, ±íÊ¾VÎªÒôÆµĞÅÏ¢
-	public final static int TLV_T_AUDIO_DATA	= 0x62;   //98		ÒôÆµÊı¾İ, ±íÊ¾VÎªÒôÆµÊı¾İ
-	public final static int TLV_T_VIDEO_FRAME_INFO = 0x63;   //99    ÊÓÆµÖ¡ĞÅÏ¢, ±íÊ¾VµÄÊı¾İÃèÊöÖ¡ĞÅÏ¢
-	public final static int TLV_T_VIDEO_IFRAME_DATA = 0x64;   //100   ÊÓÆµ¹Ø¼üÖ¡Êı¾İ£¬±íÊ¾VµÄÊı¾İÎª¹Ø¼üÖ¡
-	public final static int TLV_T_VIDEO_PFRAME_DATA = 0x66;  //102   ÊÓÆµPÖ¡(²Î¿¼Ö¡)Êı¾İ, ±íÊ¾VµÄÊı¾İÎª²Î¿¼Ö¡
-	public final static int TLV_T_VIDEO_FRAME_INFO_EX = 0x65;  //101   À©Õ¹ÊÓÆµÖ¡ĞÅÏ¢Ö§³Ö>=64KBµÄÊÓÆµÖ¡
-	public final static int TLV_T_STREAM_FORMAT_INFO	= 200;    //			Á÷¸ñÊ½ĞÅÏ¢ ,ÃèÊöÊÓÆµÊôĞÔ,ÒôÆµÊôĞÔ
+	public final static int TLV_T_AUDIO_INFO	= 0x61;   //97		éŸ³é¢‘ä¿¡æ¯, è¡¨ç¤ºVä¸ºéŸ³é¢‘ä¿¡æ¯
+	public final static int TLV_T_AUDIO_DATA	= 0x62;   //98		éŸ³é¢‘æ•°æ®, è¡¨ç¤ºVä¸ºéŸ³é¢‘æ•°æ®
+	public final static int TLV_T_VIDEO_FRAME_INFO = 0x63;   //99    è§†é¢‘å¸§ä¿¡æ¯, è¡¨ç¤ºVçš„æ•°æ®æè¿°å¸§ä¿¡æ¯
+	public final static int TLV_T_VIDEO_IFRAME_DATA = 0x64;  //100   è§†é¢‘å…³é”®å¸§æ•°æ®ï¼Œè¡¨ç¤ºVçš„æ•°æ®ä¸ºå…³é”®å¸§
+	public final static int TLV_T_VIDEO_PFRAME_DATA = 0x66;  //102   è§†é¢‘På¸§(å‚è€ƒå¸§)æ•°æ®, è¡¨ç¤ºVçš„æ•°æ®ä¸ºå‚è€ƒå¸§
+	public final static int TLV_T_VIDEO_FRAME_INFO_EX = 0x65;  //101   æ‰©å±•è§†é¢‘å¸§ä¿¡æ¯æ”¯æŒ>=64KBçš„è§†é¢‘å¸§
+	public final static int TLV_T_STREAM_FORMAT_INFO	= 200;    ///			æµæ ¼å¼ä¿¡æ¯ ,æè¿°è§†é¢‘å±æ€§,éŸ³é¢‘å±æ€§
 
 	//vod
 	public final static int TLV_T_STREAM_FILE_INDEX = 213;
