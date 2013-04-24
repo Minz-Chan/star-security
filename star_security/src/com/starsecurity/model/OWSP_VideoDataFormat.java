@@ -1,8 +1,18 @@
 package com.starsecurity.model;
 
-/* specify the format of video, this info is sent to server immidiately after StreamDataFormat*/
+/***
+ * 
+ * specify the format of video, this info issent 
+ * to server immidiately after StreamDataFormat
+ * @author  	创建人                 肖远东
+ * @date        创建日期           2013-03-18
+ * @author      修改人                 肖远东
+ * @date        修改日期           2013-03-18
+ * @description 修改说明	             首次增加
+ *
+ */
 public class OWSP_VideoDataFormat {
-	private long codecId;			//FOUR CC code����H264��
+	private long codecId;			//FOUR CC code，’H264’
 	private long bitrate;			//bps
 	private int width;				//image widht
 	private int height;				//image height

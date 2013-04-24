@@ -1,11 +1,20 @@
 package com.starsecurity.model;
 
-/* ʱ�䶨�� */
+/***
+ * 
+ * 时间定义
+ * @author  	创建人                 肖远东
+ * @date        创建日期           2013-03-18
+ * @author      修改人                 肖远东
+ * @date        修改日期           2013-03-18
+ * @description 修改说明	             首次增加
+ *
+ */
 public class OWSP_TIME {
 	private short m_hour;			//0-24
 	private short m_minute;		//0-59
 	private short m_second;		//0-59
-	private int m_microsecond;	//����	0-1000
+	private int m_microsecond;	//毫秒	0-10000
 	public short getM_hour() {
 		return m_hour;
 	}
