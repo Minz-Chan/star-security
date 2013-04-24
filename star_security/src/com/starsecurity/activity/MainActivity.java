@@ -14,7 +14,7 @@ import com.starsecurity.component.Connection;
 import com.starsecurity.component.ConnectionManager;
 import com.starsecurity.component.ViewManager;
 import com.starsecurity.h264.VideoView;
-import com.starsecurity.model.DVRDevice;
+import com.starsecurity.model.DVRDevice; 
 import com.starsecurity.service.ControlService;
 import com.starsecurity.service.impl.ControlServiceImpl;
 
