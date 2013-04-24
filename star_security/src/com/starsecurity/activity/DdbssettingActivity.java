@@ -8,9 +8,21 @@ import android.preference.PreferenceActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.starsecurity.R;
+import com.starsecurity.model.DVRDevice;
 
+/***
+ * 
+ * @function     功能	  	云台设置界面
+ * @author       创建人              肖远东
+ * @date        创建日期           2013-03-18
+ * @author       修改人              肖远东
+ * @date        修改日期           2013-04-18
+ * @description 修改说明	          首次增加
+ *
+ */
 public class DdbssettingActivity extends PreferenceActivity {
 	
 	private EditTextPreference ddns_server;
@@ -36,29 +48,59 @@ public class DdbssettingActivity extends PreferenceActivity {
             ddns_password = (EditTextPreference) findPreference("password");
             ddns_devicename = (EditTextPreference) findPreference("device_name");
     }
-
-	private int saveSettingData(){
-		try{
+	
+	/***
+	 * Menu事件处理	
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int item_id = item.getItemId();
+		switch(item_id){
+		case R.id.ddns_requestMenu:
+			Intent intent = new Intent();
+			intent.setClass(DdbssettingActivity.this, DeviceListActivity.class);
 			ddns_serverStr = ddns_server.getText().toString();
 			ddns_portStr = ddns_port.getText().toString();
 			user_idStr = user_id.getText().toString();
 			ddns_passwordStr = ddns_password.getText().toString();
 			ddns_devicenameStr = ddns_devicename.getText().toString();
-			
 			Bundle bundle = new Bundle();
 			bundle.putString("ddns_serverStr", ddns_serverStr);
 			bundle.putString("ddns_portStr", ddns_portStr);
 			bundle.putString("user_idStr", user_idStr);
 			bundle.putString("ddns_passwordStr", ddns_passwordStr);
 			bundle.putString("ddns_devicenameStr", ddns_devicenameStr);
-			Intent intent = getIntent();
 			intent.putExtras(bundle);
-			setResult(Activity.RESULT_CANCELED, intent);
-			finish();
-			return 1;
-		}catch(Exception e){
-			return 0;
+			startActivityForResult(intent,0);
+			break;
+		case R.id.ddns_backMenu:
+			DdbssettingActivity.this.finish();
+			break;
 		}
+		return true;
+	}
+
+	/***
+	 * 当新开启的设置界面结束跳转回来以后，处理设置界面的参数
+	 */
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch(resultCode){
+			case Activity.RESULT_FIRST_USER:
+				if(data!=null){
+					DVRDevice dvrDevice = (DVRDevice) data.getSerializableExtra("DVRDevice");
+					if(dvrDevice!=null){
+						dvrDevice = (DVRDevice) data.getSerializableExtra("DVRDevice");
+						Intent intent = getIntent();
+						intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+						intent.putExtra("DVRDevice",dvrDevice);
+						setResult(Activity.RESULT_FIRST_USER, intent);
+						DdbssettingActivity.this.finish();
+					}
+				}
+				break;
+		}
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 	
 	/**
@@ -67,7 +109,6 @@ public class DdbssettingActivity extends PreferenceActivity {
     @Override
     protected void onPause() 
     {
-    	saveSettingData();
         super.onPause();
     }
      
@@ -78,7 +119,7 @@ public class DdbssettingActivity extends PreferenceActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
             if (keyCode==KeyEvent.KEYCODE_BACK&&event.getAction()==KeyEvent.ACTION_DOWN)
             {
-            	saveSettingData();
+            	DdbssettingActivity.this.finish();
             }
             return super.onKeyDown(keyCode, event);
     }

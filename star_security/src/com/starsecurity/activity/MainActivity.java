@@ -1,23 +1,34 @@
 package com.starsecurity.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.starsecurity.R;
 import com.starsecurity.component.Connection;
 import com.starsecurity.component.ConnectionManager;
 import com.starsecurity.component.ViewManager;
 import com.starsecurity.h264.VideoView;
-import com.starsecurity.model.DVRDevice; 
+import com.starsecurity.model.DVRDevice;
 import com.starsecurity.service.ControlService;
 import com.starsecurity.service.impl.ControlServiceImpl;
 
+/***
+ * 
+ * @function     功能	  	主界面
+ * @author       创建人              肖远东
+ * @date        创建日期           2013-03-18
+ * @author       修改人              肖远东
+ * @date        修改日期           2013-04-18
+ * @description 修改说明	          首次增加
+ *
+ */
 public class MainActivity extends Activity {
 	//底端按钮组
 	/***
@@ -151,7 +162,32 @@ public class MainActivity extends Activity {
 		fullScreenBtn = (Button) findViewById(R.id.btn_linear_full);
 		groupBtn = (Button) findViewById(R.id.btn_linear_group);
 		ddnsBtn = (Button) findViewById(R.id.btn_linear_ddns);
-		settingBtn = (Button) findViewById(R.id.btn_linear_setting);	
+		settingBtn = (Button) findViewById(R.id.btn_linear_setting);
+		
+		//点击播放按钮时，开始播放视频
+		playBtn.setOnClickListener(new Button.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				if(dvrDevice!=null){
+					Connection conn = ConnectionManager.getConnection("conn1");
+					conn.setUsername(dvrDevice.getLoginUsername());
+					conn.setPassword(dvrDevice.getLoginPassword());
+					conn.setSvr_ip(dvrDevice.getLoginIP());
+					conn.setPort(Integer.valueOf(dvrDevice.getMobliePhonePort()));
+					conn.setChannel_no(Integer.valueOf(dvrDevice.getStarChannel()));
+					controlService.playVideo();
+				}else if(settingUsername!=null&&settingPassword!=null&&settingServer!=null&&settingPort!=null){
+					Connection conn = ConnectionManager.getConnection("conn1");
+					conn.setUsername(settingUsername);
+					conn.setPassword(settingPassword);
+					conn.setSvr_ip(settingServer);
+					conn.setPort(Integer.valueOf(settingPort));
+					//该参数暂时使用预设，待完善
+					conn.setChannel_no(1);
+					controlService.playVideo();
+				}
+			}
+		});
 		
 		//点击通道换组按钮时，先验证该平台支持的通道组数，然后根据验证改变通道选择
 		groupBtn.setOnClickListener(new Button.OnClickListener(){
@@ -244,20 +280,6 @@ public class MainActivity extends Activity {
 					settingPassword = bundle.getString("passwordStr");
 					settingServer = bundle.getString("serverStr");
 					settingPort = bundle.getString("portStr");
-					
-					Connection conn = ConnectionManager.getConnection("conn1");
-//					conn.setUsername("admin");
-//					conn.setPassword("123456");
-//					conn.setSvr_ip("116.252.168.3");
-//					conn.setPort(Integer.valueOf("8080"));
-//					conn.setChannel_no(1);
-					conn.setUsername(settingUsername);
-					conn.setPassword(settingPassword);
-					conn.setSvr_ip(settingServer);
-					conn.setPort(Integer.valueOf(settingPort));
-					//该参数暂时使用预设，待完善
-					conn.setChannel_no(1);
-					controlService.playVideo();
 				}
 				break;
 			case Activity.RESULT_FIRST_USER:
@@ -281,11 +303,22 @@ public class MainActivity extends Activity {
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	} 
+	/**
+     * 若是在当前activity中按了返回键,则退出程序
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+            if (keyCode==KeyEvent.KEYCODE_BACK&&event.getAction()==KeyEvent.ACTION_DOWN)
+            {
+            	new  AlertDialog.Builder(this).setMessage(getString(R.string.IDS_Out)).
+            	setPositiveButton(getString(R.string.IDS_Sure),new DialogInterface.OnClickListener() {
+            		@Override
+            		public void onClick(DialogInterface dialog, int which) {
+            			System.exit(0);
+            		}
+            	}).setNegativeButton(R.string.IDS_Dispos,null).show(); 
+            }
+            return super.onKeyDown(keyCode, event);
+    }
 	
 }
