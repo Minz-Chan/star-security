@@ -1,14 +1,24 @@
 package com.starsecurity.model;
 
-
-/* À©Õ¹ÊÓÆµÖ¡ĞÅÏ¢ TLV, µ±ÊÓÆµÊı¾İ>64KÊ±Ê¹ÓÃ */
+/***
+ * 
+ * æ‰©å±•è§†é¢‘å¸§ä¿¡æ¯ TLV, å½“è§†é¢‘æ•°æ®>64Kæ—¶ä½¿ç”¨
+ * //ä¹‹åæ˜¯è‹¥å¹²ä¸ªè§†é¢‘æ•°æ®TLV, Véƒ¨åˆ†æ˜¯è§†é¢‘ç¼–ç åçš„Raw Data.
+ * @author  	åˆ›å»ºäºº                 è‚–è¿œä¸œ
+ * @date        åˆ›å»ºæ—¥æœŸ           2013-03-18
+ * @author      ä¿®æ”¹äºº                 è‚–è¿œä¸œ
+ * @date        ä¿®æ”¹æ—¥æœŸ           2013-03-18
+ * @description ä¿®æ”¹è¯´æ˜	             é¦–æ¬¡å¢åŠ 
+ *
+ */	
+/* ï¿½ï¿½Õ¹ï¿½ï¿½ÆµÖ¡ï¿½ï¿½Ï¢ TLV, ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½>64KÊ±Ê¹ï¿½ï¿½ */
 public class TLV_V_VideoFrameInfoEx {
-	private short channelId;			//Í¨µÀID
-	private short reserve;				//±¸ÓÃ
-	private int checksum;				//Ğ£ÑéºÍ.Ä¿Ç°Îª0Î´ÓÃ
-	private long frameIndex;			//ÊÓÆµÖ¡ĞòºÅ
-	private long time;				    //Ê±¼ä´Á.
-	private long dataSize;				//ÊÓÆµÊı¾İ³¤¶È
+	private short channelId;			//é€šé“ID
+	private short reserve;				//å¤‡ç”¨
+	private int checksum;				//æ ¡éªŒå’Œ.ç›®å‰ä¸º0æœªç”¨
+	private long frameIndex;			//è§†é¢‘å¸§åºå·
+	private long time;				    //æ—¶é—´æˆ³.
+	private long dataSize;				//è§†é¢‘æ•°æ®é•¿åº¦
 	public short getChannelId() {
 		return channelId;
 	}
@@ -46,4 +56,4 @@ public class TLV_V_VideoFrameInfoEx {
 		this.dataSize = dataSize;
 	}
 }
-//Ö®ºóÊÇÈô¸É¸öÊÓÆµÊı¾İTLV, V²¿·ÖÊÇÊÓÆµ±àÂëºóµÄRaw Data.
+//Ö®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¸ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½TLV, Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Raw Data.

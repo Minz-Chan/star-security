@@ -1,13 +1,22 @@
 package com.starsecurity.model;
 
-/* ÊÖ»ú±¨¸æÉè±¸ĞÅÏ¢ */
+/***
+ * 
+ * æ‰‹æœºæŠ¥å‘Šè®¾å¤‡ä¿¡æ¯
+ * @author  	åˆ›å»ºäºº                 è‚–è¿œä¸œ
+ * @date        åˆ›å»ºæ—¥æœŸ           2013-03-18
+ * @author      ä¿®æ”¹äºº                 è‚–è¿œä¸œ
+ * @date        ä¿®æ”¹æ—¥æœŸ           2013-03-18
+ * @description ä¿®æ”¹è¯´æ˜	             é¦–æ¬¡å¢åŠ 
+ *
+ */
 public class TLV_V_PhoneInfoRequest {
-	private short[] equipmentIdentity = new short[TLV_Length.STR_LEN_16];		//Éè±¸Ê¶±ğÂë,±¾×Ö¶ÎÖĞÎªDVSµÄÎïÀíµØÖ·,¼´MACµØÖ·
-	private short[] equipmentOS = new short[TLV_Length.STR_LEN_16];						//ÊÖ»úµÄ²Ù×÷ÏµÍ³
-	private short reserve1;						//±£Áô
-	private short reserve2;						//±£Áô
-	private short reserve3;						//±£Áô
-	private short reserve4;						//±£Áô
+	private short[] equipmentIdentity = new short[TLV_Length.STR_LEN_16];		//è®¾å¤‡è¯†åˆ«ç ,æœ¬å­—æ®µä¸­ä¸ºDVSçš„ç‰©ç†åœ°å€,å³MACåœ°å€Ö·
+	private short[] equipmentOS = new short[TLV_Length.STR_LEN_16];						//æ‰‹æœºçš„æ“ä½œç³»ç»Ÿ
+	private short reserve1;						//ä¿ç•™
+	private short reserve2;						//ä¿ç•™
+	private short reserve3;						//ä¿ç•™
+	private short reserve4;						//ä¿ç•™
 	public short[] getEquipmentIdentity() {
 		return equipmentIdentity;
 	}

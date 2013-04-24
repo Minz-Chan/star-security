@@ -1,9 +1,18 @@
 package com.starsecurity.model;
 
-/* ÒôÆµĞÅÏ¢ TLV */
+/***
+ * 
+ * éŸ³é¢‘ä¿¡æ¯ TLV
+ * @author  	åˆ›å»ºäºº                 è‚–è¿œä¸œ
+ * @date        åˆ›å»ºæ—¥æœŸ           2013-03-18
+ * @author      ä¿®æ”¹äºº                 è‚–è¿œä¸œ
+ * @date        ä¿®æ”¹æ—¥æœŸ           2013-03-18
+ * @description ä¿®æ”¹è¯´æ˜	             é¦–æ¬¡å¢åŠ 
+ *
+ */
 public class TLV_V_AudioInfo {
 	private short channelId;			//channel id
-	private short reserve;			//±¸ÓÃ
+	private short reserve;			//å¤‡ç”¨
 	private int checksum;			//checksum of audio data.
 	private long time;					// specify the time when this audio data is created.
 	public short getChannelId() {
@@ -31,4 +40,4 @@ public class TLV_V_AudioInfo {
 		this.time = time;
 	}
 }
-//Ö®ºóÊÇÒôÆµÊı¾İTLV, V²¿·Ö¾ÍÊÇÒôÆµ±àÂëºóµÄRaw Data.
+//Ö®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½TLV, Vï¿½ï¿½ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Raw Data.

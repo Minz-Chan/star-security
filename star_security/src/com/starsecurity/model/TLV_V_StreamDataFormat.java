@@ -1,15 +1,24 @@
 package com.starsecurity.model;
 
-/* this format should be sent to the server before any other stream data,
-Plus if any format of video/audio has changed, it should send this info to server at the first time.
-followed by VideoDataFormat/AudioDataFormat*/
+/***
+ * 
+ * this format should be sent to the server before any other stream data,
+ * Plus if any format of video/audio has changed, it should send this info to server at the first time.
+ * followed by VideoDataFormat/AudioDataFormat
+ * @author  	åˆ›å»ºäºº                 è‚–è¿œä¸œ
+ * @date        åˆ›å»ºæ—¥æœŸ           2013-03-18
+ * @author      ä¿®æ”¹äºº                 è‚–è¿œä¸œ
+ * @date        ä¿®æ”¹æ—¥æœŸ           2013-03-18
+ * @description ä¿®æ”¹è¯´æ˜	             é¦–æ¬¡å¢åŠ 
+ *
+ */
 public class TLV_V_StreamDataFormat {
-	private short videoChannel;					//ÊÓÆµÍ¨µÀºÅ
-	private short audioChannel;					//ÒôÆµÍ¨µÀºÅ
-	private short dataType;							//Á÷Êı¾İÀàĞÍ, È¡Öµ¼ûStreamDataType
-	private short reserve;								//±£Áô
-	private OWSP_VideoDataFormat videoFormat;	//ÊÓÆµ¸ñÊ½
-	private OWSP_AudioDataFormat audioFormat;  //ÒôÆµ¸ñÊ½
+	private short videoChannel;					//è§†é¢‘é€šé“å·
+	private short audioChannel;					//éŸ³é¢‘é€šé“å·
+	private short dataType;							//æµæ•°æ®ç±»å‹, å–å€¼è§StreamDataType
+	private short reserve;								//ä¿ç•™
+	private OWSP_VideoDataFormat videoFormat;	//è§†é¢‘æ ¼å¼
+	private OWSP_AudioDataFormat audioFormat;   //éŸ³é¢‘æ ¼å¼
 	public int getVideoChannel() {
 		return videoChannel;
 	}

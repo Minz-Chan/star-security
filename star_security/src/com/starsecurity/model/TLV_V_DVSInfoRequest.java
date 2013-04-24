@@ -1,16 +1,25 @@
 package com.starsecurity.model;
 
-/* DVS±¨¸æÉè±¸ĞÅÏ¢ */
+/***
+ * 
+ * DVSæŠ¥å‘Šè®¾å¤‡ä¿¡æ¯
+ * @author  	åˆ›å»ºäºº                 è‚–è¿œä¸œ
+ * @date        åˆ›å»ºæ—¥æœŸ           2013-03-18
+ * @author      ä¿®æ”¹äºº                 è‚–è¿œä¸œ
+ * @date        ä¿®æ”¹æ—¥æœŸ           2013-03-18
+ * @description ä¿®æ”¹è¯´æ˜	             é¦–æ¬¡å¢åŠ 
+ *
+ */
 public class TLV_V_DVSInfoRequest {
-	char[] companyIdentity = new char[TLV_Length.STR_LEN_16];			//¹«Ë¾Ê¶±ğÂë,×î¶à16¸ö×Ö·û,ºóÃæ²»×ã²¿·ÖÎªÊı×Ö0      (ÎªASCII×Ö·û´®)
-	char[] equipmentIdentity = new char[TLV_Length.STR_LEN_16];			//Éè±¸Ê¶±ğÂë,±¾×Ö¶ÎÖĞÎªDVSµÄÎïÀíµØÖ·,¼´MACµØÖ·,ºóÃæ²»×ã²¿·ÖÎªÊı×Ö0  (ÎªASCII×Ö·û´®)
-	char[] equipmentName = new char[TLV_Length.STR_LEN_16];				//Éè±¸Ãû³Æ,×î¶à16¸ö×Ö·û,ºóÃæ²»×ã²¿·ÖÎªÊı×Ö0        (ÎªASCII×Ö·û´®)
-	char[] equipmentVersion = new char[TLV_Length.STR_LEN_16];			//Éè±¸µÄÈí¼ş°æ±¾,×î¶à16¸ö×Ö·û, ºóÃæ²»×ã²¿·ÖÎªÊı×Ö0 (ÎªASCII×Ö·û´®)
-	OWSP_DATE equipmentDate;							//Éè±¸µÄ³ö³§ÈÕÆÚ20090120 
-	short channleNumber;			//Éè±¸Ö§³Ö¶àÉÙ¸öÍ¨µÀ
-	short reserve1;						//±£Áô
-	short reserve2;						//±£Áô
-	short reserve3;						//±£Áô
+	char[] companyIdentity = new char[TLV_Length.STR_LEN_16];			//å…¬å¸è¯†åˆ«ç ,æœ€å¤š16ä¸ªå­—ç¬¦,åé¢ä¸è¶³éƒ¨åˆ†ä¸ºæ•°å­—0      (ä¸ºASCIIå­—ç¬¦ä¸²)
+	char[] equipmentIdentity = new char[TLV_Length.STR_LEN_16];			//è®¾å¤‡è¯†åˆ«ç ,æœ¬å­—æ®µä¸­ä¸ºDVSçš„ç‰©ç†åœ°å€,å³MACåœ°å€,åé¢ä¸è¶³éƒ¨åˆ†ä¸ºæ•°å­—0  (ä¸ºASCIIå­—ç¬¦ä¸²)
+	char[] equipmentName = new char[TLV_Length.STR_LEN_16];				//è®¾å¤‡åç§°,æœ€å¤š16ä¸ªå­—ç¬¦,åé¢ä¸è¶³éƒ¨åˆ†ä¸ºæ•°å­—0        (ä¸ºASCIIå­—ç¬¦ä¸²)
+	char[] equipmentVersion = new char[TLV_Length.STR_LEN_16];			//è®¾å¤‡çš„è½¯ä»¶ç‰ˆæœ¬,æœ€å¤š16ä¸ªå­—ç¬¦, åé¢ä¸è¶³éƒ¨åˆ†ä¸ºæ•°å­—0 (ä¸ºASCIIå­—ç¬¦ä¸²)
+	OWSP_DATE equipmentDate;							//è®¾å¤‡çš„å‡ºå‚æ—¥æœŸ20090120 
+	short channleNumber;			//è®¾å¤‡æ”¯æŒå¤šå°‘ä¸ªé€šé“
+	short reserve1;						//ä¿ç•™
+	short reserve2;						//ä¿ç•™
+	short reserve3;						//ä¿ç•™
 	public char[] getCompanyIdentity() {
 		return companyIdentity;
 	}

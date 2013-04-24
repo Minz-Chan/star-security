@@ -1,11 +1,20 @@
 package com.starsecurity.model;
 
-/* À©Õ¹¿ØÖÆĞ­Òé, °üÀ¨ÔÆÌ¨¼°TV¿ØÖÆ */
+/***
+ * 
+ * æ‰©å±•æ§åˆ¶åè®®, åŒ…æ‹¬äº‘å°åŠTVæ§åˆ¶
+ * @author  	åˆ›å»ºäºº                 è‚–è¿œä¸œ
+ * @date        åˆ›å»ºæ—¥æœŸ           2013-03-18
+ * @author      ä¿®æ”¹äºº                 è‚–è¿œä¸œ
+ * @date        ä¿®æ”¹æ—¥æœŸ           2013-03-18
+ * @description ä¿®æ”¹è¯´æ˜	             é¦–æ¬¡å¢åŠ 
+ *
+ */
 public class TLV_V_ControlRequest {
 	private long deviceId;			// device id generating by the remote device
 	private short channel;			// channel id 
-	private short cmdCode;			// ¿ØÖÆÃüÁî×Ö£¬²Î¼û_PTZCode
-	private int size;				// ¿ØÖÆ²ÎÊıÊı¾İ³¤¶È,Èç¹ûsize==0 ±íÊ¾ÎŞ¿ØÖÆ²ÎÊı
+	private short cmdCode;			// æ§åˆ¶å‘½ä»¤å­—ï¼Œå‚è§_PTZCode
+	private int size;				// æ§åˆ¶å‚æ•°æ•°æ®é•¿åº¦,å¦‚æœsize==0 è¡¨ç¤ºæ— æ§åˆ¶å‚æ•°
 	public long getDeviceId() {
 		return deviceId;
 	}

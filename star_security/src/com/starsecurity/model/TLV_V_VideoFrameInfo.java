@@ -1,12 +1,22 @@
 package com.starsecurity.model;
 
-/* ÊÓÆµÖ¡ĞÅÏ¢ TLV */
+/***
+ * 
+ * è§†é¢‘å¸§ä¿¡æ¯ TLV	
+ * ä¹‹åæ˜¯è§†é¢‘æ•°æ®TLV, Véƒ¨åˆ†æ˜¯è§†é¢‘ç¼–ç åçš„Raw Data
+ * @author  	åˆ›å»ºäºº                 è‚–è¿œä¸œ
+ * @date        åˆ›å»ºæ—¥æœŸ           2013-03-18
+ * @author      ä¿®æ”¹äºº                 è‚–è¿œä¸œ
+ * @date        ä¿®æ”¹æ—¥æœŸ           2013-03-18
+ * @description ä¿®æ”¹è¯´æ˜	             é¦–æ¬¡å¢åŠ 
+ *
+ */
 public class TLV_V_VideoFrameInfo {
-	private short channelId;			//Í¨µÀID
-	private short reserve;				//±¸ÓÃ
-	private int checksum;				//Ğ£ÑéºÍ.Ä¿Ç°Îª0Î´ÓÃ
-	private long frameIndex;			//ÊÓÆµÖ¡ĞòºÅ
-	private long time;					//Ê±¼ä´Á
+	private short channelId;			//é€šé“ID
+	private short reserve;				//å¤‡ç”¨
+	private int checksum;				//æ ¡éªŒå’Œ.ç›®å‰ä¸º0æœªç”¨
+	private long frameIndex;			//è§†é¢‘å¸§åºå·
+	private long time;					//æ—¶é—´æˆ³.
 	public short getChannelId() {
 		return channelId;
 	}
@@ -38,4 +48,4 @@ public class TLV_V_VideoFrameInfo {
 		this.time = time;
 	}
 }
-//Ö®ºóÊÇÊÓÆµÊı¾İTLV, V²¿·ÖÊÇÊÓÆµ±àÂëºóµÄRaw Data.
+//Ö®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½TLV, Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Raw Data.

@@ -1,10 +1,19 @@
 package com.starsecurity.model;
 
-/* login request: remote -> streaming server */
+/***
+ * 
+ * login request: remote -> streaming server
+ * @author  	åˆ›å»ºäºº                 è‚–è¿œä¸œ
+ * @date        åˆ›å»ºæ—¥æœŸ           2013-03-18
+ * @author      ä¿®æ”¹äºº                 è‚–è¿œä¸œ
+ * @date        ä¿®æ”¹æ—¥æœŸ           2013-03-18
+ * @description ä¿®æ”¹è¯´æ˜	             é¦–æ¬¡å¢åŠ 
+ *
+ */
 public class TLV_V_LoginRequest {
-	private char[] userName = new char[TLV_Length.STR_LEN_32];			//ÓÃ»§Ãû, ºóÃæ²»×ã²¿·ÖÎªÊı×Ö0      (ÎªASCII×Ö·û´®)
-	private char[] password = new char[TLV_Length.STR_LEN_16];			//ÃÜÂë, ºóÃæ²»×ã²¿·ÖÎªÊı×Ö0        (ÎªASCII×Ö·û´®) 
-	private long deviceId;					//Éè±¸ID. CSÄ£Ê½ÏÂÓÉ·şÎñÆ÷Í³Ò»·ÖÅä, P2PÄ£Ê½ÏÂÎª¹Ì¶¨Öµ
+	private char[] userName = new char[TLV_Length.STR_LEN_32];			//ç”¨æˆ·å, åé¢ä¸è¶³éƒ¨åˆ†ä¸ºæ•°å­—0      (ä¸ºASCIIå­—ç¬¦ä¸²)
+	private char[] password = new char[TLV_Length.STR_LEN_16];			//å¯†ç , åé¢ä¸è¶³éƒ¨åˆ†ä¸ºæ•°å­—0        (ä¸ºASCIIå­—ç¬¦ä¸²) 
+	private long deviceId;					//è®¾å¤‡ID. CSæ¨¡å¼ä¸‹ç”±æœåŠ¡å™¨ç»Ÿä¸€åˆ†é…, P2Pæ¨¡å¼ä¸‹ä¸ºå›ºå®šå€¼
 	private short flag;						//should be set to 1 to be compatible with the previous version.
 	public char[] getUserName() {
 		return userName;
