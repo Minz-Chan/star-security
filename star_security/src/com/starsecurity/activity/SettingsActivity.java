@@ -8,8 +8,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.starsecurity.R;
 
@@ -30,6 +32,11 @@ public class SettingsActivity extends Activity {
 	private EditText passwordEditText;
 	private EditText serverEditText;
 	private EditText portEditText;
+	/***
+	 * 通道选择
+	 */
+	private Spinner channelSpinner;
+	private String[] items = {"1", "2", "3", "4", "5","6","7","8","9","10","11","12","13","14","15","16"};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +49,10 @@ public class SettingsActivity extends Activity {
 		serverEditText = (EditText) findViewById(R.id.set_server);
 		portEditText = (EditText) findViewById(R.id.set_port);
 		
+		channelSpinner = (Spinner) findViewById(R.id.channel_spinner);
+		ArrayAdapter<String> channelItems = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,items); 
+		channelItems.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		channelSpinner.setAdapter(channelItems);		
 		//save/delete按钮的响应
 		save_deleButton.setOnClickListener(new Button.OnClickListener(){
 			@Override
@@ -89,10 +100,12 @@ public class SettingsActivity extends Activity {
 				String password = passwordEditText.getText().toString();
 				String server = serverEditText.getText().toString();
 				String port = portEditText.getText().toString();
+				String channel = (String) channelSpinner.getSelectedItem();
 				bundle.putString("usernameStr", username);
 				bundle.putString("passwordStr", password);
 				bundle.putString("serverStr", server);
 				bundle.putString("portStr", port);
+				bundle.putString("channelStr", channel);
 				Intent intent = getIntent();
 				intent.putExtras(bundle);
 				setResult(Activity.RESULT_OK, intent);

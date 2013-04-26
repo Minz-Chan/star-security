@@ -127,6 +127,7 @@ public class MainActivity extends Activity {
 	private String settingPassword;
 	private String settingServer;
 	private String settingPort;
+	private String settingChannel;
 	/***
 	 * 存放界面显示的通道切换组的页面
 	 */
@@ -182,8 +183,7 @@ public class MainActivity extends Activity {
 					conn.setPassword(settingPassword);
 					conn.setSvr_ip(settingServer);
 					conn.setPort(Integer.valueOf(settingPort));
-					//该参数暂时使用预设，待完善
-					conn.setChannel_no(1);
+					conn.setChannel_no(Integer.parseInt(settingChannel));
 					controlService.playVideo();
 				}
 			}
@@ -280,6 +280,7 @@ public class MainActivity extends Activity {
 					settingPassword = bundle.getString("passwordStr");
 					settingServer = bundle.getString("serverStr");
 					settingPort = bundle.getString("portStr");
+					settingChannel = bundle.getString("channelStr");
 				}
 				break;
 			case Activity.RESULT_FIRST_USER:
