@@ -9,3 +9,6 @@ sites/site*/public/theme/
 textpattern/
 HISTORY.txt
 README.txt
+.class
+.dex
+star_security/bin/*
