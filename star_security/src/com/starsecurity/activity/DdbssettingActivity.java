@@ -2,9 +2,13 @@ package com.starsecurity.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,7 +27,7 @@ import com.starsecurity.model.DVRDevice;
  * @description 修改说明	          首次增加
  *
  */
-public class DdbssettingActivity extends PreferenceActivity {
+public class DdbssettingActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 	
 	private EditTextPreference ddns_server;
 	private EditTextPreference ddns_port;
@@ -42,13 +46,31 @@ public class DdbssettingActivity extends PreferenceActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.ddbssetting);
             
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            prefs.registerOnSharedPreferenceChangeListener(this); // 注册预览监听事件
             ddns_server = (EditTextPreference) findPreference("ddns_server");
             ddns_port = (EditTextPreference) findPreference("ddns_port");
             user_id = (EditTextPreference) findPreference("ddbs_userid");
             ddns_password = (EditTextPreference) findPreference("password");
             ddns_devicename = (EditTextPreference) findPreference("device_name");
+            //预览已设置参数
+            ddns_server.setSummary(ddns_server.getText().toString());  
+            ddns_port.setSummary(ddns_port.getText().toString());
+            user_id.setSummary(user_id.getText().toString());
+            ddns_password.setSummary(ddns_password.getText().toString());
+            ddns_devicename.setSummary(ddns_devicename.getText().toString());
     }
 	
+	//监听设置参数的改变，即使更新预览
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,String key) {  
+        Preference pref = findPreference(key);  
+        if (pref instanceof EditTextPreference) {  
+            EditTextPreference etp = (EditTextPreference) pref;  
+            pref.setSummary(etp.getText());  
+        }  
+    }  
+
 	/***
 	 * Menu事件处理	
 	 */
@@ -59,11 +81,21 @@ public class DdbssettingActivity extends PreferenceActivity {
 		case R.id.ddns_requestMenu:
 			Intent intent = new Intent();
 			intent.setClass(DdbssettingActivity.this, DeviceListActivity.class);
-			ddns_serverStr = ddns_server.getText().toString();
-			ddns_portStr = ddns_port.getText().toString();
-			user_idStr = user_id.getText().toString();
-			ddns_passwordStr = ddns_password.getText().toString();
-			ddns_devicenameStr = ddns_devicename.getText().toString();
+			if(ddns_server!=null){
+				ddns_serverStr = ddns_server.getText().toString();
+			}
+			if(ddns_port!=null){
+				ddns_portStr = ddns_port.getText().toString();
+			}
+			if(user_id!=null){
+				user_idStr = user_id.getText().toString();
+			}
+			if(ddns_password!=null){
+				ddns_passwordStr = ddns_password.getText().toString();
+			}
+			if(ddns_devicename!=null){
+				ddns_devicenameStr = ddns_devicename.getText().toString();
+			}
 			Bundle bundle = new Bundle();
 			bundle.putString("ddns_serverStr", ddns_serverStr);
 			bundle.putString("ddns_portStr", ddns_portStr);
@@ -79,7 +111,7 @@ public class DdbssettingActivity extends PreferenceActivity {
 		}
 		return true;
 	}
-
+	
 	/***
 	 * 当新开启的设置界面结束跳转回来以后，处理设置界面的参数
 	 */
