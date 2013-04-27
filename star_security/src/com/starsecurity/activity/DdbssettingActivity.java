@@ -54,11 +54,16 @@ public class DdbssettingActivity extends PreferenceActivity implements OnSharedP
             ddns_password = (EditTextPreference) findPreference("password");
             ddns_devicename = (EditTextPreference) findPreference("device_name");
             //预览已设置参数
-            ddns_server.setSummary(ddns_server.getText().toString());  
-            ddns_port.setSummary(ddns_port.getText().toString());
-            user_id.setSummary(user_id.getText().toString());
-            ddns_password.setSummary(ddns_password.getText().toString());
-            ddns_devicename.setSummary(ddns_devicename.getText().toString());
+            if(ddns_server.getText()!=null)
+            	ddns_server.setSummary(ddns_server.getText().toString());
+            if(ddns_port.getText()!=null)
+            	ddns_port.setSummary(ddns_port.getText().toString());
+            if(user_id.getText()!=null)
+            	user_id.setSummary(user_id.getText().toString());
+            if(ddns_password.getText()!=null)
+            	ddns_password.setSummary(ddns_password.getText().toString());
+            if(ddns_devicename.getText()!=null)
+            	ddns_devicename.setSummary(ddns_devicename.getText().toString());
     }
 	
 	//监听设置参数的改变，即使更新预览
@@ -81,19 +86,19 @@ public class DdbssettingActivity extends PreferenceActivity implements OnSharedP
 		case R.id.ddns_requestMenu:
 			Intent intent = new Intent();
 			intent.setClass(DdbssettingActivity.this, DeviceListActivity.class);
-			if(ddns_server!=null){
+			if(ddns_server.getText()!=null){
 				ddns_serverStr = ddns_server.getText().toString();
 			}
-			if(ddns_port!=null){
+			if(ddns_port.getText()!=null){
 				ddns_portStr = ddns_port.getText().toString();
 			}
-			if(user_id!=null){
+			if(user_id.getText()!=null){
 				user_idStr = user_id.getText().toString();
 			}
-			if(ddns_password!=null){
+			if(ddns_password.getText()!=null){
 				ddns_passwordStr = ddns_password.getText().toString();
 			}
-			if(ddns_devicename!=null){
+			if(ddns_devicename.getText()!=null){
 				ddns_devicenameStr = ddns_devicename.getText().toString();
 			}
 			Bundle bundle = new Bundle();
@@ -134,18 +139,9 @@ public class DdbssettingActivity extends PreferenceActivity implements OnSharedP
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-	
-	/**
-     * 若是activity跳转或者被对话框覆盖则对修改的配置进行保存
-     */
-    @Override
-    protected void onPause() 
-    {
-        super.onPause();
-    }
      
     /**
-     * 若是在当前activity中按了返回键,则对修改的配置进行保存
+     * 若是在当前activity中按了返回键,则返回前一个界面
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

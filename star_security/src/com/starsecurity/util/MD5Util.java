@@ -6,7 +6,7 @@ import java.security.MessageDigest;
  * @function     功能	  进行MD5加密
  * @author       创建人                肖远东
  * @date        创建日期           2013-04-23
- * @author       修改人                 陳明珍
+ * @author       修改人                 肖远东
  * @date        修改日期           2013-04-23
  * @description 修改说明	             首次增加
  */

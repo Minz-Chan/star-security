@@ -1,5 +1,6 @@
 package com.starsecurity.activity;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -14,26 +15,26 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.starsecurity.R;
 import com.starsecurity.model.DVRDevice;
+import com.starsecurity.model.FavouriteRecord;
 import com.starsecurity.util.MD5Util;
+import com.starsecurity.util.XMLControlUtil;
 
 /***
  * 
@@ -45,6 +46,7 @@ import com.starsecurity.util.MD5Util;
  * @description 修改说明	          首次增加
  *
  */
+@SuppressLint("SdCardPath")
 public class DeviceListActivity extends Activity {
 	/***
 	 * 
@@ -60,6 +62,11 @@ public class DeviceListActivity extends Activity {
 	private static List<String> deviceNameList;
 	
 	private static String errorReason = "连接失败，请检查域名和端口设置";
+	
+	/***
+	 * 手机存放收藏夹URL
+	 */
+	private static final String filePath = "/data/data/com.starsecurity/MyFavourites.xml";
 	
 	private static final int PROGRESS_DIALOG = 1; 
 	
@@ -83,6 +90,30 @@ public class DeviceListActivity extends Activity {
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view,
 							int position, long id) {
+						//存放所选平台到收藏夹中
+						//存放收藏夹的XMl文件
+						File myFavouritesFile=new File(filePath);		
+						//若首次使用，则创建XML存储文件
+				        if(!myFavouritesFile.exists()){
+				        	try {
+				        		XMLControlUtil.createFileAndRoot(filePath, "Favourites");	//创建文件
+							} catch (Exception e) {
+								System.out.println(e.getMessage().toString());
+							}; 
+				        }else{
+				        	FavouriteRecord favouriteRecord = new FavouriteRecord();
+				        	DVRDevice dvrDevice = deviceList.get(position);
+							favouriteRecord.setFavouriteName(dvrDevice.getDeviceName());
+							favouriteRecord.setUserName(dvrDevice.getLoginUsername());
+							favouriteRecord.setPassword(dvrDevice.getLoginPassword());
+							favouriteRecord.setIPAddress(dvrDevice.getLoginIP());
+							favouriteRecord.setPort(dvrDevice.getMobliePhonePort());
+							favouriteRecord.setDefaultChannel(dvrDevice.getStarChannel());
+							favouriteRecord.setRecordName(dvrDevice.getDeviceName());
+							XMLControlUtil.addFavouriteElement(filePath, favouriteRecord);
+				        }
+						
+						//返回主界面播放视频
 						Intent intent = getIntent();
 						intent.putExtra("DVRDevice",deviceList.get(position));
 						setResult(Activity.RESULT_FIRST_USER, intent);

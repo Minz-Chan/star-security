@@ -132,6 +132,10 @@ public class MainActivity extends Activity {
 	 * 存放界面显示的通道切换组的页面
 	 */
 	private static int page = 0;
+	/***
+	 * 标识是否正在播放
+	 */
+	private static boolean isPlay = false;
 	
 	private ControlService controlService =  new ControlServiceImpl("conn1");
 	
@@ -177,7 +181,7 @@ public class MainActivity extends Activity {
 					conn.setPort(Integer.valueOf(dvrDevice.getMobliePhonePort()));
 					conn.setChannel_no(Integer.valueOf(dvrDevice.getStarChannel()));
 					controlService.playVideo();
-				}else if(settingUsername!=null&&settingPassword!=null&&settingServer!=null&&settingPort!=null){
+				}else if(settingUsername!=null&&settingPassword!=null&&settingServer!=null&&settingPort!=null&&settingChannel!=null){
 					Connection conn = ConnectionManager.getConnection("conn1");
 					conn.setUsername(settingUsername);
 					conn.setPassword(settingPassword);
@@ -276,11 +280,16 @@ public class MainActivity extends Activity {
 				switchChannelBtnImages(0);
 				if(data!=null){
 					Bundle bundle = data.getExtras();
-					settingUsername = bundle.getString("usernameStr");
-					settingPassword = bundle.getString("passwordStr");
-					settingServer = bundle.getString("serverStr");
-					settingPort = bundle.getString("portStr");
-					settingChannel = bundle.getString("channelStr");
+					if(bundle.getString("usernameStr")!=null)
+						settingUsername = bundle.getString("usernameStr");
+					if(bundle.getString("passwordStr")!=null)
+						settingPassword = bundle.getString("passwordStr");
+					if(bundle.getString("serverStr")!=null)
+						settingServer = bundle.getString("serverStr");
+					if(bundle.getString("portStr")!=null)
+						settingPort = bundle.getString("portStr");
+					if(bundle.getString("channelStr")!=null)
+						settingChannel = bundle.getString("channelStr");
 				}
 				break;
 			case Activity.RESULT_FIRST_USER:
@@ -289,15 +298,16 @@ public class MainActivity extends Activity {
 				//用户选择云台设备后，进行播放
 				if(data!=null){
 					dvrDevice = (DVRDevice) data.getSerializableExtra("DVRDevice");
-					if(dvrDevice!=null){
-						Connection conn = ConnectionManager.getConnection("conn1");
-						conn.setUsername(dvrDevice.getLoginUsername());
-						conn.setPassword(dvrDevice.getLoginPassword());
-						conn.setSvr_ip(dvrDevice.getLoginIP());
-						conn.setPort(Integer.valueOf(dvrDevice.getMobliePhonePort()));
-						conn.setChannel_no(Integer.valueOf(dvrDevice.getStarChannel()));
-						controlService.playVideo();
-					}
+//					if(dvrDevice!=null){
+//						Connection conn = ConnectionManager.getConnection("conn1");
+//						conn.setUsername(dvrDevice.getLoginUsername());
+//						conn.setPassword(dvrDevice.getLoginPassword());
+//						conn.setSvr_ip(dvrDevice.getLoginIP());
+//						conn.setPort(Integer.valueOf(dvrDevice.getMobliePhonePort()));
+//						conn.setChannel_no(Integer.valueOf(dvrDevice.getStarChannel()));
+//						controlService.playVideo();
+//						isPlay = true;
+//					}
 				}
 				break;
 		}
