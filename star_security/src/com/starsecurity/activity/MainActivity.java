@@ -176,15 +176,22 @@ public class MainActivity extends Activity {
 				if(dvrDevice!=null){
 					Connection conn = ConnectionManager.getConnection("conn1");
 					conn.setUsername(dvrDevice.getLoginUsername());
-					conn.setPassword(dvrDevice.getLoginPassword());
+					if(dvrDevice.getLoginPassword()==null){
+						conn.setPassword("");
+					}else{
+						conn.setPassword(dvrDevice.getLoginPassword());
+					}
 					conn.setSvr_ip(dvrDevice.getLoginIP());
 					conn.setPort(Integer.valueOf(dvrDevice.getMobliePhonePort()));
 					conn.setChannel_no(Integer.valueOf(dvrDevice.getStarChannel()));
 					controlService.playVideo();
-				}else if(settingUsername!=null&&settingPassword!=null&&settingServer!=null&&settingPort!=null&&settingChannel!=null){
+				}else if(settingUsername!=null&&settingServer!=null&&settingPort!=null&&settingChannel!=null){
 					Connection conn = ConnectionManager.getConnection("conn1");
 					conn.setUsername(settingUsername);
-					conn.setPassword(settingPassword);
+					if(settingPassword==null)
+						conn.setPassword("");
+					else
+						conn.setPassword(settingPassword);
 					conn.setSvr_ip(settingServer);
 					conn.setPort(Integer.valueOf(settingPort));
 					conn.setChannel_no(Integer.parseInt(settingChannel));
