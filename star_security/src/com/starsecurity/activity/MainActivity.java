@@ -97,6 +97,11 @@ public class MainActivity extends Activity {
 	 * 焦点缩小按钮
 	 */
 	private Button jujiaoBtn;
+	
+	/***
+	 * 连接状态显示文本
+	 */
+	private TextView msgView;
 	//private String path = "http://devimages.apple.com/iphone/samples/bipbop/gear1/prog_index.m3u8";
 	//通道切换按钮
 	/***
@@ -146,7 +151,7 @@ public class MainActivity extends Activity {
 		
 		VideoView mVideoView = (VideoView)findViewById(R.id.p2p_view);
 		TextView ipView =  (TextView)findViewById(R.id.ip_text);
-		TextView msgView = (TextView)findViewById(R.id.help_msg);
+		msgView = (TextView)findViewById(R.id.help_msg);
 		
 		mVideoView.init();
 		
@@ -173,29 +178,42 @@ public class MainActivity extends Activity {
 		playBtn.setOnClickListener(new Button.OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				if(dvrDevice!=null){
-					Connection conn = ConnectionManager.getConnection("conn1");
-					conn.setUsername(dvrDevice.getLoginUsername());
-					if(dvrDevice.getLoginPassword()==null){
-						conn.setPassword("");
-					}else{
-						conn.setPassword(dvrDevice.getLoginPassword());
+				if(!isPlay){
+					if(dvrDevice!=null){
+						Connection conn = ConnectionManager.getConnection("conn1");
+						conn.setUsername(dvrDevice.getLoginUsername());
+						if(dvrDevice.getLoginPassword()==null){
+							conn.setPassword("");
+						}else{
+							conn.setPassword(dvrDevice.getLoginPassword());
+						}
+						conn.setSvr_ip(dvrDevice.getLoginIP());
+						conn.setPort(Integer.valueOf(dvrDevice.getMobliePhonePort()));
+						conn.setChannel_no(Integer.valueOf(dvrDevice.getStarChannel())-1);
+						controlService.playVideo();
+						isPlay = true;
+						playBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.linear_play));
+					}else if(settingUsername!=null&&settingServer!=null&&settingPort!=null&&settingChannel!=null){
+						Connection conn = ConnectionManager.getConnection("conn1");
+						conn.setUsername(settingUsername);
+						if(settingPassword==null)
+							conn.setPassword("");
+						else
+							conn.setPassword(settingPassword);
+						conn.setSvr_ip(settingServer);
+						conn.setPort(Integer.valueOf(settingPort));
+						conn.setChannel_no(Integer.parseInt(settingChannel)-1);
+						controlService.playVideo();
+						isPlay = true;
+						playBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.linear_play));
 					}
-					conn.setSvr_ip(dvrDevice.getLoginIP());
-					conn.setPort(Integer.valueOf(dvrDevice.getMobliePhonePort()));
-					conn.setChannel_no(Integer.valueOf(dvrDevice.getStarChannel()));
-					controlService.playVideo();
-				}else if(settingUsername!=null&&settingServer!=null&&settingPort!=null&&settingChannel!=null){
-					Connection conn = ConnectionManager.getConnection("conn1");
-					conn.setUsername(settingUsername);
-					if(settingPassword==null)
-						conn.setPassword("");
-					else
-						conn.setPassword(settingPassword);
-					conn.setSvr_ip(settingServer);
-					conn.setPort(Integer.valueOf(settingPort));
-					conn.setChannel_no(Integer.parseInt(settingChannel));
-					controlService.playVideo();
+				}
+				else{
+					//停止播放视频
+					controlService.stopVideo();
+					isPlay = false;
+					playBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.linear_left));
+					msgView.setText(getString(R.string.IDS_Connect_dispos));
 				}
 			}
 		});

@@ -60,8 +60,13 @@ public class DdbssettingActivity extends PreferenceActivity implements OnSharedP
             	ddns_port.setSummary(ddns_port.getText().toString());
             if(user_id.getText()!=null)
             	user_id.setSummary(user_id.getText().toString());
-            if(ddns_password.getText()!=null)
-            	ddns_password.setSummary(ddns_password.getText().toString());
+            if(ddns_password.getText()!=null){
+            	int passwordLength = ddns_password.getText().toString().length();
+            	StringBuffer passwordStr = new StringBuffer();
+            	for(int index = 0;index<passwordLength;index++)
+            		passwordStr.append("*");
+            	ddns_password.setSummary(passwordStr.toString());
+            }
             if(ddns_devicename.getText()!=null)
             	ddns_devicename.setSummary(ddns_devicename.getText().toString());
     }
@@ -70,9 +75,18 @@ public class DdbssettingActivity extends PreferenceActivity implements OnSharedP
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,String key) {  
         Preference pref = findPreference(key);  
-        if (pref instanceof EditTextPreference) {  
-            EditTextPreference etp = (EditTextPreference) pref;  
-            pref.setSummary(etp.getText());  
+        if (pref instanceof EditTextPreference) {
+        	if(key.equals("password")){
+        		int passwordLength = ddns_password.getText().toString().length();
+            	StringBuffer passwordStr = new StringBuffer();
+            	for(int index = 0;index<passwordLength;index++)
+            		passwordStr.append("*");
+            	ddns_password.setSummary(passwordStr.toString());
+        	}
+        	else{
+	            EditTextPreference etp = (EditTextPreference) pref;  
+	            pref.setSummary(etp.getText()); 
+        	}
         }  
     }  
 

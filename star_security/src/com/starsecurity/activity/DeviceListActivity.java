@@ -61,7 +61,7 @@ public class DeviceListActivity extends Activity {
 	 */
 	private static List<String> deviceNameList;
 	
-	private static String errorReason = "连接失败，请检查域名和端口设置";
+	private static String errorReason;
 	
 	/***
 	 * 手机存放收藏夹URL
@@ -103,14 +103,19 @@ public class DeviceListActivity extends Activity {
 				        }else{
 				        	FavouriteRecord favouriteRecord = new FavouriteRecord();
 				        	DVRDevice dvrDevice = deviceList.get(position);
-							favouriteRecord.setFavouriteName(dvrDevice.getDeviceName());
+				        	favouriteRecord.setFavouriteName(dvrDevice.getDeviceName());
 							favouriteRecord.setUserName(dvrDevice.getLoginUsername());
 							favouriteRecord.setPassword(dvrDevice.getLoginPassword());
 							favouriteRecord.setIPAddress(dvrDevice.getLoginIP());
 							favouriteRecord.setPort(dvrDevice.getMobliePhonePort());
 							favouriteRecord.setDefaultChannel(dvrDevice.getStarChannel());
 							favouriteRecord.setRecordName(dvrDevice.getDeviceName());
-							XMLControlUtil.addFavouriteElement(filePath, favouriteRecord);
+				        	//检测此平台是否已经存储，若有则覆盖，若没有则添加
+				        	if(XMLControlUtil.isExist(filePath, dvrDevice.getDeviceName())){
+				        		XMLControlUtil.coverFavouriteElement(filePath, favouriteRecord);
+				        	}else{	
+								XMLControlUtil.addFavouriteElement(filePath, favouriteRecord);
+				        	}
 				        }
 						
 						//返回主界面播放视频
@@ -137,6 +142,7 @@ public class DeviceListActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.devicelist);
 		deviceListView = (ListView) findViewById(R.id.deviceListView);
+		errorReason = getString(R.string.DEVICE_LIST_ErrorReason);
 		
 		showDialog(PROGRESS_DIALOG); 
         new ProgressDeviceListThread(handler).start();

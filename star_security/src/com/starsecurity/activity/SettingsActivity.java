@@ -163,7 +163,7 @@ public class SettingsActivity extends Activity {
 					}else{
 						//若存在同名记录则是用户选择覆盖或删除
 						new  AlertDialog.Builder(SettingsActivity.this).setMessage(getString(R.string.IDS_DupRecord)).
-						setPositiveButton("覆盖",new DialogInterface.OnClickListener() {
+						setPositiveButton(getString(R.string.IDS_OVERRIDE),new DialogInterface.OnClickListener() {
 		            		@Override
 		            		public void onClick(DialogInterface dialog, int which) {
 		            			FavouriteRecord favouriteRecord = new FavouriteRecord();
@@ -177,7 +177,7 @@ public class SettingsActivity extends Activity {
 		            			if(XMLControlUtil.coverFavouriteElement(filePath, favouriteRecord))
 		            				Toast.makeText(getApplicationContext(),getString(R.string.IDS_RecordSaveSuc), Toast.LENGTH_LONG).show();
 		            		}
-		            	}).setNegativeButton("删除",new DialogInterface.OnClickListener() {
+		            	}).setNegativeButton(getString(R.string.IDS_DELETE),new DialogInterface.OnClickListener() {
 		            		@Override
 		            		public void onClick(DialogInterface dialog, int which) {
 		            			if(XMLControlUtil.removeFavouriteElement(filePath, favouriteRecordSpinner.getSelectedItem().toString())){
