@@ -112,4 +112,5 @@
     <string name="ddns_progress_text">获取设备列表中,请等待...</string>
     <string name="ddns_getlist_fail">获取设备列表失败</string>
     <string name="do_not_support">不支持分辨率变动</string>
+    <string name="DEVICE_LIST_ErrorReason">连接失败，请检查域名和端口设置</string>
 </resources>
