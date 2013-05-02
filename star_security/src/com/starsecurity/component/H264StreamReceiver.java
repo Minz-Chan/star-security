@@ -31,6 +31,7 @@ public class H264StreamReceiver implements Runnable {
 	private Socket sock;
 	private DataProcessService dataProcessService = new DataProcessServiceImpl();
 	
+	
 
 	public H264StreamReceiver(String conn_name) {
 		this.conn_name = conn_name;
@@ -40,6 +41,7 @@ public class H264StreamReceiver implements Runnable {
 
 	@Override
 	public void run() {
+		int i = 0;
 		
 		Connection conn = ConnectionManager.getConnection(conn_name);
 		if(conn.connect() != 1) {		// 建立连接
@@ -59,30 +61,20 @@ public class H264StreamReceiver implements Runnable {
 	    
 	    System.out.println("=================== loginCheck end ==================");
 	    
-	    InputStream socketReader = null; 
+	    InputStream sockIn = null; 
 	    sock = conn.getSock();
 	    
-	    try {
-			Thread.currentThread().sleep(500);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+	    
  		try {
 
- 			socketReader = sock.getInputStream();
- 			
- 			if (socketReader == null) {
- 				return;
- 			}
-			
- 			int i = 0;
-			
+ 			//socketReader = sock.getInputStream();
+ 			sockIn = new SocketInputStream(sock.getInputStream());
+
  			System.out.println("=================== get common packet start ==================");
  			
 			// 获取公共包头头（ packet_length、packet_seq）
 			byte[] packetHeaderBuf = new byte[8];
-			socketReader.read(packetHeaderBuf);
+			sockIn.read(packetHeaderBuf);
 			OwspPacketHeader owspPacketHeader = (OwspPacketHeader) ByteArray2Object.convert2Object(OwspPacketHeader.class, packetHeaderBuf,0,OWSP_LEN.OwspPacketHeader);
 			if (!(owspPacketHeader.getPacket_length() >= 4 && owspPacketHeader.getPacket_seq() > 0)) {
 				return;
@@ -94,16 +86,17 @@ public class H264StreamReceiver implements Runnable {
 			System.out.println("=================== get packet start ==================");
 			// 根据包长度读取包内容
 			byte[] tlvContent = new byte[65536];
-			socketReader.read(tlvContent, 0, (int) owspPacketHeader.getPacket_length() - 4);
+			sockIn.read(tlvContent, 0, (int) owspPacketHeader.getPacket_length() - 4);
 			System.out.println("=================== get packet: " + ((int) owspPacketHeader.getPacket_length() - 4) + "bytes ==================");
 			System.out.println("=================== get packet end ==================");
 			
 			while(!tlvContent.equals("")){
 				
-				/* 处理接收到的数据 */
+				/* 数据处理 */
 				dataProcessService.process(tlvContent, (int)owspPacketHeader.getPacket_length());
-				
 				System.out.println("=================== finish data process ==================");
+				
+				
 				
 				/* 检测连接状态 */
 				if (conn.getConnect_state() == 0) {
@@ -111,26 +104,34 @@ public class H264StreamReceiver implements Runnable {
 				}
 				
 				System.out.println("=================== get another common packet start ==================");
-				/* 该部分须检测所收的包的正确性 */
-				do {
-					// 数据重置
-					for (i = 0; i < 8; i++) {
-						packetHeaderBuf[i] = 0;
-					}
-					// 读取包头
-					socketReader.read(packetHeaderBuf);
-					owspPacketHeader = (OwspPacketHeader) ByteArray2Object.convert2Object(OwspPacketHeader.class, packetHeaderBuf,0,OWSP_LEN.OwspPacketHeader);
-					
-				} while(!(owspPacketHeader.getPacket_length() >= 4 && owspPacketHeader.getPacket_length() < 65536 && owspPacketHeader.getPacket_seq() > 0));
+
+				/* 数据重置 */
+				for (i = 0; i < 8; i++) {
+					packetHeaderBuf[i] = 0;
+				}
+				/* 读取公共包头 */
+				sockIn.read(packetHeaderBuf);
+				owspPacketHeader = (OwspPacketHeader) ByteArray2Object.convert2Object(OwspPacketHeader.class, packetHeaderBuf,0,OWSP_LEN.OwspPacketHeader);
 				
 				System.out.println("=================== get another common packet end ==================");
 				
 				System.out.println("=================== get another packet  start ==================");
 				
-				/* 上一部分须保证接收下来的包的正确性，防止出现owspPacketHeader.getPacket_length() - 4 < 0的情况 */
-				socketReader.read(tlvContent, 0, (int) owspPacketHeader.getPacket_length() - 4);
-				System.out.println("=================== get another packet: " + ((int) owspPacketHeader.getPacket_length() - 4) + "bytes ==================");
 				
+				/* 重置数据数组 */
+				resetArray(tlvContent);
+				
+				/*
+				 * 受限于网络带宽限制或服务端发送速度限制，此处需等待所需数据被完整接收之后方可往下执行 
+				 * read函数在接收满(int) owspPacketHeader.getPacket_length() - 4 长度前将保持阻塞
+				 */
+				int iRead = sockIn.read(tlvContent, 0, (int) owspPacketHeader.getPacket_length() - 4);
+				
+				
+				System.out.println("=================== length of data received: " + iRead + "   ==================");
+				System.out.println("=================== length of packet: " + ((int)owspPacketHeader.getPacket_length() - 4) + "   ==================");
+				
+				System.out.println("=================== get another packet: " + ((int) owspPacketHeader.getPacket_length() - 4) + "bytes ==================");
 				System.out.println("=================== get another packet end ==================");
 				
 			}
@@ -143,6 +144,12 @@ public class H264StreamReceiver implements Runnable {
 
 	}
 	
+	public void resetArray(byte[] b) {
+		int i = 0;
+		for (i = 0; i < b.length; i++) {
+			b[i] = 0;
+		}
+	}
 	
 	public int process(byte[] data, int length) {
 		return 1;
