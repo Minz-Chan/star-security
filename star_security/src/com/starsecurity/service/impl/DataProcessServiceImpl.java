@@ -86,7 +86,7 @@ public class DataProcessServiceImpl implements DataProcessService {
 				ViewManager.getInstance().setHelpMsg("FPS:" + tlv_V_StreamDataFormat.getVideoFormat().getFramerate() + " "
 													 + "Width:" + tlv_V_StreamDataFormat.getVideoFormat().getWidth() + " "
 													 + "Height:" + tlv_V_StreamDataFormat.getVideoFormat().getHeight() + " "
-													 + "bitrate:" + tlv_V_StreamDataFormat.getVideoFormat().getBitrate());
+													 + "bitrate:" + (int)(tlv_V_StreamDataFormat.getVideoFormat().getBitrate() / 1024));
 				System.out.println(tlv_V_StreamDataFormat);
 			}
 			else if(tlv_Header.getTlv_type() == TLV_T_Command.TLV_T_VIDEO_FRAME_INFO){

@@ -12,6 +12,9 @@ package com.starsecurity.component;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
+
+
+import com.starsecurity.R;
 import com.starsecurity.model.OWSP_LEN;
 import com.starsecurity.model.OwspPacketHeader;
 import com.starsecurity.model.convert.ByteArray2Object;
@@ -23,8 +26,10 @@ import com.starsecurity.service.impl.DataProcessServiceImpl;
  * @author       创建人                陈明珍
  * @date        创建日期           2013-04-16
  * @author       修改人                陈明珍
- * @date        修改日期           2013-04-16
- * @description 修改说明	            首次增加
+ * @date        修改日期           2013-05-03
+ * @description 修改说明	            
+     2013-05-03 提供信息使用res中string.xml的字符串资源
+     2013-04-26 改进字节流接收方式，减少丢失数据情况   
  */
 public class H264StreamReceiver implements Runnable {
 	private String conn_name;
@@ -47,12 +52,13 @@ public class H264StreamReceiver implements Runnable {
 		if(conn.connect() != 1) {		// 建立连接
 			conn.setConnect_state(0);
 			ViewManager.getInstance().setIpText(conn.getSvr_ip());
-			ViewManager.getInstance().setHelpMsg("无法连接到远程主机...");
+			ViewManager.getInstance().setHelpMsg(R.string.IDS_Connect_dispos);
+			
 			return;
 		} else {
 			conn.setConnect_state(1);
 			ViewManager.getInstance().setIpText(conn.getSvr_ip());
-			ViewManager.getInstance().setHelpMsg("连接远程主机成功！");
+			ViewManager.getInstance().setHelpMsg(R.string.IDS_ConnectServer);
 		}
 
 	    System.out.println("=================== loginCheck begin ==================");
@@ -100,6 +106,8 @@ public class H264StreamReceiver implements Runnable {
 				
 				/* 检测连接状态 */
 				if (conn.getConnect_state() == 0) {
+					conn.getSock().close();
+					conn.setSock(null);
 					break;
 				}
 				
@@ -138,6 +146,15 @@ public class H264StreamReceiver implements Runnable {
 			
 			
 		} catch (IOException e) {
+			
+			if (!conn.getSock().isClosed()) {
+				try {
+					conn.getSock().close();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+			
 			e.printStackTrace();
 		}  
 

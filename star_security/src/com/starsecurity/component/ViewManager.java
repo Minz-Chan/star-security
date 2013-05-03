@@ -9,6 +9,8 @@
  */
 package com.starsecurity.component;
 
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.widget.TextView;
 
 import com.starsecurity.h264.VideoView;
@@ -19,8 +21,9 @@ import com.starsecurity.h264.VideoView;
  * @author       创建人              陈明珍
  * @date        创建日期           2013-04-15
  * @author       修改人              陈明珍
- * @date        修改日期           2013-04-15
- * @description 修改说明	          首次增加
+ * @date        修改日期           2013-05-03
+ * @description 修改说明	          
+     2013-05-03 加入提示信息对字符串资源ID的支持
  */
 public class ViewManager {
 	private static ViewManager m_instance;
@@ -29,11 +32,15 @@ public class ViewManager {
 	private TextView ipTextView;				// IP信息显示View
 	private TextView helpMsgView;				// 提示信息显示View
 	
+	private static ContextWrapper context;
+	
 	private ViewManager() {
-		
-		
+
 	}
 	
+	public static void initContext(Context _context) {
+		context = new ContextWrapper(_context); 
+	}
 	
 	public static ViewManager getInstance() {
 		if (m_instance == null) {
@@ -88,6 +95,19 @@ public class ViewManager {
 			@Override
 			public void run() {
 				helpMsgView.setText(helpMsg);
+			}
+		});
+	}
+	
+	/**
+	 * 更新提示信息
+	 * @param helpMsgId 提示信息字符串资源ID
+	 */
+	public void setHelpMsg(final int helpMsgId) {
+		helpMsgView.post(new Runnable() {
+			@Override
+			public void run() {
+				helpMsgView.setText(context.getString(helpMsgId));
 			}
 		});
 	}

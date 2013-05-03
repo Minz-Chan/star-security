@@ -216,6 +216,7 @@ public final class R {
         public static final int settingsactivitymenu=0x7f090002;
     }
     public static final class string {
+        public static final int DEVICE_LIST_ErrorReason=0x7f070073;
         public static final int DS_AddFavSuc=0x7f070016;
         public static final int DS_ConSerSuc=0x7f070026;
         public static final int IDS_ABOUTBOX=0x7f070005;
