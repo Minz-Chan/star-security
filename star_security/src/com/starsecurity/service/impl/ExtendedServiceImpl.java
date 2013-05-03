@@ -9,10 +9,17 @@
  */
 package com.starsecurity.service.impl;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+
 import android.graphics.Bitmap;
 
+import com.starsecurity.R;
 import com.starsecurity.component.Connection;
 import com.starsecurity.component.ConnectionManager;
+import com.starsecurity.component.ViewManager;
+import com.starsecurity.h264.VideoView;
 import com.starsecurity.service.ExtendedService;
 
 /**
@@ -35,8 +42,38 @@ public class ExtendedServiceImpl implements ExtendedService {
 
 	@Override
 	public Bitmap takePicture() {
-		// TODO Auto-generated method stub
-		return null;
+		ViewManager.getInstance().setHelpMsg(R.string.IDS_Saveimg);
+		
+		VideoView v = ViewManager.getInstance().getVideoView();
+		Bitmap bmp = null;
+		
+		v.setDrawingCacheEnabled(true);
+		bmp = Bitmap.createBitmap(v.getDrawingCache());
+		
+		File dir = new File("/sdcard/ImageSave");
+		if (!dir.exists()) {
+			dir.mkdir();
+		}
+
+		FileOutputStream out = null;
+		SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		String filename = sDateFormat.format(new java.util.Date()) + ".jpg";
+		filename = filename.replace(" ", "");
+		filename = filename.replace("-", "");
+		filename = filename.replace(":", "");
+		try {
+	       out = new FileOutputStream(dir.getPath() + "/"+  filename);
+
+	       bmp.compress(Bitmap.CompressFormat.JPEG, 90, out);
+	       out.close();
+	       ViewManager.getInstance().setHelpMsg(R.string.IDS_FILE);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		v.setDrawingCacheEnabled(false);
+
+		return bmp;
 	}
 
 	@Override

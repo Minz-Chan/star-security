@@ -54,6 +54,7 @@ public class ViewManager {
 	public VideoView getVideoView() {
 		return videoView;
 	}
+	
 
 
 	public void bindVideoView(VideoView videoView) {

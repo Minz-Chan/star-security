@@ -17,7 +17,9 @@ import com.starsecurity.component.ViewManager;
 import com.starsecurity.h264.VideoView;
 import com.starsecurity.model.DVRDevice;
 import com.starsecurity.service.ControlService;
+import com.starsecurity.service.ExtendedService;
 import com.starsecurity.service.impl.ControlServiceImpl;
+import com.starsecurity.service.impl.ExtendedServiceImpl;
 
 /***
  * 
@@ -28,6 +30,7 @@ import com.starsecurity.service.impl.ControlServiceImpl;
  * @date        修改日期           2013-05-03
  * @description 修改记录	          
      2013-05-03 加入提示信息对字符串资源ID的支持 陈明珍
+                                加入拍照功能
      2013-05-03 ViewManager加入上下文初始化         陈明珍
      2013-04-26 当前Connection信息获取                  陈明珍
                ConnectionManager.getConnection("conn1")
@@ -75,6 +78,9 @@ public class MainActivity extends Activity {
 	
 	/** 控制单元实例 */
 	private ControlService controlService =  new ControlServiceImpl("conn1");	
+	
+	/** 扩展单元实例  */
+	private ExtendedService extendedService = new ExtendedServiceImpl("conn1");
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -161,6 +167,15 @@ public class MainActivity extends Activity {
 				}
 			}
 		});
+		
+		captureBtn.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				extendedService.takePicture();
+			}
+			
+		});
+		
 		
 		//点击通道换组按钮时，先验证该平台支持的通道组数，然后根据验证改变通道选择
 		groupBtn.setOnClickListener(new Button.OnClickListener(){
