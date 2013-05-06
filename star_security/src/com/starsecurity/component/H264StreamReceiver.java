@@ -34,13 +34,14 @@ import com.starsecurity.service.impl.DataProcessServiceImpl;
 public class H264StreamReceiver implements Runnable {
 	private String conn_name;
 	private Socket sock;
-	private DataProcessService dataProcessService = new DataProcessServiceImpl();
+	private DataProcessService dataProcessService;
 	
 	
 
 	public H264StreamReceiver(String conn_name) {
 		this.conn_name = conn_name;
 		sock = ConnectionManager.getConnection(conn_name).getSock();
+		dataProcessService = new DataProcessServiceImpl(this.conn_name);
 	}
 
 
@@ -49,11 +50,10 @@ public class H264StreamReceiver implements Runnable {
 		int i = 0;
 		
 		Connection conn = ConnectionManager.getConnection(conn_name);
-		if(conn.connect() != 1) {		// 建立连接
+		if(conn.connect() != 1) {		// 建立连接, 须考虑连接超时情况
 			conn.setConnect_state(0);
 			ViewManager.getInstance().setIpText(conn.getSvr_ip());
-			ViewManager.getInstance().setHelpMsg(R.string.IDS_Connect_dispos);
-			
+			//ViewManager.getInstance().setHelpMsg(R.string.IDS_Connect_dispos);
 			return;
 		} else {
 			conn.setConnect_state(1);
@@ -112,14 +112,16 @@ public class H264StreamReceiver implements Runnable {
 				}
 				
 				System.out.println("=================== get another common packet start ==================");
-
-				/* 数据重置 */
-				for (i = 0; i < 8; i++) {
-					packetHeaderBuf[i] = 0;
-				}
-				/* 读取公共包头 */
-				sockIn.read(packetHeaderBuf);
-				owspPacketHeader = (OwspPacketHeader) ByteArray2Object.convert2Object(OwspPacketHeader.class, packetHeaderBuf,0,OWSP_LEN.OwspPacketHeader);
+				
+				do {
+					/* 数据重置 */
+					for (i = 0; i < 8; i++) {
+						packetHeaderBuf[i] = 0;
+					}
+					/* 读取公共包头 */
+					sockIn.read(packetHeaderBuf);
+					owspPacketHeader = (OwspPacketHeader) ByteArray2Object.convert2Object(OwspPacketHeader.class, packetHeaderBuf,0,OWSP_LEN.OwspPacketHeader);
+				} while (owspPacketHeader.getPacket_length() <= 0);
 				
 				System.out.println("=================== get another common packet end ==================");
 				

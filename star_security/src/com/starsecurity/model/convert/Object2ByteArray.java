@@ -12,6 +12,7 @@ package com.starsecurity.model.convert;
 import com.starsecurity.model.OWSP_LEN;
 import com.starsecurity.model.OwspPacketHeader;
 import com.starsecurity.model.TLV_HEADER;
+import com.starsecurity.model.TLV_V_ChannelRequest;
 import com.starsecurity.model.TLV_V_LoginRequest;
 import com.starsecurity.model.TLV_V_PhoneInfoRequest;
 import com.starsecurity.model.TLV_V_VersionInfoRequest;
@@ -25,30 +26,31 @@ import com.starsecurity.util.LByteConvert;
  * @author       创建人                 陈明珍
  * @date        创建日期           2013-03-19
  * @author       修改人                 陈明珍
- * @date        修改日期           2013-03-19
- * @description 修改说明	             首次增加
+ * @date        修改日期           2013-05-06
+ * @description 修改说明	             
+ *   2013-05-06 移除函数convert2ByteArr的Class clazz参数
  */
 public class Object2ByteArray {
-	public static byte[] convert2ByteArr(Class clazz, Object obj) {
+	public static byte[] convert2ByteArr(Object obj) {
 		byte[] buf = null;
 		int i = 0;
 		
-		if( clazz == OwspPacketHeader.class ) {
+		if( obj instanceof OwspPacketHeader ) {
 			buf = new byte[OWSP_LEN.OwspPacketHeader];
 			OwspPacketHeader owspPacketHeader = (OwspPacketHeader)obj;
 			BByteConvert.uintToBytes(owspPacketHeader.getPacket_length(), buf, 0);
 			BByteConvert.uintToBytes(owspPacketHeader.getPacket_seq(), buf, 4);
-		} else if ( clazz == TLV_HEADER.class ) {
+		} else if ( obj instanceof TLV_HEADER ) {
 			buf = new byte[OWSP_LEN.TLV_HEADER]; 
 			TLV_HEADER tlv_header = (TLV_HEADER)obj;
 			LByteConvert.ushortToBytes(tlv_header.getTlv_type(), buf, 0);
 			LByteConvert.ushortToBytes(tlv_header.getTlv_len(), buf, 2);
-		} else if ( clazz == TLV_V_VersionInfoRequest.class ) {
+		} else if ( obj instanceof TLV_V_VersionInfoRequest ) {
 			buf = new byte[OWSP_LEN.TLV_V_VersionInfoRequest];
 			TLV_V_VersionInfoRequest versionInfoRequest = (TLV_V_VersionInfoRequest)obj;
 			LByteConvert.ushortToBytes(versionInfoRequest.getVersionMajor(), buf, 0);
 			LByteConvert.ushortToBytes(versionInfoRequest.getVersionMinor(), buf, 2);
-		} else if ( clazz == TLV_V_PhoneInfoRequest.class ) {
+		} else if ( obj instanceof TLV_V_PhoneInfoRequest ) {
 			buf = new byte[OWSP_LEN.TLV_V_PhoneInfoRequest];
 			TLV_V_PhoneInfoRequest phoneInfoRequest = (TLV_V_PhoneInfoRequest)obj;
 			
@@ -65,7 +67,7 @@ public class Object2ByteArray {
 			LByteConvert.ubyteToBytes(phoneInfoRequest.getReserve2(), buf, 33);
 			LByteConvert.ubyteToBytes(phoneInfoRequest.getReserve3(), buf, 34);
 			LByteConvert.ubyteToBytes(phoneInfoRequest.getReserve4(), buf, 35);
-		} else if ( clazz == TLV_V_LoginRequest.class ) {
+		} else if ( obj instanceof TLV_V_LoginRequest ) {
 			buf = new byte[OWSP_LEN.TLV_V_LoginRequest];
 			TLV_V_LoginRequest loginRequest = (TLV_V_LoginRequest)obj;
 			
@@ -82,6 +84,17 @@ public class Object2ByteArray {
 			LByteConvert.ubyteToBytes(loginRequest.getFlag(), buf, 52);
 			LByteConvert.ubyteToBytes(loginRequest.getChannel(), buf, 53);
 			LByteConvert.ushortToBytes(loginRequest.getReserve(), buf, 54);
+		} else if ( obj instanceof TLV_V_ChannelRequest) {
+			buf = new byte[OWSP_LEN.TLV_V_ChannelRequest];
+			TLV_V_ChannelRequest channelRequest = (TLV_V_ChannelRequest)obj;
+			
+			LByteConvert.uintToBytes(channelRequest.getDeviceId(), buf, 0);
+			LByteConvert.ubyteToBytes(channelRequest.getSourceChannel(), buf, 4);
+			LByteConvert.ubyteToBytes(channelRequest.getDestChannel(), buf, 5);
+			LByteConvert.ubyteToBytes(channelRequest.getReserve()[0], buf, 6);
+			LByteConvert.ubyteToBytes(channelRequest.getReserve()[1], buf, 7);
+			
+			System.out.println("###########################################");
 		}
 		return buf;
 	}

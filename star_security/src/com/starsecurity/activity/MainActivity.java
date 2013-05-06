@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -107,6 +108,12 @@ public class MainActivity extends Activity {
 		channelThree = (Button) findViewById(R.id.btn_number_3);
 		channelFour = (Button) findViewById(R.id.btn_number_4);
 		
+		channelOne.setOnClickListener(switchChannel);
+		channelTwo.setOnClickListener(switchChannel);
+		channelThree.setOnClickListener(switchChannel);
+		channelFour.setOnClickListener(switchChannel);
+		
+		
 		//底端按钮组与界面关联
 		playBtn = (Button) findViewById(R.id.btn_linear_left);
 		captureBtn = (Button) findViewById(R.id.btn_linear_capture);
@@ -114,6 +121,7 @@ public class MainActivity extends Activity {
 		groupBtn = (Button) findViewById(R.id.btn_linear_group);
 		ddnsBtn = (Button) findViewById(R.id.btn_linear_ddns);
 		settingBtn = (Button) findViewById(R.id.btn_linear_setting);
+		
 		
 		//点击播放按钮时，开始播放视频
 		playBtn.setOnClickListener(new Button.OnClickListener(){
@@ -171,7 +179,7 @@ public class MainActivity extends Activity {
 		captureBtn.setOnClickListener(new Button.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				extendedService.takePicture();
+				extendedService.takePicture();		// 拍照
 			}
 			
 		});
@@ -221,6 +229,26 @@ public class MainActivity extends Activity {
 		});
 
 	}
+	
+	private OnClickListener switchChannel = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			switch (v.getId()) {
+			case R.id.btn_number_1:
+				controlService.switchChannel(page * 4 + 1);
+				break;
+			case R.id.btn_number_2:
+				controlService.switchChannel(page * 4 + 2);
+				break;
+			case R.id.btn_number_3:
+				controlService.switchChannel(page * 4 + 3);
+				break;
+			case R.id.btn_number_4:
+				controlService.switchChannel(page * 4 + 4);
+				break;
+			}
+		}
+	};
 	
 	/**
 	 * 用于切换界面中的通道图标

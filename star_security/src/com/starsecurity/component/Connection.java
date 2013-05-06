@@ -11,9 +11,13 @@ package com.starsecurity.component;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketAddress;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
+import com.starsecurity.R;
 import com.starsecurity.model.OWSP_LEN;
 import com.starsecurity.model.OwspPacketHeader;
 import com.starsecurity.model.TLV_HEADER;
@@ -31,8 +35,10 @@ import com.starsecurity.util.DataProcessUtil;
  * @author       创建人              陈明珍
  * @date        创建日期           2013-04-14
  * @author       修改人              陈明珍
- * @date        修改日期           2013-04-14
- * @description 修改说明	          首次增加
+ * @date        修改日期           2013-05-06
+ * @description 修改说明	        
+ *   2013-05-06 加入连接超时处理
+ *   2013-05-05 使用Packet替代原有组包方式
  */
 public class Connection {
 	private String username;		// dvr端登录用户名
@@ -57,8 +63,16 @@ public class Connection {
 		} 
 		
 		try {
-			sock = new Socket(svr_ip, port);
+			//sock = new Socket(svr_ip, port);
+			SocketAddress socketAddress = new InetSocketAddress(svr_ip, port); 
+			sock = new Socket();
 			
+			sock.connect(socketAddress, 8000);
+			
+		} catch (SocketTimeoutException e) {
+			// 连接超时
+			ViewManager.getInstance().setHelpMsg(R.string.IDS_Time_Out);
+			return 0;
 		} catch (UnknownHostException e) {
 			result = 0;
 		} catch (IOException e) {
@@ -98,17 +112,7 @@ public class Connection {
 		if (sock == null) {
 			return 0;
 		}
-		
-		/*
-		Connection conn = ConnectionManager.getConnection(this.conn_name);
-		
-		String username = conn.getUsername();
-		String password = conn.getPassword();
-		//String svr_ip = conn.getSvr_ip();
-		//int port = conn.getPort();
-		int channel_no = conn.getChannel_no();*/
-		
-		
+
 		
 		TLV_V_VersionInfoRequest versionInfoRequest = null;
 		TLV_V_PhoneInfoRequest phoneInfoRequest = null;
@@ -137,55 +141,12 @@ public class Connection {
 			//socket = new Socket(svr_ip, port);
 			out = socket.getOutputStream();
 			
-			OwspPacketHeader packetHeader = new OwspPacketHeader();
-			packetHeader.setPacket_length(112);
-			packetHeader.setPacket_seq(1);
-			byte[] buf = new byte[116];
-			int offset = 0;
-		
-			
-			/* Package Header */		
-			DataProcessUtil.fillPacket(buf, Object2ByteArray.convert2ByteArr(OwspPacketHeader.class, packetHeader), offset, 
-					OWSP_LEN.OwspPacketHeader);
-			offset += OWSP_LEN.OwspPacketHeader;
-			
-			/* TLV_HEADER + TLV_V_VersionInfoRequest*/
-			TLV_HEADER tlv1 = new TLV_HEADER();
-			tlv1.setTlv_type(TLV_T_Command.TLV_T_VERSION_INFO_REQUEST);
-			tlv1.setTlv_len(OWSP_LEN.TLV_V_VersionInfoRequest);
-			
-			DataProcessUtil.fillPacket(buf, Object2ByteArray.convert2ByteArr(TLV_HEADER.class, tlv1), offset, OWSP_LEN.TLV_HEADER);
-			offset += OWSP_LEN.TLV_HEADER;
-			
-			DataProcessUtil.fillPacket(buf, Object2ByteArray.convert2ByteArr(TLV_V_VersionInfoRequest.class, versionInfoRequest), 
-					offset, OWSP_LEN.TLV_V_VersionInfoRequest);
-			offset += OWSP_LEN.TLV_V_VersionInfoRequest;
+			Packet p = new Packet();
+			p.add(versionInfoRequest);
+			p.add(phoneInfoRequest);
+			p.add(loginRequest);
 
-			/* TLV_HEADER + TLV_V_PhoneInfoRequest */
-			TLV_HEADER tlv2 = new TLV_HEADER();
-			tlv2.setTlv_type(TLV_T_Command.TLV_T_PHONE_INFO_REQUEST); 
-			tlv2.setTlv_len(OWSP_LEN.TLV_V_PhoneInfoRequest);
-
-			DataProcessUtil.fillPacket(buf, Object2ByteArray.convert2ByteArr(TLV_HEADER.class, tlv2), offset, OWSP_LEN.TLV_HEADER);
-			offset += OWSP_LEN.TLV_HEADER;
-			
-			DataProcessUtil.fillPacket(buf, Object2ByteArray.convert2ByteArr(TLV_V_PhoneInfoRequest.class, phoneInfoRequest), 
-					offset, OWSP_LEN.TLV_V_PhoneInfoRequest);
-			offset += OWSP_LEN.TLV_V_PhoneInfoRequest;
-
-			/* TLV_HEADER + TLV_V_LoginRequest */
-			TLV_HEADER tlv3 = new TLV_HEADER();
-			tlv3.setTlv_type(TLV_T_Command.TLV_T_LOGIN_REQUEST); 
-			tlv3.setTlv_len(OWSP_LEN.TLV_V_LoginRequest);
-			
-			DataProcessUtil.fillPacket(buf, Object2ByteArray.convert2ByteArr(TLV_HEADER.class, tlv3), offset, OWSP_LEN.TLV_HEADER);
-			offset += OWSP_LEN.TLV_HEADER;
-
-			DataProcessUtil.fillPacket(buf, Object2ByteArray.convert2ByteArr(TLV_V_LoginRequest.class, loginRequest), 
-					offset, OWSP_LEN.TLV_V_LoginRequest);
-			offset += OWSP_LEN.TLV_V_LoginRequest;	
-			
-			out.write(buf);
+			out.write(p.getPacketByteStream());
 			
 		} catch (UnknownHostException e) {
 			// error process

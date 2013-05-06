@@ -9,6 +9,7 @@
  */
 package com.starsecurity.service.impl;
 
+import com.starsecurity.component.ConnectionManager;
 import com.starsecurity.component.ViewManager;
 import com.starsecurity.h264.VideoView;
 import com.starsecurity.model.OWSP_LEN;
@@ -30,17 +31,21 @@ import com.starsecurity.util.H264DecodeUtil;
  * @date        创建日期           2013-04-15
  * @author       修改人              陈明珍
  * @date        修改日期           2013-04-15
- * @description 修改说明	          首次增加
+ * @description 修改说明
+ *   2013-05-06 加入conn_name; 处理TLV_T_CHANNLE_ANSWER返回值      
+ *   2013-04-15 首次增加 陈明珍 
+ *   
  */
 public class DataProcessServiceImpl implements DataProcessService {
+	private String conn_name;
 	private VideoView v = ViewManager.getInstance().getVideoView();
 	private H264DecodeUtil h264 = new H264DecodeUtil();
 
 	
 	
-	public DataProcessServiceImpl() {
+	public DataProcessServiceImpl(String conn_name) {
 		super();
-		
+		this.conn_name = conn_name;
 		h264.init(352, 288);
 	}
 
@@ -63,24 +68,36 @@ public class DataProcessServiceImpl implements DataProcessService {
 			flag += nLen_hdr;
 			
 			System.out.println("=================== TLV_HEADER TYPE: " + tlv_Header.getTlv_type() + " ==================");
+			System.out.println("=================== TLV_HEADER LENGTH: " + tlv_Header.getTlv_len() + " ==================");
 			
 			// 处理TLV的V部分
-			if(tlv_Header.getTlv_type() == TLV_T_Command.TLV_T_VERSION_INFO_REQUEST){
+			if (tlv_Header.getTlv_type() == TLV_T_Command.TLV_T_VERSION_INFO_REQUEST){
 				TLV_V_VersionInfoRequest tlv_V_VersionInfoRequest;
 				tlv_V_VersionInfoRequest = (TLV_V_VersionInfoRequest) ByteArray2Object.convert2Object(TLV_V_VersionInfoRequest.class, data, flag, OWSP_LEN.TLV_V_VersionInfoRequest);
 				System.out.println(tlv_V_VersionInfoRequest);
 			}
-			else if(tlv_Header.getTlv_type() == TLV_T_Command.TLV_T_DVS_INFO_REQUEST){
+			else if (tlv_Header.getTlv_type() == TLV_T_Command.TLV_T_DVS_INFO_REQUEST){
 				TLV_V_DVSInfoRequest tlv_V_DVSInfoRequest;
 				tlv_V_DVSInfoRequest = (TLV_V_DVSInfoRequest) ByteArray2Object.convert2Object(TLV_V_DVSInfoRequest.class, data, flag, OWSP_LEN.TLV_V_DVSInfoRequest);
 				System.out.println(tlv_V_DVSInfoRequest);
 			}
-			else if(tlv_Header.getTlv_type() == TLV_T_Command.TLV_T_CHANNLE_ANSWER){
+			else if (tlv_Header.getTlv_type() == TLV_T_Command.TLV_T_CHANNLE_ANSWER){
 				TLV_V_ChannelResponse tlv_V_ChannelResponse;
 				tlv_V_ChannelResponse = (TLV_V_ChannelResponse) ByteArray2Object.convert2Object(TLV_V_ChannelResponse.class, data, flag, OWSP_LEN.TLV_V_ChannelResponse);
+				
+				if (tlv_V_ChannelResponse.getResult() == 1) { // 通道请求成功
+					ConnectionManager.getConnection(conn_name).setChannel_no(tlv_V_ChannelResponse.getCurrentChannel());
+				} else { // 通道请求失败
+					
+					
+				}
+				
+				
 				System.out.println(tlv_V_ChannelResponse);
-			}
-			else if(tlv_Header.getTlv_type() == TLV_T_Command.TLV_T_STREAM_FORMAT_INFO){
+				System.out.println("Result: " + tlv_V_ChannelResponse.getResult()
+								 + "curChannel: " + tlv_V_ChannelResponse.getCurrentChannel()
+								 + "reserve: " + tlv_V_ChannelResponse.getReserve());
+			} else if (tlv_Header.getTlv_type() == TLV_T_Command.TLV_T_STREAM_FORMAT_INFO){
 				TLV_V_StreamDataFormat tlv_V_StreamDataFormat;
 				tlv_V_StreamDataFormat = (TLV_V_StreamDataFormat) ByteArray2Object.convert2Object(TLV_V_StreamDataFormat.class, data, flag, OWSP_LEN.TLV_V_StreamDataFormat);
 				ViewManager.getInstance().setHelpMsg("FPS:" + tlv_V_StreamDataFormat.getVideoFormat().getFramerate() + " "
@@ -88,8 +105,7 @@ public class DataProcessServiceImpl implements DataProcessService {
 													 + "Height:" + tlv_V_StreamDataFormat.getVideoFormat().getHeight() + " "
 													 + "bitrate:" + (int)(tlv_V_StreamDataFormat.getVideoFormat().getBitrate() / 1024));
 				System.out.println(tlv_V_StreamDataFormat);
-			}
-			else if(tlv_Header.getTlv_type() == TLV_T_Command.TLV_T_VIDEO_FRAME_INFO){
+			} else if (tlv_Header.getTlv_type() == TLV_T_Command.TLV_T_VIDEO_FRAME_INFO){
 				TLV_V_VideoFrameInfo tlv_V_VideoFrameInfo;
 				tlv_V_VideoFrameInfo = (TLV_V_VideoFrameInfo) ByteArray2Object.convert2Object(TLV_V_VideoFrameInfo.class, data, flag, OWSP_LEN.TLV_V_VideoFrameInfo);
 				System.out.println(tlv_V_VideoFrameInfo);

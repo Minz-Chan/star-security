@@ -197,7 +197,7 @@ public class StarTest extends AndroidTestCase  {
 		
 		
 		/* Package Header */
-		DataProcessUtil.fillPacket(buf, Object2ByteArray.convert2ByteArr(OwspPacketHeader.class, packetHeader), offset, 
+		DataProcessUtil.fillPacket(buf, Object2ByteArray.convert2ByteArr(packetHeader), offset, 
 				OWSP_LEN.OwspPacketHeader);
 		offset += OWSP_LEN.OwspPacketHeader;
 
@@ -206,10 +206,10 @@ public class StarTest extends AndroidTestCase  {
 		tlv1.setTlv_type(TLV_T_Command.TLV_T_VERSION_INFO_REQUEST);
 		tlv1.setTlv_len(OWSP_LEN.TLV_V_VersionInfoRequest);
 		
-		DataProcessUtil.fillPacket(buf, Object2ByteArray.convert2ByteArr(TLV_HEADER.class, tlv1), offset, OWSP_LEN.TLV_HEADER);
+		DataProcessUtil.fillPacket(buf, Object2ByteArray.convert2ByteArr(tlv1), offset, OWSP_LEN.TLV_HEADER);
 		offset += OWSP_LEN.TLV_HEADER;
 		
-		DataProcessUtil.fillPacket(buf, Object2ByteArray.convert2ByteArr(TLV_V_VersionInfoRequest.class, versionInfoRequest), 
+		DataProcessUtil.fillPacket(buf, Object2ByteArray.convert2ByteArr(versionInfoRequest), 
 				offset, OWSP_LEN.TLV_V_VersionInfoRequest);
 		offset += OWSP_LEN.TLV_V_VersionInfoRequest;
 
@@ -218,10 +218,10 @@ public class StarTest extends AndroidTestCase  {
 		tlv2.setTlv_type(TLV_T_Command.TLV_T_PHONE_INFO_REQUEST); 
 		tlv2.setTlv_len(OWSP_LEN.TLV_V_PhoneInfoRequest);
 
-		DataProcessUtil.fillPacket(buf, Object2ByteArray.convert2ByteArr(TLV_HEADER.class, tlv2), offset, OWSP_LEN.TLV_HEADER);
+		DataProcessUtil.fillPacket(buf, Object2ByteArray.convert2ByteArr(tlv2), offset, OWSP_LEN.TLV_HEADER);
 		offset += OWSP_LEN.TLV_HEADER;
 		
-		DataProcessUtil.fillPacket(buf, Object2ByteArray.convert2ByteArr(TLV_V_PhoneInfoRequest.class, phoneInfoRequest), 
+		DataProcessUtil.fillPacket(buf, Object2ByteArray.convert2ByteArr( phoneInfoRequest), 
 				offset, OWSP_LEN.TLV_V_PhoneInfoRequest);
 		offset += OWSP_LEN.TLV_V_PhoneInfoRequest;
 
@@ -230,10 +230,10 @@ public class StarTest extends AndroidTestCase  {
 		tlv3.setTlv_type(TLV_T_Command.TLV_T_LOGIN_REQUEST); 
 		tlv3.setTlv_len(OWSP_LEN.TLV_V_LoginRequest);
 		
-		DataProcessUtil.fillPacket(buf, Object2ByteArray.convert2ByteArr(TLV_HEADER.class, tlv3), offset, OWSP_LEN.TLV_HEADER);
+		DataProcessUtil.fillPacket(buf, Object2ByteArray.convert2ByteArr(tlv3), offset, OWSP_LEN.TLV_HEADER);
 		offset += OWSP_LEN.TLV_HEADER;
 
-		DataProcessUtil.fillPacket(buf, Object2ByteArray.convert2ByteArr(TLV_V_LoginRequest.class, loginRequest), 
+		DataProcessUtil.fillPacket(buf, Object2ByteArray.convert2ByteArr(loginRequest), 
 				offset, OWSP_LEN.TLV_V_LoginRequest);
 		offset += OWSP_LEN.TLV_V_LoginRequest;
 		

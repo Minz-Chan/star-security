@@ -60,11 +60,13 @@ public interface ControlService {
 	 */
 	public int adjustAperture(boolean flag);
 	
+
 	/**
 	 * 切换频道
-	 * @param channel_no 频道号
+	 * @param des_channelno 目标频道号
 	 * @return
 	 */
-	public int switchChannel(int channel_no);
+	public int switchChannel(int des_channelno);
+
 	
 }
