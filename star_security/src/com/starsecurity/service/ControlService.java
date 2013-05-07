@@ -34,7 +34,7 @@ public interface ControlService {
 	
 	/**
 	 * 移动摄像头位置
-	 * @param direction
+	 * @param direction 上、下、左、右分别对应UP、DOWN、LEFT、RIGHT
 	 * @return
 	 */
 	public int move(String direction);

@@ -10,24 +10,16 @@
 package com.starsecurity.service.impl;
 
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
 import java.net.Socket;
-
 import com.starsecurity.component.Connection;
 import com.starsecurity.component.ConnectionManager;
 import com.starsecurity.component.H264StreamReceiver;
 import com.starsecurity.component.Packet;
 import com.starsecurity.component.StreamSender;
-import com.starsecurity.model.OWSP_LEN;
-import com.starsecurity.model.TLV_HEADER;
-import com.starsecurity.model.TLV_T_Command;
 import com.starsecurity.model.TLV_V_ChannelRequest;
-import com.starsecurity.model.convert.Object2ByteArray;
+import com.starsecurity.model.TLV_V_ControlRequest;
 import com.starsecurity.service.ControlService;
-import com.starsecurity.util.DataProcessUtil;
+
 
 
 /**
@@ -35,19 +27,19 @@ import com.starsecurity.util.DataProcessUtil;
  * @author       创建人              陈明珍
  * @date        创建日期           2013-04-15
  * @author       修改人              陈明珍
- * @date        修改日期           2013-04-15
- * @description 修改说明	          首次增加
- *   2013-04-05 首次增加 陈明珍
+ * @date        修改日期           2013-05-07
+ * @description 修改说明	      
+ *   2013-05-07 放大/缩小、焦距放大/缩小、光圈放大/缩小实现 陈明珍
+ *   2013-05-06 频道切换实现  陈明珍   
+ *   2013-04-15 首次增加 陈明珍
  */
 public class ControlServiceImpl implements ControlService {
 	private String conn_name = null;
-	private Socket client = null;
 
 	public ControlServiceImpl(String conn_name) {
 		super();
 		this.conn_name= conn_name; 
 		//this.client = ConnectionManager.getConnection(this.conn_name).getSock();
-
 	}
 
 	@Override
@@ -64,26 +56,59 @@ public class ControlServiceImpl implements ControlService {
 
 	@Override
 	public int move(String direction) {
-		// TODO Auto-generated method stub
-		return 0;
+		int cmdCode = 0;
+		
+		if (direction.equals("UP")) {
+			cmdCode = 9;	// OWSP_ACTION_MD_UP，向上
+		} else if(direction.equals("DOWN")) {
+			cmdCode = 10;	// OWSP_ACTION_MD_DOWN，向下
+		} else if(direction.equals("LEFT")) {
+			cmdCode = 11;	// OWSP_ACTION_MD_LEFT，向左
+		} else if(direction.equals("RIGHT")) {
+			cmdCode = 12;	// OWSP_ACTION_MD_RIGHT，向右
+		}
+
+
+		return sendControlRequest(cmdCode);
 	}
 
 	@Override
 	public int zoomInOrOut(boolean flag) {
-		// TODO Auto-generated method stub
-		return 0;
+		int cmdCode = 0;
+		
+		if (flag) {
+			cmdCode = 6;	// OWSP_ACTION_ZOOMADD，放大
+		} else {
+			cmdCode = 5;	// OWSP_ACTION_ZOOMReduce, 缩小
+		}
+		
+		return sendControlRequest(cmdCode);
 	}
 
 	@Override
 	public int adjustFocus(boolean flag) {
-		// TODO Auto-generated method stub
-		return 0;
+		int cmdCode = 0;
+		
+		if (flag) {
+			cmdCode = 7;	// OWSP_ACTION_FOCUSADD，焦距放大
+		} else {
+			cmdCode = 8;	// OWSP_ACTION_FOCUSReduce，焦距缩小
+		}
+		
+		return sendControlRequest(cmdCode);
 	}
 
 	@Override
 	public int adjustAperture(boolean flag) {
-		// TODO Auto-generated method stub
-		return 0;
+		int cmdCode = 0;
+		
+		if (flag) {
+			cmdCode = 13;	// OWSP_ACTION_Circle_Add， 光圈放大
+		} else {
+			cmdCode = 14;	// OWSP_ACTION_Circle_Reduce，光圈缩小
+		}
+		
+		return sendControlRequest(cmdCode);
 	}
 
 	@Override
@@ -116,5 +141,27 @@ public class ControlServiceImpl implements ControlService {
 	
 	
 	
-	
+	private int sendControlRequest(int cmdCode) {
+		int result = 0;
+		Connection conn = ConnectionManager.getConnection(conn_name);
+		
+		if (conn.getConnect_state() == 1) {
+			// 发送TLV_V_ControlRequest数据包
+			TLV_V_ControlRequest controlRequest = new TLV_V_ControlRequest();
+			controlRequest.setDeviceId(1);
+			controlRequest.setChannel((short)conn.getChannel_no());
+			controlRequest.setCmdCode((short)cmdCode);
+			controlRequest.setSize(0);
+			
+			Packet p = new Packet();
+			p.add(controlRequest);
+			
+			StreamSender sender = new StreamSender(conn_name, p.getPacketByteStream());
+			new Thread(sender).start();
+			
+			result = 1;
+		} 
+
+		return result;
+	}
 }

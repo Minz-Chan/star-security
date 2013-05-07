@@ -28,8 +28,9 @@ import com.starsecurity.service.impl.ExtendedServiceImpl;
  * @author       创建人              肖远东
  * @date        创建日期           2013-03-18
  * @author       修改人           陈明珍/肖远东
- * @date        修改日期           2013-05-03
+ * @date        修改日期           2013-05-07
  * @description 修改记录	          
+     2013-05-07 加入方向控制、放大/缩小、焦点放大/缩小、光圈放大/缩小功能  陈明珍
      2013-05-03 加入提示信息对字符串资源ID的支持 陈明珍
                                 加入拍照功能
      2013-05-03 ViewManager加入上下文初始化         陈明珍
@@ -53,11 +54,11 @@ public class MainActivity extends Activity {
 	private Button controlLeftBtn;			// 控制向左按钮
 	private Button controlRightBtn; 		// 控制向右按钮
 	private Button zoomAddBtn;				// 放大按钮
-	private Button zoomBtn;					// 缩小按钮
-	private Button focusAddBtn;				// 光圈放大按钮
-	private Button focusBtn; 				// 光圈缩小按钮
-	private Button jujiaoAddBtn; 			// 焦点放大按钮
-	private Button jujiaoBtn; 				// 焦点缩小按钮
+	private Button zoomReduceBtn;			// 缩小按钮
+	private Button apertureAddBtn;			// 光圈放大按钮
+	private Button apertureReduceBtn; 		// 光圈缩小按钮
+	private Button focusAddBtn; 			// 焦点放大按钮
+	private Button focusReduceBtn; 			// 焦点缩小按钮
 	//private TextView msgView;				// 连接状态显示文本
 	private Button channelOne; 				// 第一通道
 	private Button channelTwo; 				// 第二通道
@@ -102,7 +103,19 @@ public class MainActivity extends Activity {
 		v.bindIpTextView(ipView);
 		v.bindHelpMsgView(msgView);
 		
-		//通道切换按钮组与界面关联
+		// 控制按钮关联
+		controlUpBtn = (Button) findViewById(R.id.btn_control_up);
+		controlDownBtn = (Button) findViewById(R.id.btn_control_down);
+		controlLeftBtn = (Button) findViewById(R.id.btn_control_left);
+		controlRightBtn = (Button) findViewById(R.id.btn_control_right);
+		zoomAddBtn = (Button) findViewById(R.id.btn_control_zoomadd);
+		zoomReduceBtn = (Button) findViewById(R.id.btn_control_zoom);
+		apertureAddBtn = (Button) findViewById(R.id.btn_control_jujiaoadd);
+		apertureReduceBtn = (Button) findViewById(R.id.btn_control_jujiao);
+		focusAddBtn = (Button) findViewById(R.id.btn_control_focusadd);
+		focusReduceBtn = (Button) findViewById(R.id.btn_control_focus);
+		
+		// 通道切换按钮组与界面关联
 		channelOne = (Button) findViewById(R.id.btn_number_1);
 		channelTwo = (Button) findViewById(R.id.btn_number_2);
 		channelThree = (Button) findViewById(R.id.btn_number_3);
@@ -114,7 +127,7 @@ public class MainActivity extends Activity {
 		channelFour.setOnClickListener(switchChannel);
 		
 		
-		//底端按钮组与界面关联
+		// 底端按钮组与界面关联
 		playBtn = (Button) findViewById(R.id.btn_linear_left);
 		captureBtn = (Button) findViewById(R.id.btn_linear_capture);
 		fullScreenBtn = (Button) findViewById(R.id.btn_linear_full);
@@ -122,6 +135,70 @@ public class MainActivity extends Activity {
 		ddnsBtn = (Button) findViewById(R.id.btn_linear_ddns);
 		settingBtn = (Button) findViewById(R.id.btn_linear_setting);
 		
+		// 控制按键单击事件
+		controlUpBtn.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				controlService.move("UP");
+			}
+		});
+		controlDownBtn.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				controlService.move("DOWN");
+			}
+		});
+		controlLeftBtn.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				controlService.move("LEFT");
+			}
+		});
+		controlRightBtn.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				controlService.move("RIGHT");
+			}
+		});
+		
+		zoomAddBtn.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				controlService.zoomInOrOut(true);
+			}
+		});
+		zoomReduceBtn.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				controlService.zoomInOrOut(false);
+			}
+		});
+		
+		apertureAddBtn.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				controlService.adjustAperture(true);
+			}
+		});
+		apertureReduceBtn.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				controlService.adjustAperture(false);
+			}
+		});
+		
+		focusAddBtn.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				controlService.adjustFocus(true);
+		}
+			});
+			focusReduceBtn.setOnClickListener(new Button.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					controlService.adjustFocus(false);
+				}
+			});
 		
 		//点击播放按钮时，开始播放视频
 		playBtn.setOnClickListener(new Button.OnClickListener(){
