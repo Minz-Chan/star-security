@@ -223,7 +223,7 @@ public class DeviceListActivity extends Activity {
 	@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
 	public static void readXml(InputStream inputStr) throws DocumentException{ 
 		SAXReader sr = new SAXReader();//读取类 
-		Document doc = sr.read(inputStr);  //这里可以使 字符串 或者 流转换成字符串，文件之类的//从里面读内容,返回的是一个Element /取得根节点 
+		Document doc = sr.read(inputStr);
 		//获取状态码及相应状态信息，用于检测是否连接成功
 		List resCodeList = null;
 		resCodeList = doc.selectNodes("//Devices/resCode");
