@@ -17,7 +17,7 @@ import com.starsecurity.model.DVRDevice;
 import com.starsecurity.model.FavouriteRecord;
 
 /**
- * @function     功能	  进行MD5加密
+ * @function     功能	  进行设置记录的增、删、改、查操作
  * @author       创建人                肖远东
  * @date        创建日期           2013-04-26
  * @author       修改人                 肖远东

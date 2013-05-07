@@ -2,111 +2,48 @@ package com.starsecurity.model;
 
 import java.io.Serializable;
 
+/***
+ * 
+ * 平台设备
+ * @author  	创建人                 肖远东
+ * @date        创建日期           2013-03-18
+ * @author      修改人                 肖远东
+ * @date        修改日期           2013-03-18
+ * @description 修改说明	             首次增加
+ *
+ */
 public class DVRDevice implements Serializable{
 	/***
 	 * 
 	 */
 	private static final long serialVersionUID = -394689937589506763L;
-	/***
-	 * <du>登陆设备用户名</du>
-	 */
-	private String loginUsername;
-	/***
-	 * <dp>登陆设备密码</dp>
-	 */
-	private String loginPassword;
-	/***
-	 * <dm>登陆设备模式(0.IP  1.域名)</dm>
-	 */
-	private String loginMode;
-	/***
-	 * <dip>设备IP[登陆设备模式 为IP的时候有效]</dip>
-	 */
-	private String loginIP;
-	/***
-	 * <dd>设备域名[登陆设备模式 为域名的时候有效]</dd>
-	 */
-	private String loginDomain;
-	/***
-	 * <dpn>登陆设备端口号</dpn>
-	 */
-	private String loginPort;
-	/***
-	 * <scn>开始通道号</scn>
-	 */
-	private String starChannel;
-	/***
-	 * <cn>通道个数</cn>
-	 */
-	private String channelNumber;
-	/***
-	 * <ain>报警输入个数</ain>
-	 */
-	private String warningInputNumber;
-	/***
-	 * <aon>报警输出个数</aon>
-	 */
-	private String warningOutputNumber;
-	/***
-	 * <acn>音频通道个数</acn>
-	 */
-	private String audioChannelNumber;
-	/***
-	 * <vn>语音对讲个数</vn>
-	 */
-	private String IntercomNumber;
-	/***
-	 * <dn>硬盘个数</dn>
-	 */
-	private String HDNumber;
-	/***
-	 * <mdn>最大支持的移动侦测区域个数</mdn>
-	 */
-	private String maxMobileDetectionNumber;
-	/***
-	 * <can>最大支持的视频遮盖区域个数</can>
-	 */
-	private String maxOverlayAreaNumber;
-	/***
-	 * <tp>产品型号</tp>
-	 */
-	private String productModel;
-	/***
-	 * <ma>厂家类型: 星网锐捷[枚举类型]</ma>
-	 */
-	private String manufacturer;
-	/***
-	 * <sn>设备序列号</sn>
-	 */
-	private String serialNumber;
-	/***
-	 * <dmc>设备网卡地址</dmc>
-	 */
-	private String ethernetaddress;
-	/***
-	 * <dv>设备版本号</dv>
-	 */
-	private String versionNumber;
-	/***
-	 * <wu>平台用户名</wu>
-	 */
-	private String platformUsername;
-	/***
-	 * <wp>密码（密文）</wp>
-	 */
-	private String platformPassword;
-	/***
-	 * <dwp>设备WEB端口</dwp>
-	 */
-	private String WEBPort;
-	/***
-	 * <dna>(在线、离线)设备名称</dna>
-	 */
-	private String deviceName;
-	/***
-	 * <mp>手机端口号</mp>
-	 */
-	private String mobliePhonePort;
+	
+	private String loginUsername;	// <du>登陆设备用户名</du>
+	private String loginPassword;	// <dp>登陆设备密码</dp>
+	private String loginMode;		// <dm>登陆设备模式(0.IP  1.域名)</dm>
+	private String loginIP;			// <dip>设备IP[登陆设备模式 为IP的时候有效]</dip>
+	private String loginDomain;		// <dd>设备域名[登陆设备模式 为域名的时候有效]</dd>
+	private String loginPort;		// <dpn>登陆设备端口号</dpn>
+	private String starChannel;		// <scn>开始通道号</scn>
+	private String channelNumber;	//  <cn>通道个数</cn>
+	private String warningInputNumber;		// <ain>报警输入个数</ain>
+	private String warningOutputNumber;		// <aon>报警输出个数</aon>
+	private String audioChannelNumber;		// <acn>音频通道个数</acn>
+	private String IntercomNumber;			// <vn>语音对讲个数</vn>
+	private String HDNumber;		// <dn>硬盘个数</dn>
+	private String maxMobileDetectionNumber;	// <mdn>最大支持的移动侦测区域个数</mdn>
+	private String maxOverlayAreaNumber;		// <can>最大支持的视频遮盖区域个数</can>
+	private String productModel;		// <tp>产品型号</tp>
+	private String manufacturer;		// <ma>厂家类型: 星网锐捷[枚举类型]</ma>
+	private String serialNumber;		// <sn>设备序列号</sn>
+	private String ethernetaddress;		// <dmc>设备网卡地址</dmc>
+	private String versionNumber;		// <dv>设备版本号</dv>
+	private String platformUsername;	// <wu>平台用户名</wu>
+	private String platformPassword;	// <wp>密码（密文）</wp>
+	private String WEBPort;			// <dwp>设备WEB端口</dwp>
+	private String deviceName;		// <dna>(在线、离线)设备名称</dna>
+	private String mobliePhonePort;		// <mp>手机端口号</mp>
+	
 	public String getLoginUsername() {
 		return loginUsername;
 	}
