@@ -27,9 +27,10 @@ import com.starsecurity.service.impl.DataProcessServiceImpl;
  * @date        创建日期           2013-04-16
  * @author       修改人                陈明珍
  * @date        修改日期           2013-05-03
- * @description 修改说明	            
-     2013-05-03 提供信息使用res中string.xml的字符串资源
-     2013-04-26 改进字节流接收方式，减少丢失数据情况   
+ * @description 修改说明	 
+ *   2013-05-07 错误提示完善 陈明珍
+ *   2013-05-03 提供信息使用res中string.xml的字符串资源 陈明珍
+ *   2013-04-26 改进字节流接收方式，减少丢失数据情况 陈明珍
  */
 public class H264StreamReceiver implements Runnable {
 	private String conn_name;
@@ -50,15 +51,26 @@ public class H264StreamReceiver implements Runnable {
 		int i = 0;
 		
 		Connection conn = ConnectionManager.getConnection(conn_name);
-		if(conn.connect() != 1) {		// 建立连接, 须考虑连接超时情况
-			conn.setConnect_state(0);
-			ViewManager.getInstance().setIpText(conn.getSvr_ip());
-			//ViewManager.getInstance().setHelpMsg(R.string.IDS_Connect_dispos);
-			return;
-		} else {
+		
+		// 连接提示信息
+		ViewManager.getInstance().setIpText(conn.getSvr_ip());
+		ViewManager.getInstance().setHelpMsg(R.string.IDS_ConnectServer);
+		
+		// 建立连接
+		int result = conn.connect();
+		if (result == 1) { // 连接服务器成功
 			conn.setConnect_state(1);
-			ViewManager.getInstance().setIpText(conn.getSvr_ip());
-			ViewManager.getInstance().setHelpMsg(R.string.IDS_ConnectServer);
+			ViewManager.getInstance().setHelpMsg(R.string.DS_ConSerSuc);
+			
+		} else {	// 连接服务器不成功
+			conn.setConnect_state(0);
+			if (result == -1) { // 连接超时
+				ViewManager.getInstance().setHelpMsg(R.string.IDS_Time_Out);
+			} else {  // 连接失败
+				ViewManager.getInstance().setHelpMsg(R.string.IDS_ConSerFail);
+			}
+			
+			return;
 		}
 
 	    System.out.println("=================== loginCheck begin ==================");

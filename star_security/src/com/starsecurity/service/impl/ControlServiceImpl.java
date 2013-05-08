@@ -11,11 +11,15 @@ package com.starsecurity.service.impl;
 
 
 import java.net.Socket;
+
+
+import com.starsecurity.R;
 import com.starsecurity.component.Connection;
 import com.starsecurity.component.ConnectionManager;
 import com.starsecurity.component.H264StreamReceiver;
 import com.starsecurity.component.Packet;
 import com.starsecurity.component.StreamSender;
+import com.starsecurity.component.ViewManager;
 import com.starsecurity.model.TLV_V_ChannelRequest;
 import com.starsecurity.model.TLV_V_ControlRequest;
 import com.starsecurity.service.ControlService;
@@ -131,6 +135,8 @@ public class ControlServiceImpl implements ControlService {
 			StreamSender sender = new StreamSender(conn_name, p.getPacketByteStream());
 			new Thread(sender).start();
 			
+			ViewManager.getInstance().setHelpMsg(R.string.IDS_ChangeChannel);
+			
 			result = 1;
 		} else {
 			
@@ -158,6 +164,7 @@ public class ControlServiceImpl implements ControlService {
 			
 			StreamSender sender = new StreamSender(conn_name, p.getPacketByteStream());
 			new Thread(sender).start();
+
 			
 			result = 1;
 		} 

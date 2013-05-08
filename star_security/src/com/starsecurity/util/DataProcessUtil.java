@@ -14,9 +14,12 @@ import com.starsecurity.model.OwspPacketHeader;
 import com.starsecurity.model.TLV_HEADER;
 import com.starsecurity.model.TLV_T_Command;
 import com.starsecurity.model.TLV_V_ChannelRequest;
+import com.starsecurity.model.TLV_V_ChannelResponse;
 import com.starsecurity.model.TLV_V_LoginRequest;
 import com.starsecurity.model.TLV_V_PhoneInfoRequest;
+import com.starsecurity.model.TLV_V_StreamDataFormat;
 import com.starsecurity.model.TLV_V_VersionInfoRequest;
+import com.starsecurity.model.TLV_V_VideoFrameInfo;
 import com.starsecurity.model.convert.Object2ByteArray;
 
 /***
@@ -50,11 +53,16 @@ public class DataProcessUtil {
 		} else if (obj instanceof TLV_V_ChannelRequest) {
 			head.setTlv_type(TLV_T_Command.TLV_T_CHANNLE_REQUEST);
 			head.setTlv_len(OWSP_LEN.TLV_V_ChannelRequest);
-		} else if (obj instanceof TLV_HEADER) {
-			
-		} else if (obj instanceof TLV_HEADER) {
-			
-		}
+		} else if (obj instanceof TLV_V_ChannelResponse) {
+			head.setTlv_type(TLV_T_Command.TLV_T_CHANNLE_ANSWER);
+			head.setTlv_len(OWSP_LEN.TLV_V_ChannelResponse);
+		} else if (obj instanceof TLV_V_StreamDataFormat) {
+			head.setTlv_type(TLV_T_Command.TLV_T_STREAM_FORMAT_INFO);
+			head.setTlv_len(OWSP_LEN.TLV_V_StreamDataFormat);
+		} else if (obj instanceof TLV_V_VideoFrameInfo) {
+			head.setTlv_type(TLV_T_Command.TLV_T_VIDEO_FRAME_INFO);
+			head.setTlv_len(OWSP_LEN.TLV_V_VideoFrameInfo);
+		} 
 		
 		return head;
 	}

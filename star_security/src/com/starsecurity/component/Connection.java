@@ -16,6 +16,8 @@ import java.net.Socket;
 import java.net.SocketAddress;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.starsecurity.R;
 import com.starsecurity.model.OWSP_LEN;
@@ -37,6 +39,7 @@ import com.starsecurity.util.DataProcessUtil;
  * @author       修改人              陈明珍
  * @date        修改日期           2013-05-06
  * @description 修改说明	        
+ *   2013-05-07 加入返回数据存储项并提供存取接口
  *   2013-05-06 加入连接超时处理
  *   2013-05-05 使用Packet替代原有组包方式
  */
@@ -50,9 +53,12 @@ public class Connection {
 	private int connect_state;		// 当前连接状态：1 连接成功； 0 连接失败
 	private Socket sock = null;
 	
+	
+	private Map<Integer, Object> data = new HashMap<Integer, Object>();	// 返回数据存储项
+	
 	/**
 	 * 建立连接
-	 * @return 返回1，表示成功；返回0，表示失败
+	 * @return 返回1，连接成功；返回0，连接失败；返回-1，连接超时
 	 */
 	public int connect() {
 		int result = 1;
@@ -63,19 +69,18 @@ public class Connection {
 		} 
 		
 		try {
+			String timeout = ViewManager.getInstance().getStringById(R.string.IDS_ConnectTimeoutInterval);
 			//sock = new Socket(svr_ip, port);
 			SocketAddress socketAddress = new InetSocketAddress(svr_ip, port); 
 			sock = new Socket();
-			
-			sock.connect(socketAddress, 8000);
-			
+
+			System.out.println("Timeout interval: " + timeout);
+			if (!timeout.equals("")) {
+				sock.connect(socketAddress, Integer.valueOf(timeout));
+			}
 		} catch (SocketTimeoutException e) {
-			// 连接超时
-			ViewManager.getInstance().setHelpMsg(R.string.IDS_Time_Out);
-			return 0;
-		} catch (UnknownHostException e) {
-			result = 0;
-		} catch (IOException e) {
+			result = -1;
+		}  catch (IOException e) {
 			result = 0;
 		}
 		
@@ -148,18 +153,34 @@ public class Connection {
 
 			out.write(p.getPacketByteStream());
 			
-		} catch (UnknownHostException e) {
-			// error process
-			//e.printStackTrace();
-			result = 002;
 		} catch (IOException e) {
-			// error process
-			//e.printStackTrace();
-			result = 003;
+			result = 0;
 		}
 
 		
 		return result;
+	}
+	
+	/**
+	 * 存储返回的数据
+	 * @param obj 返回数据对应的类实例
+	 */
+	public void addResultItem(Object obj) {
+		int typeId = DataProcessUtil.getHeaderOfData(obj).getTlv_type();
+		if (data.containsKey(typeId)) {
+			data.remove(typeId);
+		} else {
+			data.put(typeId, obj);
+		}
+	}
+	
+	/**
+	 * 获取返回数据中已存储的相关结构信息
+	 * @param typeId 结构类型ID
+	 * @return 结构实例
+	 */
+	public Object retrieveResultItem(int typeId) {
+		return data.get(typeId);
 	}
 	
 	public String getUsername() {

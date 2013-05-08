@@ -112,4 +112,13 @@ public class ViewManager {
 			}
 		});
 	}
+	
+	/**
+	 * 工具方法，获取资源ID对应的字符串
+	 * @param resourceId
+	 * @return
+	 */
+	public String getStringById(final int resourceId) {
+		return context.getString(resourceId);
+	}
 }

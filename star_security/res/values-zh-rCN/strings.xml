@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="IDS_ConnectTimeoutInterval">8000</string>
+    
     <string name="IDS_OVERRIDE">覆盖</string>
     <string name="IDS_DELETE">删除</string>
     <string name="IDS_ABOUTBOX">About EPhonePlayer...</string>
