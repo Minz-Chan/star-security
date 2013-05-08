@@ -30,9 +30,9 @@ import com.starsecurity.util.MD5Util;
 
 /**
  * @function     功能	  云台控制接口实现类
- * @author       创建人              陈明珍
+ * @author       创建人              肖远东
  * @date        创建日期           2013-04-18
- * @author       修改人              陈明珍
+ * @author       修改人              肖远东
  * @date        修改日期           2013-04-18
  * @description 修改说明	          首次增加
  */

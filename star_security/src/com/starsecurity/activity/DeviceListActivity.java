@@ -26,8 +26,9 @@ import com.starsecurity.R;
 import com.starsecurity.model.DVRDevice;
 import com.starsecurity.model.FavouriteRecord;
 import com.starsecurity.service.CloudService;
+import com.starsecurity.service.FavouriteControlService;
 import com.starsecurity.service.impl.CloudServiceImpl;
-import com.starsecurity.util.XMLControlUtil;
+import com.starsecurity.service.impl.FavouriteControlServiceImpl;
 
 /***
  * 
@@ -67,6 +68,7 @@ public class DeviceListActivity extends Activity {
 	private static final int STATE_FAIL = 0;
 	
 	private CloudService cloudService = new CloudServiceImpl("conn1");
+	private FavouriteControlService favouriteControlService = new FavouriteControlServiceImpl("conn1");
 	/***
 	 * 处理子线程消息，并更新界面
 	 */
@@ -90,7 +92,7 @@ public class DeviceListActivity extends Activity {
 						//若首次使用，则创建XML存储文件
 				        if(!myFavouritesFile.exists()){
 				        	try {
-				        		XMLControlUtil.createFileAndRoot(filePath, "Favourites");	//创建文件
+				        		favouriteControlService.createFileAndRoot(filePath, "Favourites");	//创建文件
 							} catch (Exception e) {
 								System.out.println(e.getMessage().toString());
 							}; 
@@ -105,10 +107,10 @@ public class DeviceListActivity extends Activity {
 							favouriteRecord.setDefaultChannel(dvrDevice.getStarChannel());
 							favouriteRecord.setRecordName(dvrDevice.getDeviceName());
 				        	//检测此平台是否已经存储，若有则覆盖，若没有则添加
-				        	if(XMLControlUtil.isExist(filePath, dvrDevice.getDeviceName())){
-				        		XMLControlUtil.coverFavouriteElement(filePath, favouriteRecord);
+				        	if(favouriteControlService.isExist(filePath, dvrDevice.getDeviceName())){
+				        		favouriteControlService.coverFavouriteElement(filePath, favouriteRecord);
 				        	}else{	
-								XMLControlUtil.addFavouriteElement(filePath, favouriteRecord);
+				        		favouriteControlService.addFavouriteElement(filePath, favouriteRecord);
 				        	}
 				        }
 						

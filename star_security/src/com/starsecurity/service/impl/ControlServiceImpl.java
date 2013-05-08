@@ -10,9 +10,6 @@
 package com.starsecurity.service.impl;
 
 
-import java.net.Socket;
-
-
 import com.starsecurity.R;
 import com.starsecurity.component.Connection;
 import com.starsecurity.component.ConnectionManager;

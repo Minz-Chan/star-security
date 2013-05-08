@@ -1,4 +1,4 @@
-package com.starsecurity.util;
+package com.starsecurity.service.impl;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -15,24 +15,32 @@ import org.dom4j.io.XMLWriter;
 
 import com.starsecurity.model.DVRDevice;
 import com.starsecurity.model.FavouriteRecord;
+import com.starsecurity.service.FavouriteControlService;
 
 /**
- * @function     功能	  进行设置记录的增、删、改、查操作
+ * @function     功能	  进行收藏夹记录的操作实现类
  * @author       创建人                肖远东
- * @date        创建日期           2013-04-26
+ * @date        创建日期           2013-05-08
  * @author       修改人                 肖远东
- * @date        修改日期           2013-04-26
+ * @date        修改日期           2013-05-08
  * @description 修改说明	             首次增加
  */
-public class XMLControlUtil {
+public class FavouriteControlServiceImpl implements FavouriteControlService {
 	
 	private static final boolean SUCCESS = true;
 	private static final boolean FAILED = false;
 	
+	private String conn_name;
+	
+	public FavouriteControlServiceImpl(String conn_name) {
+		super();
+		this.conn_name = conn_name;
+	}
+	
 	/***
 	 * 为XML文件创建根节点
 	 */
-	public static boolean createFileAndRoot(String fileName,String rootName){
+	public boolean createFileAndRoot(String fileName,String rootName){
 		Document document = DocumentHelper.createDocument();
 		//创建根结点
 		document.addElement(rootName);
@@ -59,7 +67,7 @@ public class XMLControlUtil {
 	 * @param favouriteName		记录名
 	 * @return					找到的收藏记录
 	 */
-	public static FavouriteRecord getFavouriteRecordByName(String fileName,String favouriteName){
+	public FavouriteRecord getFavouriteRecordByName(String fileName,String favouriteName){
 		SAXReader saxReader = new SAXReader();
 		FavouriteRecord favouriteRecord = new FavouriteRecord();
 		try {
@@ -94,7 +102,7 @@ public class XMLControlUtil {
 	 * @param favouriteName		记录名
 	 * @return					是否存在
 	 */
-	public static boolean isExist(String fileName,String favouriteName){
+	public boolean isExist(String fileName,String favouriteName){
 		SAXReader saxReader = new SAXReader(); 
 		try {
 			Document document = saxReader.read(new File(fileName));
@@ -118,7 +126,7 @@ public class XMLControlUtil {
 	 * @param fileName		XML文件名
 	 * @return 				记录名列表
 	 */
-	public static List<String> getFavouriteList(String fileName){
+	public List<String> getFavouriteList(String fileName){
 		List<String> favouriteListTemp = new ArrayList();
 		SAXReader saxReader = new SAXReader(); 
 		try {
@@ -142,7 +150,7 @@ public class XMLControlUtil {
 	 * @param favouriteRecord	新记录
 	 * @return					成功与否
 	 */
-	public static boolean coverFavouriteElement(String fileName,FavouriteRecord favouriteRecord){
+	public boolean coverFavouriteElement(String fileName,FavouriteRecord favouriteRecord){
 		SAXReader saxReader = new SAXReader(); 
 		try {
 			Document document = saxReader.read(new File(fileName));
@@ -181,7 +189,7 @@ public class XMLControlUtil {
 	 * @param favouriteName		记录名
 	 * @return					成功与否
 	 */
-	public static boolean removeFavouriteElement(String fileName,String favouriteName){
+	public boolean removeFavouriteElement(String fileName,String favouriteName){
 		SAXReader saxReader = new SAXReader(); 
 		try {
 			Document document = saxReader.read(new File(fileName));
@@ -212,7 +220,7 @@ public class XMLControlUtil {
 	 * @param favouriteRecord	需要添加的记录
 	 * @return					成功与否
 	 */
-	public static boolean addFavouriteElement(String fileName,FavouriteRecord favouriteRecord){
+	public boolean addFavouriteElement(String fileName,FavouriteRecord favouriteRecord){
 		SAXReader saxReader = new SAXReader(); 
 		try {
 			Document document = saxReader.read(new File(fileName));
@@ -244,7 +252,7 @@ public class XMLControlUtil {
 	 * @param fileName		XML文件名
 	 * @return				成功与否
 	 */
-	public static boolean addDefaultFavouriteElement(DVRDevice dvrDevice,String fileName){
+	public boolean addDefaultFavouriteElement(DVRDevice dvrDevice,String fileName){
 		SAXReader saxReader = new SAXReader(); 
 		try {
 			Document document = saxReader.read(new File(fileName));
