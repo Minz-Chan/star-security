@@ -147,7 +147,7 @@ public class MainActivity extends Activity {
 					if(isPlay){
 						functionTempStr = msgView.getText().toString();
 						msgView.setText(getString(R.string.IDS_Up));
-						//controlService.move("UP");
+						controlService.move("UP");
 					}
 				}
 				//按钮松开时，显示播放参数
@@ -167,8 +167,8 @@ public class MainActivity extends Activity {
 					if(isPlay){
 						functionTempStr = msgView.getText().toString();
 						msgView.setText(getString(R.string.IDS_Down));
+						controlService.move("DOWN");
 					}
-					controlService.move("DOWN");
 				}
 				//按钮松开时，显示播放参数
 				if(event.getAction() == MotionEvent.ACTION_UP) {
@@ -176,7 +176,7 @@ public class MainActivity extends Activity {
 						msgView.setText(functionTempStr);
 					}
 				}
-				return true;
+				return false;
 			}
 		});
 		controlLeftBtn.setOnTouchListener(new OnTouchListener(){
@@ -187,8 +187,8 @@ public class MainActivity extends Activity {
 					if(isPlay){
 						functionTempStr = msgView.getText().toString();
 						msgView.setText(getString(R.string.IDS_Left));
-					}
-					controlService.move("LEFT");
+						controlService.move("LEFT");
+					}			
 				}
 				//按钮松开时，显示播放参数
 				if(event.getAction() == MotionEvent.ACTION_UP) {
@@ -196,7 +196,7 @@ public class MainActivity extends Activity {
 						msgView.setText(functionTempStr);
 					}
 				}
-				return true;
+				return false;
 			}
 		});
 		controlRightBtn.setOnTouchListener(new OnTouchListener(){
@@ -207,15 +207,15 @@ public class MainActivity extends Activity {
 					if(isPlay){
 						functionTempStr = msgView.getText().toString();
 						msgView.setText(getString(R.string.IDS_Right));
-					}
-					controlService.move("RIGHT");
+						controlService.move("RIGHT");
+					}		
 				}
 				//按钮松开时，显示播放参数
 				if(event.getAction() == MotionEvent.ACTION_UP) {
 					if(isPlay)
 						msgView.setText(functionTempStr);
 				}
-				return true;
+				return false;
 			}
 		});
 		
@@ -227,15 +227,15 @@ public class MainActivity extends Activity {
 					if(isPlay){
 						functionTempStr = msgView.getText().toString();
 						msgView.setText(getString(R.string.IDS_ZoomOut));
-					}
-					controlService.zoomInOrOut(true);
+						controlService.zoomInOrOut(true);
+					}					
 				}
 				//按钮松开时，显示播放参数
 				if(event.getAction() == MotionEvent.ACTION_UP) {
 					if(isPlay)
 						msgView.setText(functionTempStr);
 				}
-				return true;
+				return false;
 			}
 		});
 		
@@ -247,15 +247,15 @@ public class MainActivity extends Activity {
 					if(isPlay){
 						functionTempStr = msgView.getText().toString();
 						msgView.setText(getString(R.string.IDS_ZoomIn));
+						controlService.zoomInOrOut(false);
 					}
-					controlService.zoomInOrOut(false);
 				}
 				//按钮松开时，显示播放参数
 				if(event.getAction() == MotionEvent.ACTION_UP) {
 					if(isPlay)
 						msgView.setText(functionTempStr);
 				}
-				return true;
+				return false;
 			}
 		});
 		
@@ -267,15 +267,15 @@ public class MainActivity extends Activity {
 					if(isPlay){
 						functionTempStr = msgView.getText().toString();
 						msgView.setText(getString(R.string.IDS_OpticalOut));
-					}
-					controlService.adjustAperture(true);
+						controlService.adjustAperture(true);
+					}					
 				}
 				//按钮松开时，显示播放参数
 				if(event.getAction() == MotionEvent.ACTION_UP) {
 					if(isPlay)
 						msgView.setText(functionTempStr);
 				}
-				return true;
+				return false;
 			}
 		});
 		apertureReduceBtn.setOnTouchListener(new OnTouchListener(){
@@ -286,15 +286,15 @@ public class MainActivity extends Activity {
 					if(isPlay){
 						functionTempStr = msgView.getText().toString();
 						msgView.setText(getString(R.string.IDS_OpticalIn));
-					}
-					controlService.adjustAperture(false);
+						controlService.adjustAperture(false);
+					}					
 				}
 				//按钮松开时，显示播放参数
 				if(event.getAction() == MotionEvent.ACTION_UP) {
 					if(isPlay)
 						msgView.setText(functionTempStr);
 				}
-				return true;
+				return false;
 			}
 		});
 		
@@ -306,32 +306,34 @@ public class MainActivity extends Activity {
 					if(isPlay){
 						functionTempStr = msgView.getText().toString();
 						msgView.setText(getString(R.string.IDS_FocusOut));
-					}
-					controlService.adjustFocus(true);
+						controlService.adjustFocus(true);
+					}					
 				}
 				//按钮松开时，显示播放参数
 				if(event.getAction() == MotionEvent.ACTION_UP) {
 					if(isPlay)
 						msgView.setText(functionTempStr);
 				}
-				return true;
+				return false;
 			}
 		});
 		focusReduceBtn.setOnTouchListener(new OnTouchListener(){
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				//单击事件
-				if(isPlay){
-					functionTempStr = msgView.getText().toString();
-					msgView.setText(getString(R.string.IDS_FocusIn));
+				if(event.getAction() == MotionEvent.ACTION_DOWN) {
+					if(isPlay){
+						functionTempStr = msgView.getText().toString();
+						msgView.setText(getString(R.string.IDS_FocusIn));
+						controlService.adjustFocus(false);
+					}
 				}
-				controlService.adjustFocus(false);
 				//按钮松开时，显示播放参数
 				if(event.getAction() == MotionEvent.ACTION_UP) {
 					if(isPlay)
 						msgView.setText(functionTempStr);
 				}
-				return true;
+				return false;
 			}
 		});
 		
