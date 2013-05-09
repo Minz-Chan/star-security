@@ -17,6 +17,7 @@ import com.starsecurity.component.H264StreamReceiver;
 import com.starsecurity.component.Packet;
 import com.starsecurity.component.StreamSender;
 import com.starsecurity.component.ViewManager;
+import com.starsecurity.model.OWSP_ACTIONCode;
 import com.starsecurity.model.TLV_V_ChannelRequest;
 import com.starsecurity.model.TLV_V_ControlRequest;
 import com.starsecurity.service.ControlService;
@@ -60,13 +61,13 @@ public class ControlServiceImpl implements ControlService {
 		int cmdCode = 0;
 		
 		if (direction.equals("UP")) {
-			cmdCode = 9;	// OWSP_ACTION_MD_UP，向上
+			cmdCode = OWSP_ACTIONCode.OWSP_ACTION_MD_UP;	// OWSP_ACTION_MD_UP，向上
 		} else if(direction.equals("DOWN")) {
-			cmdCode = 10;	// OWSP_ACTION_MD_DOWN，向下
+			cmdCode = OWSP_ACTIONCode.OWSP_ACTION_MD_DOWN;	// OWSP_ACTION_MD_DOWN，向下
 		} else if(direction.equals("LEFT")) {
-			cmdCode = 11;	// OWSP_ACTION_MD_LEFT，向左
+			cmdCode = OWSP_ACTIONCode.OWSP_ACTION_MD_LEFT;	// OWSP_ACTION_MD_LEFT，向左
 		} else if(direction.equals("RIGHT")) {
-			cmdCode = 12;	// OWSP_ACTION_MD_RIGHT，向右
+			cmdCode = OWSP_ACTIONCode.OWSP_ACTION_MD_RIGHT;	// OWSP_ACTION_MD_RIGHT，向右
 		}
 
 
@@ -78,9 +79,9 @@ public class ControlServiceImpl implements ControlService {
 		int cmdCode = 0;
 		
 		if (flag) {
-			cmdCode = 6;	// OWSP_ACTION_ZOOMADD，放大
+			cmdCode = OWSP_ACTIONCode.OWSP_ACTION_ZOOMADD;	// OWSP_ACTION_ZOOMADD，放大
 		} else {
-			cmdCode = 5;	// OWSP_ACTION_ZOOMReduce, 缩小
+			cmdCode = OWSP_ACTIONCode.OWSP_ACTION_ZOOMReduce;	// OWSP_ACTION_ZOOMReduce, 缩小
 		}
 		
 		return sendControlRequest(cmdCode);
@@ -91,9 +92,9 @@ public class ControlServiceImpl implements ControlService {
 		int cmdCode = 0;
 		
 		if (flag) {
-			cmdCode = 7;	// OWSP_ACTION_FOCUSADD，焦距放大
+			cmdCode = OWSP_ACTIONCode.OWSP_ACTION_FOCUSADD;	// OWSP_ACTION_FOCUSADD，焦距放大
 		} else {
-			cmdCode = 8;	// OWSP_ACTION_FOCUSReduce，焦距缩小
+			cmdCode = OWSP_ACTIONCode.OWSP_ACTION_FOCUSReduce;	// OWSP_ACTION_FOCUSReduce，焦距缩小
 		}
 		
 		return sendControlRequest(cmdCode);
@@ -104,9 +105,9 @@ public class ControlServiceImpl implements ControlService {
 		int cmdCode = 0;
 		
 		if (flag) {
-			cmdCode = 13;	// OWSP_ACTION_Circle_Add， 光圈放大
+			cmdCode = OWSP_ACTIONCode.OWSP_ACTION_Circle_Add;	// OWSP_ACTION_Circle_Add， 光圈放大
 		} else {
-			cmdCode = 14;	// OWSP_ACTION_Circle_Reduce，光圈缩小
+			cmdCode = OWSP_ACTIONCode.OWSP_ACTION_Circle_Reduce;	// OWSP_ACTION_Circle_Reduce，光圈缩小
 		}
 		
 		return sendControlRequest(cmdCode);

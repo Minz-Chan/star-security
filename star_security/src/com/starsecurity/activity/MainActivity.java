@@ -206,7 +206,7 @@ public class MainActivity extends Activity {
 				if(event.getAction() == MotionEvent.ACTION_DOWN) {
 					if(isPlay){
 						functionTempStr = msgView.getText().toString();
-						msgView.setText(getString(R.string.IDS_Left));
+						msgView.setText(getString(R.string.IDS_Right));
 					}
 					controlService.move("RIGHT");
 				}

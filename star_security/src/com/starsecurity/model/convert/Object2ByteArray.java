@@ -13,6 +13,7 @@ import com.starsecurity.model.OWSP_LEN;
 import com.starsecurity.model.OwspPacketHeader;
 import com.starsecurity.model.TLV_HEADER;
 import com.starsecurity.model.TLV_V_ChannelRequest;
+import com.starsecurity.model.TLV_V_ControlRequest;
 import com.starsecurity.model.TLV_V_LoginRequest;
 import com.starsecurity.model.TLV_V_PhoneInfoRequest;
 import com.starsecurity.model.TLV_V_VersionInfoRequest;
@@ -94,7 +95,14 @@ public class Object2ByteArray {
 			LByteConvert.ubyteToBytes(channelRequest.getReserve()[0], buf, 6);
 			LByteConvert.ubyteToBytes(channelRequest.getReserve()[1], buf, 7);
 			
-			System.out.println("###########################################");
+		} else if ( obj instanceof TLV_V_ControlRequest) {
+			buf = new byte[OWSP_LEN.TLV_V_ControlRequest];
+			TLV_V_ControlRequest controlRequest = (TLV_V_ControlRequest)obj;
+			
+			LByteConvert.uintToBytes(controlRequest.getDeviceId(), buf, 0);
+			LByteConvert.ubyteToBytes(controlRequest.getChannel(), buf, 4);
+			LByteConvert.ubyteToBytes(controlRequest.getCmdCode(), buf, 5);
+			LByteConvert.ushortToBytes(controlRequest.getSize(), buf, 6);
 		}
 		return buf;
 	}
