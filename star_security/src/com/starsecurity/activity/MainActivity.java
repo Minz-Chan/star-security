@@ -6,8 +6,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -28,7 +30,7 @@ import com.starsecurity.service.impl.ExtendedServiceImpl;
  * @author       创建人              肖远东
  * @date        创建日期           2013-03-18
  * @author       修改人           陈明珍/肖远东
- * @date        修改日期           2013-05-07
+ * @date        修改日期           2013-05-09
  * @description 修改记录	          
      2013-05-07 加入方向控制、放大/缩小、焦点放大/缩小、光圈放大/缩小功能  陈明珍
      2013-05-03 加入提示信息对字符串资源ID的支持 陈明珍
@@ -59,7 +61,7 @@ public class MainActivity extends Activity {
 	private Button apertureReduceBtn; 		// 光圈缩小按钮
 	private Button focusAddBtn; 			// 焦点放大按钮
 	private Button focusReduceBtn; 			// 焦点缩小按钮
-	//private TextView msgView;				// 连接状态显示文本
+	private TextView msgView;				// 连接状态显示文本
 	private Button channelOne; 				// 第一通道
 	private Button channelTwo; 				// 第二通道
 	private Button channelThree;			// 第三通道
@@ -77,6 +79,7 @@ public class MainActivity extends Activity {
 
 	private static int page = 0;			// 存放界面显示的通道切换组的页面
 	private static boolean isPlay = false;	// 标识是否正在播放
+	private static String functionTempStr;	// 存储临时文本信息
 	
 	/** 控制单元实例 */
 	private ControlService controlService =  new ControlServiceImpl("conn1");	
@@ -91,7 +94,7 @@ public class MainActivity extends Activity {
 		
 		VideoView mVideoView = (VideoView)findViewById(R.id.p2p_view);
 		TextView ipView =  (TextView)findViewById(R.id.ip_text);
-		TextView msgView = (TextView)findViewById(R.id.help_msg);
+		msgView = (TextView)findViewById(R.id.help_msg);
 		
 		mVideoView.init();
 		
@@ -135,70 +138,202 @@ public class MainActivity extends Activity {
 		ddnsBtn = (Button) findViewById(R.id.btn_linear_ddns);
 		settingBtn = (Button) findViewById(R.id.btn_linear_setting);
 		
-		// 控制按键单击事件
-		controlUpBtn.setOnClickListener(new Button.OnClickListener() {
+		// 控制按键单击、松开事件
+		controlUpBtn.setOnTouchListener(new OnTouchListener(){
 			@Override
-			public void onClick(View v) {
-				controlService.move("UP");
-			}
-		});
-		controlDownBtn.setOnClickListener(new Button.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				controlService.move("DOWN");
-			}
-		});
-		controlLeftBtn.setOnClickListener(new Button.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				controlService.move("LEFT");
-			}
-		});
-		controlRightBtn.setOnClickListener(new Button.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				controlService.move("RIGHT");
-			}
-		});
-		
-		zoomAddBtn.setOnClickListener(new Button.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				controlService.zoomInOrOut(true);
-			}
-		});
-		zoomReduceBtn.setOnClickListener(new Button.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				controlService.zoomInOrOut(false);
-			}
-		});
-		
-		apertureAddBtn.setOnClickListener(new Button.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				controlService.adjustAperture(true);
-			}
-		});
-		apertureReduceBtn.setOnClickListener(new Button.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				controlService.adjustAperture(false);
-			}
-		});
-		
-		focusAddBtn.setOnClickListener(new Button.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				controlService.adjustFocus(true);
-		}
-			});
-			focusReduceBtn.setOnClickListener(new Button.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					controlService.adjustFocus(false);
+			public boolean onTouch(View v, MotionEvent event) {
+				//单击事件
+				if(event.getAction() == MotionEvent.ACTION_DOWN) {
+					if(isPlay){
+						functionTempStr = msgView.getText().toString();
+						msgView.setText(getString(R.string.IDS_Up));
+						//controlService.move("UP");
+					}
 				}
-			});
+				//按钮松开时，显示播放参数
+				if(event.getAction() == MotionEvent.ACTION_UP) {
+					if(isPlay){
+						msgView.setText(functionTempStr);
+					}
+				}
+				return false;
+			}
+		});
+		controlDownBtn.setOnTouchListener(new OnTouchListener(){
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				//单击事件
+				if(event.getAction() == MotionEvent.ACTION_DOWN) {
+					if(isPlay){
+						functionTempStr = msgView.getText().toString();
+						msgView.setText(getString(R.string.IDS_Down));
+					}
+					controlService.move("DOWN");
+				}
+				//按钮松开时，显示播放参数
+				if(event.getAction() == MotionEvent.ACTION_UP) {
+					if(isPlay){
+						msgView.setText(functionTempStr);
+					}
+				}
+				return true;
+			}
+		});
+		controlLeftBtn.setOnTouchListener(new OnTouchListener(){
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				//单击事件
+				if(event.getAction() == MotionEvent.ACTION_DOWN) {
+					if(isPlay){
+						functionTempStr = msgView.getText().toString();
+						msgView.setText(getString(R.string.IDS_Left));
+					}
+					controlService.move("LEFT");
+				}
+				//按钮松开时，显示播放参数
+				if(event.getAction() == MotionEvent.ACTION_UP) {
+					if(isPlay){
+						msgView.setText(functionTempStr);
+					}
+				}
+				return true;
+			}
+		});
+		controlRightBtn.setOnTouchListener(new OnTouchListener(){
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				//单击事件
+				if(event.getAction() == MotionEvent.ACTION_DOWN) {
+					if(isPlay){
+						functionTempStr = msgView.getText().toString();
+						msgView.setText(getString(R.string.IDS_Left));
+					}
+					controlService.move("RIGHT");
+				}
+				//按钮松开时，显示播放参数
+				if(event.getAction() == MotionEvent.ACTION_UP) {
+					if(isPlay)
+						msgView.setText(functionTempStr);
+				}
+				return true;
+			}
+		});
+		
+		zoomAddBtn.setOnTouchListener(new OnTouchListener(){
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				//单击事件
+				if(event.getAction() == MotionEvent.ACTION_DOWN) {
+					if(isPlay){
+						functionTempStr = msgView.getText().toString();
+						msgView.setText(getString(R.string.IDS_ZoomOut));
+					}
+					controlService.zoomInOrOut(true);
+				}
+				//按钮松开时，显示播放参数
+				if(event.getAction() == MotionEvent.ACTION_UP) {
+					if(isPlay)
+						msgView.setText(functionTempStr);
+				}
+				return true;
+			}
+		});
+		
+		zoomReduceBtn.setOnTouchListener(new OnTouchListener(){
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				//单击事件
+				if(event.getAction() == MotionEvent.ACTION_DOWN) {
+					if(isPlay){
+						functionTempStr = msgView.getText().toString();
+						msgView.setText(getString(R.string.IDS_ZoomIn));
+					}
+					controlService.zoomInOrOut(false);
+				}
+				//按钮松开时，显示播放参数
+				if(event.getAction() == MotionEvent.ACTION_UP) {
+					if(isPlay)
+						msgView.setText(functionTempStr);
+				}
+				return true;
+			}
+		});
+		
+		apertureAddBtn.setOnTouchListener(new OnTouchListener(){
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				//单击事件
+				if(event.getAction() == MotionEvent.ACTION_DOWN) {
+					if(isPlay){
+						functionTempStr = msgView.getText().toString();
+						msgView.setText(getString(R.string.IDS_OpticalOut));
+					}
+					controlService.adjustAperture(true);
+				}
+				//按钮松开时，显示播放参数
+				if(event.getAction() == MotionEvent.ACTION_UP) {
+					if(isPlay)
+						msgView.setText(functionTempStr);
+				}
+				return true;
+			}
+		});
+		apertureReduceBtn.setOnTouchListener(new OnTouchListener(){
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				//单击事件
+				if(event.getAction() == MotionEvent.ACTION_DOWN) {
+					if(isPlay){
+						functionTempStr = msgView.getText().toString();
+						msgView.setText(getString(R.string.IDS_OpticalIn));
+					}
+					controlService.adjustAperture(false);
+				}
+				//按钮松开时，显示播放参数
+				if(event.getAction() == MotionEvent.ACTION_UP) {
+					if(isPlay)
+						msgView.setText(functionTempStr);
+				}
+				return true;
+			}
+		});
+		
+		focusAddBtn.setOnTouchListener(new OnTouchListener(){
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				//单击事件
+				if(event.getAction() == MotionEvent.ACTION_DOWN) {
+					if(isPlay){
+						functionTempStr = msgView.getText().toString();
+						msgView.setText(getString(R.string.IDS_FocusOut));
+					}
+					controlService.adjustFocus(true);
+				}
+				//按钮松开时，显示播放参数
+				if(event.getAction() == MotionEvent.ACTION_UP) {
+					if(isPlay)
+						msgView.setText(functionTempStr);
+				}
+				return true;
+			}
+		});
+		focusReduceBtn.setOnTouchListener(new OnTouchListener(){
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				//单击事件
+				if(isPlay){
+					functionTempStr = msgView.getText().toString();
+					msgView.setText(getString(R.string.IDS_FocusIn));
+				}
+				controlService.adjustFocus(false);
+				//按钮松开时，显示播放参数
+				if(event.getAction() == MotionEvent.ACTION_UP) {
+					if(isPlay)
+						msgView.setText(functionTempStr);
+				}
+				return true;
+			}
+		});
 		
 		//点击播放按钮时，开始播放视频
 		playBtn.setOnClickListener(new Button.OnClickListener(){
