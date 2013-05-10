@@ -27,8 +27,9 @@ import com.starsecurity.service.ExtendedService;
  * @author       创建人              陈明珍
  * @date        创建日期           2013-04-17
  * @author       修改人              陈明珍
- * @date        修改日期           2013-04-17
- * @description 修改说明	          首次增加
+ * @date        修改日期           2013-05-10
+ * @description 修改说明	       
+ *   2013-05-10 全屏及复原功能实现 陈明珍
  */
 public class ExtendedServiceImpl implements ExtendedService {
 	private String conn_name;
@@ -78,14 +79,21 @@ public class ExtendedServiceImpl implements ExtendedService {
 
 	@Override
 	public void switchToFullScreen() {
-		// TODO Auto-generated method stub
+		VideoView v = ViewManager.getInstance().getFullVideoView();
+		v.init();
+		v.setFullScreenMode(true);
+		
+		ViewManager.getInstance().changeVideoView(v);
 
 	}
 
 	@Override
 	public void restoreFromFullScreen() {
-		// TODO Auto-generated method stub
-
+		VideoView v = ViewManager.getInstance().getMainVideoView();
+		v.init();
+		v.setFullScreenMode(false);
+		
+		ViewManager.getInstance().changeVideoView(v);
 	}
 
 	@Override

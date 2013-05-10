@@ -32,13 +32,11 @@ import com.starsecurity.util.H264DecodeUtil;
  * @author       修改人              陈明珍
  * @date        修改日期           2013-04-15
  * @description 修改说明
- *   2013-05-06 加入conn_name; 处理TLV_T_CHANNLE_ANSWER返回值      
+ *   2013-05-06 加入conn_name; 处理TLV_T_CHANNLE_ANSWER返回值 陈明珍
  *   2013-04-15 首次增加 陈明珍 
- *   
  */
 public class DataProcessServiceImpl implements DataProcessService {
 	private String conn_name;
-	private VideoView v = ViewManager.getInstance().getVideoView();
 	private H264DecodeUtil h264 = new H264DecodeUtil();
 
 	
@@ -53,7 +51,7 @@ public class DataProcessServiceImpl implements DataProcessService {
 
 	@Override
 	public int process(byte[] data, int length) {
-
+		VideoView v = ViewManager.getInstance().getVideoView();
 		int nLeft = length - 4; //未处理的字节数
 		int nLen_hdr = OWSP_LEN.TLV_HEADER;
 		int flag = 0;

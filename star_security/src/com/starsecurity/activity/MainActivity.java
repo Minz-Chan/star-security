@@ -106,6 +106,8 @@ public class MainActivity extends Activity {
 		v.bindIpTextView(ipView);
 		v.bindHelpMsgView(msgView);
 		
+		v.setMainVideoView(mVideoView);
+		
 		// 控制按钮关联
 		controlUpBtn = (Button) findViewById(R.id.btn_control_up);
 		controlDownBtn = (Button) findViewById(R.id.btn_control_down);
@@ -394,6 +396,32 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				extendedService.takePicture();		// 拍照
+			}
+			
+		});
+		
+		// 全屏按钮
+		fullScreenBtn.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				intent.setClass(MainActivity.this, FullScreenActivity.class);
+				intent.putExtra("conn_name", "conn1");
+				
+				startActivity(intent);
+			}
+		});
+		
+		// 单击视频全屏
+		mVideoView.setOnClickListener(new Button.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				intent.setClass(MainActivity.this, FullScreenActivity.class);
+				intent.putExtra("conn_name", "conn1");
+				
+				startActivity(intent);
 			}
 			
 		});

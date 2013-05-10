@@ -10,9 +10,13 @@
 package com.starsecurity.h264;
 
 import java.nio.ByteBuffer;
+
+import com.starsecurity.util.BitmapUtil;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Bitmap.Config;
 import android.util.AttributeSet;
 import android.widget.ImageView;
@@ -24,8 +28,10 @@ import android.widget.ImageView;
  * @author       创建人              陈明珍
  * @date        创建日期           2013-04-12
  * @author       修改人              陈明珍
- * @date        修改日期           2013-04-16
- * @description 修改说明	  使图像可适应容器的Width和Height
+ * @date        修改日期           2013-05-10
+ * @description 修改说明	  
+ *   2013-05-10 加入旋转、拉伸，对全屏模式进行支持
+ *   2013-04-16 使图像可适应容器的Width和Height
  */
 public class VideoView extends ImageView {
 	private int width = 352;
@@ -35,6 +41,7 @@ public class VideoView extends ImageView {
     private ByteBuffer buffer;
 	private Bitmap VideoBit;     
 	
+	private boolean isFullScreenMode = false;
 
     public VideoView(Context context) {
         super(context);
@@ -54,8 +61,22 @@ public class VideoView extends ImageView {
         super.onDraw(canvas);   
         if (VideoBit != null) {
         	VideoBit.copyPixelsFromBuffer(buffer);	
-            canvas.drawBitmap(Bitmap.createScaledBitmap(VideoBit, getWidth(), getHeight(), true)
-            		, 0, 0, null); 
+        	
+        	if (isFullScreenMode) {
+        		Matrix m = new Matrix();
+                m.setRotate(90);
+        		
+                // 旋转
+                Bitmap tmp = Bitmap.createBitmap(VideoBit, 0, 0, VideoBit.getWidth(), VideoBit.getHeight(),
+                		m, true);
+        		
+                canvas.drawBitmap(Bitmap.createScaledBitmap(tmp, getWidth(), getHeight(), true)
+                		, 0, 0, null); ; 
+        	} else {
+        		canvas.drawBitmap(Bitmap.createScaledBitmap(VideoBit, getWidth(), getHeight(), true)
+                		, 0, 0, null); 
+        	}
+
         }
     }
     
@@ -63,7 +84,6 @@ public class VideoView extends ImageView {
      * VideoView初始化
      */
     public void init() {
-    	
     	buffer = ByteBuffer.wrap(mPixel);
     	VideoBit = Bitmap.createBitmap(width, height, Config.RGB_565);
     	
@@ -80,5 +100,14 @@ public class VideoView extends ImageView {
 		return mPixel;
 	}
 
+	public boolean isFullScreenMode() {
+		return isFullScreenMode;
+	}
+
+	public void setFullScreenMode(boolean isFullScreenMode) {
+		this.isFullScreenMode = isFullScreenMode;
+	}
     
+	
+	
 }

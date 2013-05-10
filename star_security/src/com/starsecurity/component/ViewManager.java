@@ -23,7 +23,8 @@ import com.starsecurity.h264.VideoView;
  * @author       修改人              陈明珍
  * @date        修改日期           2013-05-03
  * @description 修改说明	          
-     2013-05-03 加入提示信息对字符串资源ID的支持
+ *   2013-05-10 加入mainVideoView、fullVideoView、changeVideoView对全屏进行支持 陈明珍
+ *   2013-05-03 加入提示信息对字符串资源ID的支持 陈明珍
  */
 public class ViewManager {
 	private static ViewManager m_instance;
@@ -31,6 +32,9 @@ public class ViewManager {
 	private VideoView videoView;				// 视频显示View
 	private TextView ipTextView;				// IP信息显示View
 	private TextView helpMsgView;				// 提示信息显示View
+	
+	private VideoView mainVideoView;			// 存储主界面视频控件
+	private VideoView fullVideoView;			// 存储全屏界面视频控件
 	
 	private static ContextWrapper context;
 	
@@ -50,11 +54,11 @@ public class ViewManager {
 		return m_instance;
 	}
 
-
+	
+	
 	public VideoView getVideoView() {
 		return videoView;
 	}
-	
 
 
 	public void bindVideoView(VideoView videoView) {
@@ -71,6 +75,47 @@ public class ViewManager {
 
 	public void bindHelpMsgView(TextView helpMsg) {
 		this.helpMsgView = helpMsg;
+	}
+	
+	
+	/**
+	 * @return the mainVideoView
+	 */
+	public VideoView getMainVideoView() {
+		return mainVideoView;
+	}
+
+	/**
+	 * @param mainVideoView the mainVideoView to set
+	 */
+	public void setMainVideoView(VideoView mainVideoView) {
+		this.mainVideoView = mainVideoView;
+	}
+
+	/**
+	 * @return the fullVideoView
+	 */
+	public VideoView getFullVideoView() {
+		return fullVideoView;
+	}
+
+	/**
+	 * @param fullVideoView the fullVideoView to set
+	 */
+	public void setFullVideoView(VideoView fullVideoView) {
+		this.fullVideoView = fullVideoView;
+	}
+	
+	/**
+	 * 改变VideoView对象
+	 * @param v
+	 */
+	public void changeVideoView(VideoView v) {
+		byte[] desPixel = v.getmPixel();
+		byte[] srcPixel = videoView.getmPixel();
+		System.arraycopy(srcPixel, 0, desPixel, 0, srcPixel.length);
+		
+		bindVideoView(v);
 	}
 	
 	
@@ -121,4 +166,7 @@ public class ViewManager {
 	public String getStringById(final int resourceId) {
 		return context.getString(resourceId);
 	}
+
+
+	
 }

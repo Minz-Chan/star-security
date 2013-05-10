@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="IDS_ConnectTimeoutInterval">8000</string>
+    <string name="app_name">星网安防</string>
+    <string name="action_settings">设置</string>
+    <string name="IDS_ConnectTimeoutInterval">12000</string>
     
     <string name="IDS_OVERRIDE">覆盖</string>
     <string name="IDS_DELETE">删除</string>
