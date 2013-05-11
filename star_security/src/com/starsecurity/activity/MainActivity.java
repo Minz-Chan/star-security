@@ -565,16 +565,6 @@ public class MainActivity extends Activity {
 			// 用户选择云台设备后，进行播放
 			if (data != null) {
 				dvrDevice = (DVRDevice) data.getSerializableExtra("DVRDevice");
-				// if(dvrDevice!=null){
-				// Connection conn = ConnectionManager.getConnection("conn1");
-				// conn.setUsername(dvrDevice.getLoginUsername());
-				// conn.setPassword(dvrDevice.getLoginPassword());
-				// conn.setSvr_ip(dvrDevice.getLoginIP());
-				// conn.setPort(Integer.valueOf(dvrDevice.getMobliePhonePort()));
-				// conn.setChannel_no(Integer.valueOf(dvrDevice.getStarChannel()));
-				// controlService.playVideo();
-				// isPlay = true;
-				// }
 			}
 			break;
 		}
