@@ -80,6 +80,7 @@ public class MainActivity extends Activity {
 	private static int page = 0;			// 存放界面显示的通道切换组的页面
 	private static boolean isPlay = false;	// 标识是否正在播放
 	private static String functionTempStr;	// 存储临时文本信息
+	private static boolean isCloudControl = false;
 	
 	/** 控制单元实例 */
 	private ControlService controlService =  new ControlServiceImpl("conn1");	
@@ -344,7 +345,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				if (!isPlay) {
-					if (dvrDevice != null) {
+					if (dvrDevice!= null&&isCloudControl) {
 						Connection conn = ConnectionManager
 								.getConnection("conn1");
 						conn.setUsername(dvrDevice.getLoginUsername());
@@ -363,7 +364,7 @@ public class MainActivity extends Activity {
 						playBtn.setBackgroundDrawable(getResources()
 								.getDrawable(R.drawable.linear_play));
 					} else if (settingUsername != null && settingServer != null
-							&& settingPort != null && settingChannel != null) {
+							&& settingPort != null && settingChannel != null&&!isCloudControl) {
 						Connection conn = ConnectionManager
 								.getConnection("conn1");
 						conn.setUsername(settingUsername);
@@ -557,6 +558,7 @@ public class MainActivity extends Activity {
 					settingPort = bundle.getString("portStr");
 				if (bundle.getString("channelStr") != null)
 					settingChannel = bundle.getString("channelStr");
+				isCloudControl = false;
 			}
 			break;
 		case Activity.RESULT_FIRST_USER:
@@ -565,6 +567,7 @@ public class MainActivity extends Activity {
 			// 用户选择云台设备后，进行播放
 			if (data != null) {
 				dvrDevice = (DVRDevice) data.getSerializableExtra("DVRDevice");
+				isCloudControl = true;
 			}
 			break;
 		}
