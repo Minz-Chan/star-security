@@ -15,7 +15,7 @@ import com.starsecurity.model.FavouriteRecord;
  */
 public interface FavouriteControlService {
 	/***
-	 * 为XML文件创建根节点
+	 * 创建XML文件根节点
 	 */
 	public boolean createFileAndRoot(String fileName,String rootName);
 	
@@ -71,4 +71,19 @@ public interface FavouriteControlService {
 	 * @return				成功与否
 	 */
 	public boolean addDefaultFavouriteElement(DVRDevice dvrDevice,String fileName);
+	
+	/***
+	 * 设置最近选取记录
+	 * @param recordName	最近选取的记录名
+	 * @param fileName		XML文件名
+	 * @return
+	 */
+	public boolean setLastRecord(String fileName,String recordName);
+	
+	/***
+	 * 获取最近选取记录
+	 * @param fileName		XML文件名
+	 * @return
+	 */
+	public String getLastRecordName(String fileName);
 }

@@ -112,6 +112,7 @@ public class DeviceListActivity extends Activity {
 				        	}else{	
 				        		favouriteControlService.addFavouriteElement(filePath, favouriteRecord);
 				        	}
+				        	favouriteControlService.setLastRecord(filePath,favouriteRecord.getFavouriteName());
 				        }
 						
 						//返回主界面播放视频

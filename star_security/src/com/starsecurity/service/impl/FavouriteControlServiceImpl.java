@@ -38,14 +38,16 @@ public class FavouriteControlServiceImpl implements FavouriteControlService {
 	}
 	
 	/***
-	 * 为XML文件创建根节点
+	 * 创建XML文件及根节点
 	 */
 	public boolean createFileAndRoot(String fileName,String rootName){
 		Document document = DocumentHelper.createDocument();
 		//创建根结点
 		document.addElement(rootName);
 		try 
-		{ 
+		{
+			Element rootElement=document.getRootElement();
+			rootElement.addElement("LastRecord");
 			/* 将document中的内容写入文件中 */ 
 			OutputFormat format = OutputFormat.createPrettyPrint(); 
 			format.setEncoding("UTF-8"); 
@@ -275,6 +277,42 @@ public class FavouriteControlServiceImpl implements FavouriteControlService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return FAILED;
+		} 	
+	}
+
+	@Override
+	public boolean setLastRecord(String fileName,String recordName) {
+		SAXReader saxReader = new SAXReader(); 
+		try {
+			Document document = saxReader.read(new File(fileName));
+			Element rootElement=document.getRootElement();
+			List LastRecordList = rootElement.selectNodes("//Favourites/LastRecord");
+			Element LastRecordTemp = (Element) LastRecordList.get(0);
+			LastRecordTemp.addAttribute("LastRecordName", recordName);
+			OutputFormat opf=new OutputFormat("",true,"UTF-8");
+			opf.setTrimText(true);
+			XMLWriter writer=new XMLWriter(new FileOutputStream(fileName),opf);
+			writer.write(document);
+			writer.close();
+			return SUCCESS;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return FAILED;
+		} 	
+	}
+
+	@Override
+	public String getLastRecordName(String fileName) {
+		SAXReader saxReader = new SAXReader(); 
+		try {
+			Document document = saxReader.read(new File(fileName));
+			Element rootElement=document.getRootElement();
+			List LastRecordList = rootElement.selectNodes("//Favourites/LastRecord");
+			Element LastRecordTemp = (Element) LastRecordList.get(0);
+			return LastRecordTemp.attribute("LastRecordName").getText().toString();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
 		} 	
 	}
 }

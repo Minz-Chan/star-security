@@ -93,17 +93,33 @@ public class SettingsActivity extends Activity {
 			List<String> favouriteRecordList = favouriteControlService.getFavouriteList(filePath);
 			if(favouriteRecordList.size()!=0){
 				//控件初始化
-				ArrayAdapter<String> favouriteRecordItems = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,favouriteRecordList);
-				favouriteRecordItems.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-				favouriteRecordSpinner.setAdapter(favouriteRecordItems);
-				String selectedRecordName= (String) favouriteRecordSpinner.getSelectedItem();
-				FavouriteRecord favouriteRecord = (FavouriteRecord) favouriteControlService.getFavouriteRecordByName(filePath,selectedRecordName);
-				usernameEditText.setText(favouriteRecord.getUserName());
-				passwordEditText.setText(favouriteRecord.getPassword());
-				serverEditText.setText(favouriteRecord.getIPAddress());
-				portEditText.setText(favouriteRecord.getPort());
-				recordNameEditText.setText(favouriteRecord.getFavouriteName());
-				channelSpinner.setSelection(Integer.parseInt(favouriteRecord.getDefaultChannel())-1);
+				if(favouriteControlService.getLastRecordName(filePath)==null){
+					ArrayAdapter<String> favouriteRecordItems = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,favouriteRecordList);
+					favouriteRecordItems.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+					favouriteRecordSpinner.setAdapter(favouriteRecordItems);
+					String selectedRecordName= (String) favouriteRecordSpinner.getSelectedItem();
+					FavouriteRecord favouriteRecord = (FavouriteRecord) favouriteControlService.getFavouriteRecordByName(filePath,selectedRecordName);
+					usernameEditText.setText(favouriteRecord.getUserName());
+					passwordEditText.setText(favouriteRecord.getPassword());
+					serverEditText.setText(favouriteRecord.getIPAddress());
+					portEditText.setText(favouriteRecord.getPort());
+					recordNameEditText.setText(favouriteRecord.getFavouriteName());
+					channelSpinner.setSelection(Integer.parseInt(favouriteRecord.getDefaultChannel())-1);
+				}
+				else{
+					ArrayAdapter<String> favouriteRecordItems = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,favouriteRecordList);
+					favouriteRecordItems.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+					String selectedRecordName= favouriteControlService.getLastRecordName(filePath);
+					favouriteRecordSpinner.setAdapter(favouriteRecordItems);
+					favouriteRecordSpinner.setSelection(favouriteRecordItems.getPosition(selectedRecordName));
+					FavouriteRecord lastFavouriteRecord = (FavouriteRecord) favouriteControlService.getFavouriteRecordByName(filePath,selectedRecordName);
+					usernameEditText.setText(lastFavouriteRecord.getUserName());
+					passwordEditText.setText(lastFavouriteRecord.getPassword());
+					serverEditText.setText(lastFavouriteRecord.getIPAddress());
+					portEditText.setText(lastFavouriteRecord.getPort());
+					recordNameEditText.setText(lastFavouriteRecord.getFavouriteName());
+					channelSpinner.setSelection(Integer.parseInt(lastFavouriteRecord.getDefaultChannel())-1);
+				}
 			}	
 		}
 		
@@ -141,6 +157,7 @@ public class SettingsActivity extends Activity {
 						favouriteRecord.setPort(portEditText.getText().toString());
 						favouriteRecord.setDefaultChannel(channelSpinner.getSelectedItem().toString());
 						favouriteRecord.setRecordName(recordNameEditText.getText().toString());
+						favouriteControlService.setLastRecord(filePath,recordNameEditText.getText().toString());
 						if(favouriteControlService.addFavouriteElement(filePath, favouriteRecord)){
 							//更新界面				
 							List<String> favouriteRecordList = favouriteControlService.getFavouriteList(filePath);
@@ -174,6 +191,7 @@ public class SettingsActivity extends Activity {
 								favouriteRecord.setRecordName(recordNameEditText.getText().toString());
 		            			if(favouriteControlService.coverFavouriteElement(filePath, favouriteRecord))
 		            				Toast.makeText(getApplicationContext(),getString(R.string.IDS_RecordSaveSuc), Toast.LENGTH_LONG).show();
+		            			favouriteControlService.setLastRecord(filePath,recordNameEditText.getText().toString());
 		            		}
 		            	}).setNegativeButton(getString(R.string.IDS_DELETE),new DialogInterface.OnClickListener() {
 		            		@Override
@@ -194,7 +212,8 @@ public class SettingsActivity extends Activity {
 										portEditText.setText(favouriteRecordTemp.getPort());
 										recordNameEditText.setText(favouriteRecordTemp.getFavouriteName());
 										channelSpinner.setSelection(Integer.parseInt(favouriteRecordTemp.getDefaultChannel())-1);	
-			            				Toast.makeText(getApplicationContext(),getString(R.string.IDS_DelSuc), Toast.LENGTH_LONG).show();
+										favouriteControlService.setLastRecord(filePath,null);
+										Toast.makeText(getApplicationContext(),getString(R.string.IDS_DelSuc), Toast.LENGTH_LONG).show();
 									}
 									else{
 										ArrayAdapter<String> favouriteRecordNullItems = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_item,favouriteRecordList);
@@ -205,7 +224,8 @@ public class SettingsActivity extends Activity {
 										serverEditText.setText(null);
 										portEditText.setText(null);
 										recordNameEditText.setText(null);
-										channelSpinner.setSelection(0);	
+										channelSpinner.setSelection(0);
+										favouriteControlService.setLastRecord(filePath,null);
 									}
 		            			}
 		            		}
@@ -246,6 +266,7 @@ public class SettingsActivity extends Activity {
 		int item_id = item.getItemId();
 		switch(item_id){
 			case R.id.setting_settingMenu:
+				favouriteControlService.setLastRecord(filePath,(String) favouriteRecordSpinner.getSelectedItem());
 				//完成设置并跳转至主界面
 				Bundle bundle = new Bundle();
 				String username = usernameEditText.getText().toString();
