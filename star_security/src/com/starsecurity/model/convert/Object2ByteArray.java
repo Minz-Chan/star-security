@@ -29,7 +29,7 @@ import com.starsecurity.util.LByteConvert;
  * @author       修改人                 陈明珍
  * @date        修改日期           2013-05-06
  * @description 修改说明	             
- *   2013-05-06 移除函数convert2ByteArr的Class clazz参数
+ *   2013-05-06 移除函数convert2ByteArr的Class clazz参数 陈明珍
  */
 public class Object2ByteArray {
 	public static byte[] convert2ByteArr(Object obj) {

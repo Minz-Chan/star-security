@@ -47,9 +47,9 @@ import com.tvt.p2pplayer.VideoView;
 
 /**
  * @function     功能	  Android Junit测试用类
- * @author       创建人                 陳明珍
+ * @author       创建人                 陈明珍
  * @date        创建日期           2013-03-22
- * @author       修改人                 陳明珍
+ * @author       修改人                 陈明珍
  * @date        修改日期           2013-03-22
  * @description 修改说明	             首次增加
  */

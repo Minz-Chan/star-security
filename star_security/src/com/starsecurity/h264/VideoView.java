@@ -30,8 +30,8 @@ import android.widget.ImageView;
  * @author       修改人              陈明珍
  * @date        修改日期           2013-05-10
  * @description 修改说明	  
- *   2013-05-10 加入旋转、拉伸，对全屏模式进行支持
- *   2013-04-16 使图像可适应容器的Width和Height
+ *   2013-05-10 加入旋转、拉伸，对全屏模式进行支持 陈明珍
+ *   2013-04-16 使图像可适应容器的Width和Height 陈明珍
  */
 public class VideoView extends ImageView {
 	private int width = 352;

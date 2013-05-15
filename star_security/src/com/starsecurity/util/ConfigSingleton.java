@@ -1,5 +1,22 @@
+/*
+ * FileName:ConfigSingleton.java
+ * 
+ * Package:com.starsecurity.util
+ * 
+ * Date:2013-03-19
+ * 
+ * Copyright: Copyright (c) 2013 Minz.Chan
+ */
 package com.starsecurity.util;
 
+/**
+ * @function     功能	    连接信息配置类
+ * @author       创建人              陈明珍
+ * @date        创建日期           2013-04-15
+ * @author       修改人              陈明珍
+ * @date        修改日期           2013-04-15
+ * @description 修改说明	          首次增加
+ */
 public class ConfigSingleton {
 
 	private static ConfigSingleton m_instance = null;

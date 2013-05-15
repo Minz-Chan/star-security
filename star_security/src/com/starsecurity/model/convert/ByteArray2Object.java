@@ -34,8 +34,8 @@ import com.starsecurity.util.LByteConvert;
  * @author       修改人                 陈明珍
  * @date        修改日期           2013-03-22
  * @description 修改说明	             
- *     TLV_V_DVSInfoRequest、TLV_V_ChannelResponse、TLV_V_StreamDataFormat、
- * TLV_V_VideoFrameInfo四个结构进行解析，并调试通过
+ *   2013-03-22 TLV_V_DVSInfoRequest、TLV_V_ChannelResponse、TLV_V_StreamDataFormat、
+ *               TLV_V_VideoFrameInfo四个结构进行解析，并调试通过  陈明珍
  */
 public class ByteArray2Object {
 	/**

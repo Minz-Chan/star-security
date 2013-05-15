@@ -1,3 +1,12 @@
+/*
+ * FileName:H264StreamingReceiver.java
+ * 
+ * Package:com.starsecurity.model.data
+ * 
+ * Date:2013-04-16
+ * 
+ * Copyright: Copyright (c) 2013 Minz.Chan
+ */
 package com.starsecurity.model.data;
 
 import java.io.File;
@@ -31,6 +40,15 @@ import com.starsecurity.model.convert.Object2ByteArray;
 import com.starsecurity.util.DataProcessUtil;
 import com.starsecurity.util.H264DecodeUtil;
 
+/**
+ * @function     功能	  h264码流接收线程类
+ * @author       创建人                陈明珍
+ * @date        创建日期           2013-04-16
+ * @author       修改人                陈明珍
+ * @date        修改日期           2013-05-03
+ * @description 修改说明	 
+ *   2013-04-16 首次增加 陈明珍
+ */
 public class H264StreamingReceiver implements Runnable {
 
 	VideoView v;

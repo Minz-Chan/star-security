@@ -1,3 +1,12 @@
+/*
+ * FileName:StreamSender.java
+ * 
+ * Package:com.starsecurity.component
+ * 
+ * Date:2013-05-06
+ * 
+ * Copyright: Copyright (c) 2013 Minz.Chan
+ */
 package com.starsecurity.component;
 
 import java.io.IOException;

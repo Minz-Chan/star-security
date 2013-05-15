@@ -18,9 +18,9 @@ package com.starsecurity.util;
  * 和 c/c++的通信，则情况就要复杂一些，主要是因为 java 中没有 unsigned 类型，并且 java和c在
  * 某些数据类型上的长度不一致。本类就是针对这种情况，整理了 java 数据类型和网络字节流(Big-
  * Endian)或字节包 ( 相当于 java 的 byte 数组 ) 之间转换方法。
- * @author       创建人                 陳明珍
+ * @author       创建人                 陈明珍
  * @date        创建日期           2013-03-19
- * @author       修改人                 陳明珍
+ * @author       修改人                 陈明珍
  * @date        修改日期           2013-03-19
  * @description 修改说明	             首次增加
  */

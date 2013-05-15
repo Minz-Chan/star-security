@@ -1,3 +1,12 @@
+/*
+ * FileName:FullScreenActivity.java
+ * 
+ * Package:com.starsecurity.activity
+ * 
+ * Date:2013-05-09
+ * 
+ * Copyright: Copyright (c) 2013 Minz.Chan
+ */
 package com.starsecurity.activity;
 
 import com.starsecurity.R;
@@ -38,39 +47,11 @@ public class FullScreenActivity extends Activity {
 		String conn_name = getIntent().getStringExtra("conn_name");
 		extendedService = new ExtendedServiceImpl(conn_name);
 		
-		//getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//		try {
-//			videoView = ViewManager.getInstance().getVideoView().clone();
-//		} catch (CloneNotSupportedException e) {
-//			e.printStackTrace();
-//		} 
-//		
-		
 		VideoView videoView = (VideoView) findViewById(R.id.sufFull);
 		ViewManager.getInstance().setFullVideoView(videoView);
 		
-		
 		extendedService.switchToFullScreen();
 		
-		/*
-		videoView = new VideoView(this);
-		videoView.init();
-		
-		byte[] desPixel = videoView.getmPixel();
-		byte[] srcPixel = ViewManager.getInstance().getVideoView().getmPixel();
-		System.arraycopy(srcPixel, 0, desPixel, 0, srcPixel.length);
-		
-		videoView.postInvalidate();
-		
-		ScrollView sv   = new ScrollView(this);    
-		LinearLayout.LayoutParams LP_FF = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);  
-		sv.setLayoutParams( LP_FF ); 
-		
-		LinearLayout layout = new LinearLayout(this);   //线性布局方式     
-		layout.setOrientation( LinearLayout.VERTICAL ); //控件对其方式为垂直排列     
-		layout.setBackgroundColor( 0xff00ffff );        //设置布局板的一个特殊颜色，这可以检验我们会话时候是否有地方颜色不正确！     
-		
-		layout.addView(videoView);*/
 		
 		
 		videoView.setOnTouchListener(new OnTouchListener() {
@@ -85,9 +66,6 @@ public class FullScreenActivity extends Activity {
 		
 	}
 
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onBackPressed()
-	 */
 	@Override
 	public void onBackPressed() {
 		if (extendedService != null) {
