@@ -128,6 +128,7 @@ public class SettingsActivity extends Activity {
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int position, long id) {
 				String selectedRecordName = (String) favouriteRecordSpinner.getSelectedItem();
+				favouriteControlService.setLastRecord(filePath,selectedRecordName);
 				FavouriteRecord favouriteRecord = favouriteControlService.getFavouriteRecordByName(filePath, selectedRecordName);
 				usernameEditText.setText(favouriteRecord.getUserName());
 				passwordEditText.setText(favouriteRecord.getPassword());
@@ -266,7 +267,6 @@ public class SettingsActivity extends Activity {
 		int item_id = item.getItemId();
 		switch(item_id){
 			case R.id.setting_settingMenu:
-				favouriteControlService.setLastRecord(filePath,(String) favouriteRecordSpinner.getSelectedItem());
 				//完成设置并跳转至主界面
 				Bundle bundle = new Bundle();
 				String username = usernameEditText.getText().toString();
