@@ -15,8 +15,9 @@ package com.starsecurity.service;
  * @author       创建人              陈明珍
  * @date        创建日期           2013-04-15
  * @author       修改人              陈明珍
- * @date        修改日期           2013-04-15
- * @description 修改说明	          首次增加
+ * @date        修改日期           2013-05-17
+ * @description 修改说明	          
+ *   2013-05-17 加入[停止控制动作]接口 陈明珍
  */
 public interface ControlService {
 	
@@ -68,5 +69,10 @@ public interface ControlService {
 	 */
 	public int switchChannel(int des_channelno);
 
+	/**
+	 * 停止控制动作
+	 * @return
+	 */
+	public int stopAction();
 	
 }

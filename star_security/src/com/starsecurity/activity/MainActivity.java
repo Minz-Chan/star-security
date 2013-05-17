@@ -32,13 +32,14 @@ import com.starsecurity.service.impl.ExtendedServiceImpl;
  * @author       修改人           陈明珍/肖远东
  * @date        修改日期           2013-05-09
  * @description 修改记录	          
-     2013-05-07 加入方向控制、放大/缩小、焦点放大/缩小、光圈放大/缩小功能  陈明珍
-     2013-05-03 加入提示信息对字符串资源ID的支持 陈明珍
-                                加入拍照功能
-     2013-05-03 ViewManager加入上下文初始化         陈明珍
-     2013-04-26 当前Connection信息获取                  陈明珍
-               ConnectionManager.getConnection("conn1")
-     2013-04-15 ViewManager相关信息初始化             陈明珍
+ *   2013-05-17 加入控制停止动作controlService.stopAction 陈明珍
+ *   2013-05-07 加入方向控制、放大/缩小、焦点放大/缩小、光圈放大/缩小功能  陈明珍
+ *   2013-05-03 加入提示信息对字符串资源ID的支持 陈明珍
+ *              加入拍照功能
+ *   2013-05-03 ViewManager加入上下文初始化         陈明珍
+ *   2013-04-26 当前Connection信息获取                  陈明珍
+ *             ConnectionManager.getConnection("conn1")
+ *   2013-04-15 ViewManager相关信息初始化             陈明珍
  */
 public class MainActivity extends Activity {
 
@@ -157,6 +158,7 @@ public class MainActivity extends Activity {
 				if(event.getAction() == MotionEvent.ACTION_UP) {
 					if(isPlay){
 						msgView.setText(functionTempStr);
+						controlService.stopAction();
 					}
 				}
 				return false;
@@ -177,6 +179,7 @@ public class MainActivity extends Activity {
 				if(event.getAction() == MotionEvent.ACTION_UP) {
 					if(isPlay){
 						msgView.setText(functionTempStr);
+						controlService.stopAction();
 					}
 				}
 				return false;
@@ -197,6 +200,7 @@ public class MainActivity extends Activity {
 				if(event.getAction() == MotionEvent.ACTION_UP) {
 					if(isPlay){
 						msgView.setText(functionTempStr);
+						controlService.stopAction();
 					}
 				}
 				return false;
@@ -215,8 +219,10 @@ public class MainActivity extends Activity {
 				}
 				//按钮松开时，显示播放参数
 				if(event.getAction() == MotionEvent.ACTION_UP) {
-					if(isPlay)
+					if(isPlay) {
 						msgView.setText(functionTempStr);
+						controlService.stopAction();
+					}
 				}
 				return false;
 			}
@@ -235,8 +241,10 @@ public class MainActivity extends Activity {
 				}
 				//按钮松开时，显示播放参数
 				if(event.getAction() == MotionEvent.ACTION_UP) {
-					if(isPlay)
+					if(isPlay) {
 						msgView.setText(functionTempStr);
+						controlService.stopAction();
+					}
 				}
 				return false;
 			}
@@ -255,8 +263,10 @@ public class MainActivity extends Activity {
 				}
 				//按钮松开时，显示播放参数
 				if(event.getAction() == MotionEvent.ACTION_UP) {
-					if(isPlay)
+					if(isPlay) {
 						msgView.setText(functionTempStr);
+						controlService.stopAction();
+					}
 				}
 				return false;
 			}
@@ -275,8 +285,10 @@ public class MainActivity extends Activity {
 				}
 				//按钮松开时，显示播放参数
 				if(event.getAction() == MotionEvent.ACTION_UP) {
-					if(isPlay)
+					if(isPlay) {
 						msgView.setText(functionTempStr);
+						controlService.stopAction();
+					}
 				}
 				return false;
 			}
@@ -294,8 +306,10 @@ public class MainActivity extends Activity {
 				}
 				//按钮松开时，显示播放参数
 				if(event.getAction() == MotionEvent.ACTION_UP) {
-					if(isPlay)
+					if(isPlay) {
 						msgView.setText(functionTempStr);
+						controlService.stopAction();
+					}
 				}
 				return false;
 			}
@@ -314,8 +328,10 @@ public class MainActivity extends Activity {
 				}
 				//按钮松开时，显示播放参数
 				if(event.getAction() == MotionEvent.ACTION_UP) {
-					if(isPlay)
+					if(isPlay) {
 						msgView.setText(functionTempStr);
+						controlService.stopAction();
+					}
 				}
 				return false;
 			}
@@ -333,8 +349,10 @@ public class MainActivity extends Activity {
 				}
 				//按钮松开时，显示播放参数
 				if(event.getAction() == MotionEvent.ACTION_UP) {
-					if(isPlay)
+					if(isPlay) {
 						msgView.setText(functionTempStr);
+						controlService.stopAction();
+					}
 				}
 				return false;
 			}

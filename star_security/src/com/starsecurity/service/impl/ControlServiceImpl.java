@@ -169,4 +169,9 @@ public class ControlServiceImpl implements ControlService {
 
 		return result;
 	}
+
+	
+	public int stopAction() {
+		return sendControlRequest(OWSP_ACTIONCode.OWSP_ACTION_MD_STOP);
+	}
 }

@@ -39,6 +39,7 @@ import com.starsecurity.util.DataProcessUtil;
  * @author       修改人              陈明珍
  * @date        修改日期           2013-05-06
  * @description 修改说明	        
+ *   2013-05-17 修正为允许password为空
  *   2013-05-07 加入返回数据存储项并提供存取接口 陈明珍
  *   2013-05-06 加入连接超时处理 陈明珍
  *   2013-05-05 使用Packet替代原有组包方式 陈明珍
@@ -63,7 +64,7 @@ public class Connection {
 	public int connect() {
 		int result = 1;
 		
-		if (username.equals("") || password.equals("") || svr_ip.equals("")
+		if (username.equals("") || svr_ip.equals("")
 				|| port <= 0) {
 			return 0;
 		} 
