@@ -20,8 +20,9 @@ import java.io.InputStream;
  * @author       创建人              陈明珍
  * @date        创建日期           2013-04-25
  * @author       修改人              陈明珍
- * @date        修改日期           2013-04-25
- * @description 修改说明	          首次增加
+ * @date        修改日期           2013-05-23
+ * @description 修改说明	          
+ *   2013-05-53 数据接收部分优化
  */
 public class SocketInputStream extends FilterInputStream {
 
@@ -33,15 +34,11 @@ public class SocketInputStream extends FilterInputStream {
 	public int read(byte[] b, int off, int len) throws IOException {
 		int iRead = 0;
 		int iShouldBeRead = len;
-		int c = -1;
-		while (iRead < iShouldBeRead) {
-			c = super.read();
-			if (c != -1) {
-				b[iRead++] = (byte)c;
-			} else {
-				return iRead;
-			}
-		}
+		
+		while (iRead < iShouldBeRead) {   
+			iRead += super.read(b, iRead, iShouldBeRead - iRead);   
+		} 
+		
 		return iRead;
 	}
 

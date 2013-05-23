@@ -73,11 +73,11 @@ public class H264StreamReceiver implements Runnable {
 			return;
 		}
 
-	    System.out.println("=================== loginCheck begin ==================");
+	    //System.out.println("=================== loginCheck begin ==================");
 		
 	    conn.loginCheck();						// 登录验证
 	    
-	    System.out.println("=================== loginCheck end ==================");
+	    //System.out.println("=================== loginCheck end ==================");
 	    
 	    InputStream sockIn = null; 
 	    sock = conn.getSock();
@@ -88,7 +88,7 @@ public class H264StreamReceiver implements Runnable {
  			//socketReader = sock.getInputStream();
  			sockIn = new SocketInputStream(sock.getInputStream());
 
- 			System.out.println("=================== get common packet start ==================");
+ 			//System.out.println("=================== get common packet start ==================");
  			
 			// 获取公共包头头（ packet_length、packet_seq）
 			byte[] packetHeaderBuf = new byte[8];
@@ -98,21 +98,22 @@ public class H264StreamReceiver implements Runnable {
 				return;
 			}
 			
-			System.out.println("=================== get common packet end ==================");
+			//System.out.println("=================== get common packet end ==================");
 			
+			Timecounter.getInstance().setBaseTime();
 			
-			System.out.println("=================== get packet start ==================");
+			//System.out.println("=================== get packet start ==================");
 			// 根据包长度读取包内容
 			byte[] tlvContent = new byte[65536];
 			sockIn.read(tlvContent, 0, (int) owspPacketHeader.getPacket_length() - 4);
-			System.out.println("=================== get packet: " + ((int) owspPacketHeader.getPacket_length() - 4) + "bytes ==================");
-			System.out.println("=================== get packet end ==================");
+			//System.out.println("=================== get packet: " + ((int) owspPacketHeader.getPacket_length() - 4) + "bytes ==================");
+			//System.out.println("=================== get packet end ==================");
 			
 			while(!tlvContent.equals("")){
 				
 				/* 数据处理 */
 				dataProcessService.process(tlvContent, (int)owspPacketHeader.getPacket_length());
-				System.out.println("=================== finish data process ==================");
+				//System.out.println("=================== finish data process ==================");
 				
 				
 				
@@ -123,7 +124,7 @@ public class H264StreamReceiver implements Runnable {
 					break;
 				}
 				
-				System.out.println("=================== get another common packet start ==================");
+				//System.out.println("=================== get another common packet start ==================");
 				
 				do {
 					/* 数据重置 */
@@ -131,13 +132,13 @@ public class H264StreamReceiver implements Runnable {
 						packetHeaderBuf[i] = 0;
 					}
 					/* 读取公共包头 */
-					sockIn.read(packetHeaderBuf);
+					sockIn.read(packetHeaderBuf, 0, 8);
 					owspPacketHeader = (OwspPacketHeader) ByteArray2Object.convert2Object(OwspPacketHeader.class, packetHeaderBuf,0,OWSP_LEN.OwspPacketHeader);
 				} while (owspPacketHeader.getPacket_length() <= 0);
 				
-				System.out.println("=================== get another common packet end ==================");
+				//System.out.println("=================== get another common packet end ==================");
 				
-				System.out.println("=================== get another packet  start ==================");
+				//System.out.println("=================== get another packet  start ==================");
 				
 				
 				/* 重置数据数组 */
@@ -150,11 +151,11 @@ public class H264StreamReceiver implements Runnable {
 				int iRead = sockIn.read(tlvContent, 0, (int) owspPacketHeader.getPacket_length() - 4);
 				
 				
-				System.out.println("=================== length of data received: " + iRead + "   ==================");
-				System.out.println("=================== length of packet: " + ((int)owspPacketHeader.getPacket_length() - 4) + "   ==================");
+				//System.out.println("=================== length of data received: " + iRead + "   ==================");
+				//System.out.println("=================== length of packet: " + ((int)owspPacketHeader.getPacket_length() - 4) + "   ==================");
 				
-				System.out.println("=================== get another packet: " + ((int) owspPacketHeader.getPacket_length() - 4) + "bytes ==================");
-				System.out.println("=================== get another packet end ==================");
+				//System.out.println("=================== get another packet: " + ((int) owspPacketHeader.getPacket_length() - 4) + "bytes ==================");
+				//System.out.println("=================== get another packet end ==================");
 				
 			}
 			
