@@ -16,6 +16,7 @@ import com.starsecurity.model.TLV_T_Command;
 import com.starsecurity.model.TLV_V_ChannelRequest;
 import com.starsecurity.model.TLV_V_ChannelResponse;
 import com.starsecurity.model.TLV_V_ControlRequest;
+import com.starsecurity.model.TLV_V_DVSInfoRequest;
 import com.starsecurity.model.TLV_V_LoginRequest;
 import com.starsecurity.model.TLV_V_PhoneInfoRequest;
 import com.starsecurity.model.TLV_V_StreamDataFormat;
@@ -57,6 +58,9 @@ public class DataProcessUtil {
 		} else if (obj instanceof TLV_V_ChannelResponse) {
 			head.setTlv_type(TLV_T_Command.TLV_T_CHANNLE_ANSWER);
 			head.setTlv_len(OWSP_LEN.TLV_V_ChannelResponse);
+		} else if (obj instanceof TLV_V_DVSInfoRequest) {
+			head.setTlv_type(TLV_T_Command.TLV_T_DVS_INFO_REQUEST);
+			head.setTlv_len(OWSP_LEN.TLV_V_DVSInfoRequest);
 		} else if (obj instanceof TLV_V_StreamDataFormat) {
 			head.setTlv_type(TLV_T_Command.TLV_T_STREAM_FORMAT_INFO);
 			head.setTlv_len(OWSP_LEN.TLV_V_StreamDataFormat);
