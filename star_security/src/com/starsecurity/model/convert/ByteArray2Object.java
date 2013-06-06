@@ -18,6 +18,7 @@ import com.starsecurity.model.TLV_HEADER;
 import com.starsecurity.model.TLV_Length;
 import com.starsecurity.model.TLV_V_ChannelResponse;
 import com.starsecurity.model.TLV_V_DVSInfoRequest;
+import com.starsecurity.model.TLV_V_LoginResponse;
 import com.starsecurity.model.TLV_V_StreamDataFormat;
 import com.starsecurity.model.TLV_V_VersionInfoRequest;
 import com.starsecurity.model.TLV_V_VideoData;
@@ -32,10 +33,11 @@ import com.starsecurity.util.LByteConvert;
  * @author       创建人                 肖远东
  * @date        创建日期           2013-03-20
  * @author       修改人                 陈明珍
- * @date        修改日期           2013-03-22
+ * @date        修改日期           2013-06-05
  * @description 修改说明	             
  *   2013-03-22 TLV_V_DVSInfoRequest、TLV_V_ChannelResponse、TLV_V_StreamDataFormat、
  *               TLV_V_VideoFrameInfo四个结构进行解析，并调试通过  陈明珍
+ *   2013-06-05 加入TLV_V_LoginResponse处理 陈明珍
  */
 public class ByteArray2Object {
 	/**
@@ -131,7 +133,7 @@ public class ByteArray2Object {
 			
 			return tlv_V_ChannelResponse;
 		} else if( clazz == TLV_V_StreamDataFormat.class ){
-			if(tempByteArray.length!=OWSP_LEN.TLV_V_StreamDataFormat) {
+			if(tempByteArray.length != OWSP_LEN.TLV_V_StreamDataFormat) {
 				return null;
 			}
 			
@@ -180,6 +182,15 @@ public class ByteArray2Object {
 		} else if ( clazz == TLV_V_VideoData.class) {
 			
 			return tempByteArray;
+		} else if ( clazz == TLV_V_LoginResponse.class) {
+			if(tempByteArray.length != OWSP_LEN.TLV_V_LoginResponse) {
+				return null;
+			}
+			
+			TLV_V_LoginResponse tlv_V_LoginResponse = new TLV_V_LoginResponse();
+			tlv_V_LoginResponse.setResult(LByteConvert.bytesToUshort(tempByteArray, 0));
+			tlv_V_LoginResponse.setReserve(LByteConvert.bytesToUshort(tempByteArray, 0));
+			return tlv_V_LoginResponse;
 		}
 		
 		return null;

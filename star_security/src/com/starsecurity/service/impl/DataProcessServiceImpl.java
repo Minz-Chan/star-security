@@ -9,15 +9,19 @@
  */
 package com.starsecurity.service.impl;
 
+import com.starsecurity.R;
 import com.starsecurity.component.ConnectionManager;
 import com.starsecurity.component.Timecounter;
 import com.starsecurity.component.ViewManager;
 import com.starsecurity.h264.VideoView;
 import com.starsecurity.model.OWSP_LEN;
+import com.starsecurity.model.OWSP_VideoDataFormat;
+import com.starsecurity.model.ResponseCode;
 import com.starsecurity.model.TLV_HEADER;
 import com.starsecurity.model.TLV_T_Command;
 import com.starsecurity.model.TLV_V_ChannelResponse;
 import com.starsecurity.model.TLV_V_DVSInfoRequest;
+import com.starsecurity.model.TLV_V_LoginResponse;
 import com.starsecurity.model.TLV_V_StreamDataFormat;
 import com.starsecurity.model.TLV_V_VersionInfoRequest;
 import com.starsecurity.model.TLV_V_VideoData;
@@ -83,7 +87,16 @@ public class DataProcessServiceImpl implements DataProcessService {
 				System.out.println("*********************** P Frame process start  *************************");
 				byte[] tmp = (byte[]) ByteArray2Object.convert2Object(TLV_V_VideoData.class, data, flag, tlv_Header.getTlv_len());
 				
-				int result = h264.decodePacket(tmp, tmp.length, v.getmPixel());
+				int result = 0;
+				
+				try {
+					result = h264.decodePacket(tmp, tmp.length, v.getmPixel());
+				} catch(Exception e) {
+					// 解码过程发生异常
+					ViewManager.getInstance().setHelpMsg(R.string.IDS_Unknown);
+				}
+				
+				
 				if(result == 1) {
 					v.postInvalidate();
 					System.out.println("*********************** update video: P Frame  *************************");
@@ -95,7 +108,16 @@ public class DataProcessServiceImpl implements DataProcessService {
 				System.out.println("*********************** I Frame process start  *************************");
 				byte[] tmp = (byte[]) ByteArray2Object.convert2Object(TLV_V_VideoData.class, data, flag, tlv_Header.getTlv_len());
 				
-				int result = h264.decodePacket(tmp, tmp.length, v.getmPixel());
+				int result = 0;
+				
+				try {
+					result = h264.decodePacket(tmp, tmp.length, v.getmPixel());
+				} catch(Exception e) {
+					// 解码过程发生异常
+					ViewManager.getInstance().setHelpMsg(R.string.IDS_Unknown);
+				}
+				
+				
 				if(result == 1) {
 					v.postInvalidate();
 					System.out.println("*********************** update video: I Frame  *************************");
@@ -142,10 +164,39 @@ public class DataProcessServiceImpl implements DataProcessService {
 							 + "Width:" + tlv_V_StreamDataFormat.getVideoFormat().getWidth() + " "
 							 + "Height:" + tlv_V_StreamDataFormat.getVideoFormat().getHeight() + " "
 							 + "bitrate:" + (int)(tlv_V_StreamDataFormat.getVideoFormat().getBitrate() / 1024));
+					
+					OWSP_VideoDataFormat videoDataFormat = tlv_V_StreamDataFormat.getVideoFormat();
+					h264.init(videoDataFormat.getWidth(), videoDataFormat.getHeight());	// 初始化视频分辨率
 				}
 				
 				ConnectionManager.getConnection(conn_name).addResultItem(tlv_V_StreamDataFormat);
-			} 
+			} else if (tlv_Header.getTlv_type() == TLV_T_Command.TLV_T_LOGIN_ANSWER) {
+				TLV_V_LoginResponse tlv_V_LoginResponse;
+				tlv_V_LoginResponse = (TLV_V_LoginResponse) ByteArray2Object.convert2Object(TLV_V_LoginResponse.class, data, flag, OWSP_LEN.TLV_V_LoginResponse);
+				
+				int result = tlv_V_LoginResponse.getResult();
+				
+				if (result == ResponseCode._RESPONSECODE_SUCC) { // 登录服务器成功
+					ViewManager.getInstance().setHelpMsg(R.string.IDS_LoginSerSuccess);  
+				} else {
+					ConnectionManager.getConnection(conn_name).setConnect_state(0);	// 关闭连接
+					
+					if (result == ResponseCode._RESPONSECODE_USER_PWD_ERROR) { // 用户或密码错误
+						ViewManager.getInstance().setHelpMsg(R.string.IDS_LoginInfo);
+					} else if (result == ResponseCode._RESPONSECODE_PDA_VERSION_ERROR) { // 版本不一致
+						ViewManager.getInstance().setHelpMsg(R.string.IDS_VersionErr);
+					} else if (result == ResponseCode._RESPONSECODE_MAX_USER_ERROR) { // 最大用户数
+						ViewManager.getInstance().setHelpMsg(R.string.IDS_UserMax);
+					} else if (result == ResponseCode._RESPONSECODE_DEVICE_OFFLINE) { // 设备已离线
+						ViewManager.getInstance().setHelpMsg(R.string.IDS_ACQ_Off);
+					} else { // 其他
+						ViewManager.getInstance().setHelpMsg(R.string.IDS_LoginSerFail);  // 登录服务器失败
+						
+					}  
+						
+				}
+				
+			}
 			
 			
 			
