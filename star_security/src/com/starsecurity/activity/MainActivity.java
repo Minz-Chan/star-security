@@ -36,8 +36,9 @@ import com.starsecurity.service.impl.ExtendedServiceImpl;
  * @author       创建人              肖远东
  * @date        创建日期           2013-03-18
  * @author       修改人           陈明珍/肖远东
- * @date        修改日期           2013-05-09
+ * @date        修改日期           2013-06-08
  * @description 修改记录	          
+ *   2013-06-08 加入断线重连功能（3分钟后重连） 陈明珍
  *   2013-05-17 加入控制停止动作controlService.stopAction 陈明珍
  *   2013-05-07 加入方向控制、放大/缩小、焦点放大/缩小、光圈放大/缩小功能  陈明珍
  *   2013-05-03 加入提示信息对字符串资源ID的支持 陈明珍
