@@ -1,9 +1,12 @@
 package com.starsecurity.activity;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -23,6 +26,7 @@ import com.starsecurity.model.TLV_T_Command;
 import com.starsecurity.model.TLV_V_DVSInfoRequest;
 import com.starsecurity.service.ControlService;
 import com.starsecurity.service.ExtendedService;
+import com.starsecurity.service.impl.CheckConnectionBroadcast;
 import com.starsecurity.service.impl.ControlServiceImpl;
 import com.starsecurity.service.impl.ExtendedServiceImpl;
 
@@ -45,6 +49,10 @@ import com.starsecurity.service.impl.ExtendedServiceImpl;
  */
 public class MainActivity extends Activity {
 
+	public static MainActivity mainActivity;
+	
+	private PendingIntent pi = null;
+	
 	/** 底端按钮 */
 	private Button playBtn;					// 播放按钮
 	private Button captureBtn;				// 截屏按钮
@@ -95,6 +103,8 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		mainActivity = this;
 		
 		VideoView mVideoView = (VideoView)findViewById(R.id.p2p_view);
 		TextView ipView =  (TextView)findViewById(R.id.ip_text);
@@ -521,7 +531,13 @@ public class MainActivity extends Activity {
 				startActivityForResult(intent, 0);
 			}
 		});
-
+		
+		
+		/* 若网络异常或中断，3分钟后重连 */
+		AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);  
+        
+        pi = PendingIntent.getBroadcast(this, 0, new Intent(MainActivity.this, CheckConnectionBroadcast.class), Intent.FLAG_ACTIVITY_NEW_TASK);  
+        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 180 * 1000, pi);   
 	}
 	
 	private OnClickListener switchChannel = new OnClickListener() {
@@ -650,6 +666,9 @@ public class MainActivity extends Activity {
 								@Override
 								public void onClick(DialogInterface dialog,
 										int which) {
+									if (pi != null) {
+										pi.cancel();
+									}
 									System.exit(0);
 								}
 							}).setNegativeButton(R.string.IDS_Dispos, null)
@@ -657,5 +676,33 @@ public class MainActivity extends Activity {
 		}
 		return super.onKeyDown(keyCode, event);
 	}
+
+	
+	public boolean getIsPlay() {
+		return isPlay;
+	}
+	
+	public void playVideo() {
+		isPlay = false;
+		playBtn.performClick();
+	}
+	
+	public void stopVideo() {
+		isPlay = true;
+		playBtn.performClick();
+	}
+	
+    /** 
+     * 对网络连接状态进行判断 
+     * @return  true, 可用； false， 不可用 
+     */  
+    public boolean isOpenNetwork() {  
+        ConnectivityManager connManager = (ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);  
+        if(connManager.getActiveNetworkInfo() != null) {  
+            return connManager.getActiveNetworkInfo().isAvailable();  
+        }  
+      
+        return false;  
+    }  
 
 }
