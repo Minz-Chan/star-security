@@ -104,6 +104,8 @@ public class ViewManager {
 	 */
 	public void setFullVideoView(VideoView fullVideoView) {
 		this.fullVideoView = fullVideoView;
+
+		
 	}
 	
 	/**
@@ -111,6 +113,30 @@ public class ViewManager {
 	 * @param v
 	 */
 	public void changeVideoView(VideoView v) {
+		
+		// 若分辨率不相等，重新指配videoView相关缓存数组
+		/*
+		if ((v.getWidth() != videoView.getWidth() || v.getHeight() != videoView.getHeight())
+				&& (v.getWidth() > 0 && v.getHeight() > 0)) {
+			
+			videoView.changeScreenRevolution(v.getWidth(), v.getHeight());
+		}*/
+		
+		if (v.getmPixel().length != videoView.getmPixel().length) {
+			/*
+			int currWidth = this.videoView.getWidth();
+			int currHeight = this.videoView.getHeight();
+			// 若发现this.fullVideoView与前this.videoView分辨率不一致，则改变fullVideoView分辨率
+			if (this.fullVideoView.getWidth() != currWidth
+					|| this.fullVideoView.getHeight() != currHeight) {
+				this.fullVideoView.changeScreenRevolution(currWidth, currHeight);
+			}*/
+			int currWidth = this.videoView.getWidth1();
+			int currHeight = this.videoView.getHeight1();
+			v.changeScreenRevolution(currWidth, currHeight);
+		}
+		
+		
 		byte[] desPixel = v.getmPixel();
 		byte[] srcPixel = videoView.getmPixel();
 		System.arraycopy(srcPixel, 0, desPixel, 0, srcPixel.length);

@@ -47,7 +47,7 @@
     <string name="IDS_UserInfoErr">用户名密码错误</string>
     <string name="IDS_Downloading">开始下载...</string>
     <string name="IDS_Pause">已暂停</string>
-    <string name="IDS_Unknown">未知</string>
+    <string name="IDS_Unknown">未知异常</string>
     <string name="IDS_Opening">正在打开</string>
     <string name="IDS_OpenFileFail">打开文件失败</string>
     <string name="IDS_BeginReqData">正在请求数据...</string>
@@ -106,6 +106,7 @@
     <string name="IDS_INFO_HELP">网络正在连接中,是否确定中断当前连接,重新连接</string>
     <string name="IDS_SAVE_RECORD">保存记录成功</string>
     <string name="IDS_DELETE_RECORD">删除记录成功</string>
+    <string name="IDS_DATA_ERROR">数据异常</string>
     <string name="ddns_server">域名服务器</string>
     <string name="ddns_port">端口</string>
     <string name="user_id">用户名</string>

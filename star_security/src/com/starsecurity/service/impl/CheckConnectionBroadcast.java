@@ -37,7 +37,7 @@ public class CheckConnectionBroadcast extends BroadcastReceiver {
 		MainActivity main = MainActivity.mainActivity;
 
 	    /* 检查当前连接状态 */
-		if (main.getIsPlay()) {
+		if (main != null && main.getIsPlay()) {
 			if (!main.isOpenNetwork()) {
 				//main.stopVideo();
 		    	ViewManager.getInstance().setHelpMsg(R.string.IDS_InternetOff);

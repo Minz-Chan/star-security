@@ -171,7 +171,14 @@ public class H264StreamReceiver implements Runnable {
 			}
 			
 			e.printStackTrace();
-		}  
+		} catch(ArrayIndexOutOfBoundsException e) {
+			ViewManager.getInstance().setHelpMsg(R.string.IDS_DATA_ERROR);
+			e.printStackTrace();
+		} 
+ 		catch(Exception e) {
+			ViewManager.getInstance().setHelpMsg(R.string.IDS_Unknown);
+			e.printStackTrace();
+		}
 
 
 	}

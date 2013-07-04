@@ -216,7 +216,7 @@ public final class R {
         public static final int settingsactivitymenu=0x7f090002;
     }
     public static final class string {
-        public static final int DEVICE_LIST_ErrorReason=0x7f070074;
+        public static final int DEVICE_LIST_ErrorReason=0x7f070075;
         public static final int DS_AddFavSuc=0x7f070017;
         public static final int DS_ConSerSuc=0x7f070027;
         public static final int IDS_ABOUTBOX=0x7f070006;
@@ -241,6 +241,7 @@ public final class R {
         public static final int IDS_ConnectTimeoutInterval=0x7f070003;
         public static final int IDS_Connect_dispos=0x7f070057;
         public static final int IDS_Continue=0x7f070052;
+        public static final int IDS_DATA_ERROR=0x7f07006a;
         public static final int IDS_DELETE=0x7f070005;
         public static final int IDS_DELETE_RECORD=0x7f070069;
         public static final int IDS_DefaultChannel=0x7f070048;
@@ -322,17 +323,17 @@ public final class R {
         public static final int IDS_buffer=0x7f070024;
         public static final int action_settings=0x7f070001;
         public static final int app_name=0x7f070000;
-        public static final int ddns_back=0x7f07006f;
-        public static final int ddns_devicename=0x7f070070;
-        public static final int ddns_getlist_fail=0x7f070072;
-        public static final int ddns_passworld=0x7f07006d;
-        public static final int ddns_port=0x7f07006b;
-        public static final int ddns_progress_text=0x7f070071;
-        public static final int ddns_request=0x7f07006e;
-        public static final int ddns_server=0x7f07006a;
-        public static final int do_not_support=0x7f070073;
+        public static final int ddns_back=0x7f070070;
+        public static final int ddns_devicename=0x7f070071;
+        public static final int ddns_getlist_fail=0x7f070073;
+        public static final int ddns_passworld=0x7f07006e;
+        public static final int ddns_port=0x7f07006c;
+        public static final int ddns_progress_text=0x7f070072;
+        public static final int ddns_request=0x7f07006f;
+        public static final int ddns_server=0x7f07006b;
+        public static final int do_not_support=0x7f070074;
         public static final int hello_world=0x7f070002;
-        public static final int user_id=0x7f07006c;
+        public static final int user_id=0x7f07006d;
     }
     public static final class style {
         /** 

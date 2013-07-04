@@ -107,7 +107,24 @@ public class VideoView extends ImageView {
 	public void setFullScreenMode(boolean isFullScreenMode) {
 		this.isFullScreenMode = isFullScreenMode;
 	}
-    
+
+	public void changeScreenRevolution(int width, int height) {
+		this.mPixel = null;
+		
+		this.width = width;
+		this.height = height;
+		this.mPixel = new byte[this.width * this.height * 2];
+		init();
+	}
+
+	public int getWidth1() {
+		return width;
+	}
+
+	public int getHeight1() {
+		return height;
+	}
+	
 	
 	
 }

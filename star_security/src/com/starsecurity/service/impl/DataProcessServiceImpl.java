@@ -159,14 +159,25 @@ public class DataProcessServiceImpl implements DataProcessService {
 				
 				System.out.println(tlv_V_StreamDataFormat);
 				
+				int framerate = tlv_V_StreamDataFormat.getVideoFormat().getFramerate();
+				int width = tlv_V_StreamDataFormat.getVideoFormat().getWidth();
+				int height = tlv_V_StreamDataFormat.getVideoFormat().getHeight();
+				int bitrate = (int)(tlv_V_StreamDataFormat.getVideoFormat().getBitrate() / 1024);
+				
 				if (tlv_V_StreamDataFormat != null) {
-					ViewManager.getInstance().setHelpMsg("FPS:" + tlv_V_StreamDataFormat.getVideoFormat().getFramerate() + " "
-							 + "Width:" + tlv_V_StreamDataFormat.getVideoFormat().getWidth() + " "
-							 + "Height:" + tlv_V_StreamDataFormat.getVideoFormat().getHeight() + " "
-							 + "bitrate:" + (int)(tlv_V_StreamDataFormat.getVideoFormat().getBitrate() / 1024));
+					ViewManager.getInstance().setHelpMsg("FPS:" + framerate + " "
+													 + "Width:" + width + " "
+													 + "Height:" + height + " "
+													 + "bitrate:" + bitrate);
 					
-					OWSP_VideoDataFormat videoDataFormat = tlv_V_StreamDataFormat.getVideoFormat();
-					h264.init(videoDataFormat.getWidth(), videoDataFormat.getHeight());	// 初始化视频分辨率
+					//OWSP_VideoDataFormat videoDataFormat = tlv_V_StreamDataFormat.getVideoFormat();
+					
+					System.out.println("@@@@@Width: " + width + ", height: " + height);
+					
+					if (width > 0 && height > 0) {
+						h264.init(width, height);	// 初始化视频分辨率
+						ViewManager.getInstance().getMainVideoView().changeScreenRevolution(width, height);
+					}
 				}
 				
 				ConnectionManager.getConnection(conn_name).addResultItem(tlv_V_StreamDataFormat);
