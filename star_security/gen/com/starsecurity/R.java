@@ -157,8 +157,9 @@ public final class R {
         public static final int number_three_focused=0x7f020080;
         public static final int number_three_show=0x7f020081;
         public static final int number_two=0x7f020082;
-        public static final int text_background=0x7f020083;
-        public static final int text_midle=0x7f020084;
+        public static final int star_net=0x7f020083;
+        public static final int text_background=0x7f020084;
+        public static final int text_midle=0x7f020085;
     }
     public static final class id {
         public static final int action_settings=0x7f0a0027;

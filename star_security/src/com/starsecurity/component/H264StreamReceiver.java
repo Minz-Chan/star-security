@@ -172,7 +172,7 @@ public class H264StreamReceiver implements Runnable {
 			
 			e.printStackTrace();
 		} catch(ArrayIndexOutOfBoundsException e) {
-			ViewManager.getInstance().setHelpMsg(R.string.IDS_DATA_ERROR);
+			ViewManager.getInstance().setHelpMsg(R.string.IDS_Connect_dispos);	// 连接已经断开
 			e.printStackTrace();
 		} 
  		catch(Exception e) {
