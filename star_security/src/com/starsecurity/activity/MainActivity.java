@@ -623,8 +623,7 @@ public class MainActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (resultCode) {
 		case Activity.RESULT_OK:
-			// 将通道选择按钮组还原为初始状态
-			switchChannelBtnImages(0);
+			// 将通道选择按钮组还原为初始状态	
 			if (data != null) {
 				Bundle bundle = data.getExtras();
 				if (bundle.getString("usernameStr") != null)
@@ -635,8 +634,18 @@ public class MainActivity extends Activity {
 					settingServer = bundle.getString("serverStr");
 				if (bundle.getString("portStr") != null)
 					settingPort = bundle.getString("portStr");
-				if (bundle.getString("channelStr") != null)
+				if (bundle.getString("channelStr") != null){
 					settingChannel = bundle.getString("channelStr");
+					int channelNumber = Integer.parseInt(settingChannel);
+					if(channelNumber>0&&channelNumber<=4)
+						switchChannelBtnImages(0);
+					if(channelNumber>4&&channelNumber<=8)
+						switchChannelBtnImages(1);
+					if(channelNumber>8&&channelNumber<=12)
+						switchChannelBtnImages(2);
+					if(channelNumber>12&&channelNumber<=16)
+						switchChannelBtnImages(3);
+				}
 				isCloudControl = false;
 			}
 			break;
