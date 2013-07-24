@@ -29,7 +29,7 @@ public class H264DecodeUtil {
 	int mTrans = 0x0F0F0F0F;
 	
 	public H264DecodeUtil() {
-		super();
+		//super();
 	}
 	
 	public int init(int width, int height) {

@@ -34,10 +34,10 @@ import android.widget.ImageView;
  *   2013-04-16 使图像可适应容器的Width和Height 陈明珍
  */
 public class VideoView extends ImageView {
-	private int width = 352;
-	private int height = 288;
+	private static int width = 352;
+	private static int height = 288;
 	
-	private byte [] mPixel = new byte[width * height * 2];
+	private static byte [] mPixel = new byte[width * height * 2];
     private ByteBuffer buffer;
 	private Bitmap VideoBit;     
 	
@@ -87,11 +87,11 @@ public class VideoView extends ImageView {
     	buffer = ByteBuffer.wrap(mPixel);
     	VideoBit = Bitmap.createBitmap(width, height, Config.RGB_565);
     	
-    	int i = mPixel.length;
+    	/*int i = mPixel.length;
     	
         for (i = 0; i < mPixel.length; i++) {
         	mPixel[i] = (byte)0x00;
-        }
+        }*/
         
         setScaleType(ImageView.ScaleType.FIT_XY);
     }
@@ -108,13 +108,18 @@ public class VideoView extends ImageView {
 		this.isFullScreenMode = isFullScreenMode;
 	}
 
-	public void changeScreenRevolution(int width, int height) {
-		this.mPixel = null;
+	public static void changeScreenRevolution(int width1, int height1) {
+		mPixel = null;
+
+		width = width1;
+		height = height1;
+		mPixel = new byte[width * height * 2];
 		
-		this.width = width;
-		this.height = height;
-		this.mPixel = new byte[this.width * this.height * 2];
-		init();
+		int i = mPixel.length;
+		for (i = 0; i < mPixel.length; i++) {
+        	mPixel[i] = (byte)0x00;
+        }
+		
 	}
 
 	public int getWidth1() {

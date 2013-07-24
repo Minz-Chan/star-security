@@ -122,24 +122,17 @@ public class ViewManager {
 			videoView.changeScreenRevolution(v.getWidth(), v.getHeight());
 		}*/
 		
-		if (v.getmPixel().length != videoView.getmPixel().length) {
-			/*
-			int currWidth = this.videoView.getWidth();
-			int currHeight = this.videoView.getHeight();
-			// 若发现this.fullVideoView与前this.videoView分辨率不一致，则改变fullVideoView分辨率
-			if (this.fullVideoView.getWidth() != currWidth
-					|| this.fullVideoView.getHeight() != currHeight) {
-				this.fullVideoView.changeScreenRevolution(currWidth, currHeight);
-			}*/
+		
+		/*if (v.getmPixel().length != videoView.getmPixel().length) {
 			int currWidth = this.videoView.getWidth1();
 			int currHeight = this.videoView.getHeight1();
 			v.changeScreenRevolution(currWidth, currHeight);
 		}
+		*/
 		
-		
-		byte[] desPixel = v.getmPixel();
+		/*byte[] desPixel = v.getmPixel();
 		byte[] srcPixel = videoView.getmPixel();
-		System.arraycopy(srcPixel, 0, desPixel, 0, srcPixel.length);
+		System.arraycopy(srcPixel, 0, desPixel, 0, srcPixel.length);*/
 		
 		bindVideoView(v);
 	}
