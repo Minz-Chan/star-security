@@ -60,6 +60,13 @@ public class VideoView extends ImageView {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);   
         if (VideoBit != null) {
+        	/* 此处rewind用意
+         	 * 4.2中对copyPixelsFromBuffer( )执行的缓冲区进行了调整，每次拷贝结束后，将下次拷贝
+        	 * 的起始位置置为前一次拷贝结束时的位置。这样，如果对同一个ByteBuffer执行多次连续拷贝，
+        	 * 就要注意每次起始位置。我看了自己的代码，果然这个错误是对一个ByteBuffer进行连续二次
+        	 * 拷贝时，第二次的起始位置没有重置为0导致的。
+        	 */
+        	buffer.rewind();		    	
         	VideoBit.copyPixelsFromBuffer(buffer);	
         	
         	if (isFullScreenMode) {
