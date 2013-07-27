@@ -679,12 +679,17 @@ public class MainActivity extends Activity {
 									if (pi != null) {
 										pi.cancel();
 									}
-									System.exit(0);
+									//dialog.dismiss();
+									//System.exit(0);
+									android.os.Process.killProcess(android.os.Process.myPid()); 
 								}
 							}).setNegativeButton(R.string.IDS_Dispos, null)
 					.show();
+			return true;
+		} else {
+			return super.onKeyDown(keyCode, event);
 		}
-		return super.onKeyDown(keyCode, event);
+		
 	}
 
 	

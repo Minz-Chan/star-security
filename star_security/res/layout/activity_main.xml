@@ -14,22 +14,22 @@
             <Button android:id="@+id/btn_control_up" android:background="@drawable/control_up" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="9.0dip" />
             <Button android:id="@+id/btn_control_right" android:background="@drawable/control_right" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="6.0dip" />
             <Button android:id="@+id/btn_control_zoomadd" android:background="@drawable/control_zoomadd" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="15.0dip" />
-            <Button android:id="@+id/btn_control_focusadd" android:background="@drawable/control_focus" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="4.0dip" />
-            <Button android:id="@+id/btn_control_jujiaoadd" android:background="@drawable/control_jujiaoadd" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="4.0dip" />
-            <Button android:id="@+id/btn_number_1" android:background="@drawable/control_number1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="14.0dip" />
+            <Button android:id="@+id/btn_control_focusadd" android:background="@drawable/control_focus" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" />
+            <Button android:id="@+id/btn_control_jujiaoadd" android:background="@drawable/control_jujiaoadd" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" />
+            <Button android:id="@+id/btn_number_1" android:background="@drawable/control_number1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="13.0dip" />
             <Button android:id="@+id/btn_number_2" android:background="@drawable/number_two" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="6.0dip" />
         </LinearLayout>
         <LinearLayout android:orientation="horizontal" android:id="@+id/control_linear2" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginBottom="2.0dip">
             <Button android:id="@+id/btn_control_down" android:background="@drawable/control_down" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="9.0dip" />
             <Button android:id="@+id/btn_control_left" android:background="@drawable/control_left" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="6.0dip" />
             <Button android:id="@+id/btn_control_zoom" android:background="@drawable/control_zoom" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="15.0dip" />
-            <Button android:id="@+id/btn_control_focus" android:background="@drawable/control_focusadd" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="4.0dip" />
-            <Button android:id="@+id/btn_control_jujiao" android:background="@drawable/control_jujiao" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="4.0dip" />
-            <Button android:id="@+id/btn_number_3" android:background="@drawable/number_three" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="14.0dip" />
+            <Button android:id="@+id/btn_control_focus" android:background="@drawable/control_focusadd" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" />
+            <Button android:id="@+id/btn_control_jujiao" android:background="@drawable/control_jujiao" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" />
+            <Button android:id="@+id/btn_number_3" android:background="@drawable/number_three" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="13.0dip" />
             <Button android:id="@+id/btn_number_4" android:background="@drawable/number_four" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="6.0dip" />
         </LinearLayout>
     </LinearLayout>
     <TextView android:textSize="20.0px" android:gravity="center" android:id="@+id/ip_text" android:background="@drawable/text_background" android:layout_width="fill_parent" android:layout_height="40.0px" />
-    <TextView android:textSize="20.0px" android:id="@+id/help_msg" android:background="@drawable/text_midle" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_above="@+id/midle" />
+    <TextView android:textSize="15.0px" android:id="@+id/help_msg" android:background="@drawable/text_midle" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_above="@+id/midle" />
 	<com.starsecurity.h264.VideoView android:id="@+id/p2p_view" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_above="@+id/help_msg" android:layout_below="@+id/ip_text" />
 </RelativeLayout>
