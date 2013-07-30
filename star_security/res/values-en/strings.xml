@@ -87,6 +87,7 @@
     <string name="IDS_Dispos">Dispos</string>
     <string name="IDS_Saveimg">Save the image to/SDCard/ImageSave/</string>
     <string name="IDS_FILE">file sucessfuly!</string>
+    <string name="IDS_CreateFolderFailure">Create /SDCard/ImageSave/ failure</string>
     <string name="IDS_Ready">Ready</string>
     <string name="IDS_Connect_dispos">Connection has been disconnected</string>
     <string name="IDS_Error_UserName">User name can not exceed 32 characters</string>

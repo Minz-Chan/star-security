@@ -27,8 +27,9 @@ import com.starsecurity.service.ExtendedService;
  * @author       创建人              陈明珍
  * @date        创建日期           2013-04-17
  * @author       修改人              陈明珍
- * @date        修改日期           2013-05-10
+ * @date        修改日期           2013-07-30
  * @description 修改说明	       
+ *   2013-07-30 修复SD卡不存在时，依然提示保存成功错误
  *   2013-05-10 全屏及复原功能实现 陈明珍
  */
 public class ExtendedServiceImpl implements ExtendedService {
@@ -43,8 +44,6 @@ public class ExtendedServiceImpl implements ExtendedService {
 
 	@Override
 	public Bitmap takePicture() {
-		ViewManager.getInstance().setHelpMsg(R.string.IDS_Saveimg);
-		
 		VideoView v = ViewManager.getInstance().getVideoView();
 		Bitmap bmp = null;
 		
@@ -53,7 +52,11 @@ public class ExtendedServiceImpl implements ExtendedService {
 		
 		File dir = new File("/sdcard/ImageSave");
 		if (!dir.exists()) {
-			dir.mkdir();
+			if (!dir.mkdir()) {
+				// 创建目录/SDCard/ImageSave/失败
+				ViewManager.getInstance().setHelpMsg(R.string.IDS_CreateFolderFailure);
+				return null;
+			}
 		}
 
 		FileOutputStream out = null;
@@ -67,7 +70,8 @@ public class ExtendedServiceImpl implements ExtendedService {
 
 	       bmp.compress(Bitmap.CompressFormat.JPEG, 90, out);
 	       out.close();
-	       ViewManager.getInstance().setHelpMsg(R.string.IDS_FILE);
+	       //ViewManager.getInstance().setHelpMsg(R.string.IDS_FILE);
+	       ViewManager.getInstance().setHelpMsg(R.string.IDS_Saveimg);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

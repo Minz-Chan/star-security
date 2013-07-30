@@ -87,6 +87,7 @@
     <string name="IDS_Dispos">取消</string>
     <string name="IDS_Saveimg">保存圖片到/SDCard/ImageSave/</string>
     <string name="IDS_FILE">圖片下载成功!</string>
+    <string name="IDS_CreateFolderFailure">創建目錄/SDCard/ImageSave/失敗</string>
     <string name="IDS_Ready">準備就緒</string>
     <string name="IDS_Connect_dispos">連接已經斷開</string>
     <string name="IDS_Error_UserName">用戶名不能超過32個字符</string>
@@ -117,4 +118,6 @@
     <string name="ddns_progress_text">獲取設備列表中,請耐心等待....</string>
     <string name="ddns_getlist_fail">獲取設備列表失敗</string>
     <string name="do_not_support">不支持分辨率變動</string>
+    <string name="DEVICE_LIST_ErrorReason">連線失敗，請檢查域名和端口設置</string>
+    <string name="DEVICE_SINGLE_ErrorReason">獲取設備失敗</string>
 </resources>
