@@ -53,27 +53,23 @@ public class H264StreamReceiver implements Runnable {
 	public void run() {
 		int i = 0;
 		Connection conn = ConnectionManager.getConnection(conn_name);
-		Handler h1 = ViewManager.getInstance().getHandler();
-		Message msg = new Message();
-		
-		
 		
 		// 连接提示信息
 		ViewManager.getInstance().setIpText(conn.getSvr_ip());
-		ViewManager.getInstance().setHelpMsg(R.string.IDS_ConnectServer);
+		updateUIMessage(MessageCode.IDS_CONNECTSERVER);
 		
 		// 建立连接
 		int result = conn.connect();
 		if (result == 1) { // 连接服务器成功
 			conn.setConnect_state(1);
-			ViewManager.getInstance().setHelpMsg(R.string.DS_ConSerSuc);
-			
+			updateUIMessage(MessageCode.IDS_CONSERSUC);
 		} else {	// 连接服务器不成功
 			conn.setConnect_state(0);
-			if (result == -1) { // 连接超时
-				ViewManager.getInstance().setHelpMsg(R.string.IDS_Time_Out);
+			if (result == -1) { // 连接超时	
+				updateUIMessage(MessageCode.IDS_TIMEOUT);
 			} else {  // 连接失败
-				ViewManager.getInstance().setHelpMsg(R.string.IDS_ConSerFail);
+				updateUIMessage(MessageCode.IDS_CONSERFAIL);
+				
 			}
 			
 			return;
@@ -128,10 +124,7 @@ public class H264StreamReceiver implements Runnable {
 					conn.getSock().close();
 					conn.setSock(null);
 					
-					if (h1 != null) {
-						msg.what = MessageCode.CONNECTION_CLOSED;
-						h1.sendMessage(msg);
-					}
+					updateUIMessage(MessageCode.CONNECTION_CLOSED);
 			
 					break;
 				}
@@ -173,7 +166,6 @@ public class H264StreamReceiver implements Runnable {
 			
 			
 		} catch (IOException e) {
-			
 			if (!conn.getSock().isClosed()) {
 				try {
 					conn.getSock().close();
@@ -181,18 +173,15 @@ public class H264StreamReceiver implements Runnable {
 					e1.printStackTrace();
 				}
 			}
-			
+
+			updateUIMessage(MessageCode.CONNECTION_CLOSED);
 			e.printStackTrace();
 		} catch(ArrayIndexOutOfBoundsException e) {
-			//ViewManager.getInstance().setHelpMsg(R.string.IDS_Connect_dispos);	// 连接已经断开
-			msg.what = MessageCode.CONNECTION_CLOSED;
-			h1.sendMessage(msg);
+			updateUIMessage(MessageCode.CONNECTION_CLOSED);
 			e.printStackTrace();
 		} 
  		catch(Exception e) {
-			//ViewManager.getInstance().setHelpMsg(R.string.IDS_Unknown);
- 			msg.what = MessageCode.ERR_UNKNOWN;
- 			h1.sendMessage(msg);
+ 			updateUIMessage(MessageCode.ERR_UNKNOWN);
 			e.printStackTrace();
 		}
 
@@ -209,6 +198,22 @@ public class H264StreamReceiver implements Runnable {
 	public int process(byte[] data, int length) {
 		return 1;
 		
+	}
+	
+	/**
+	 * 更新UI消息传递
+	 * @param msgCode 消息代码
+	 */
+	private void updateUIMessage(int msgCode) {
+		Message msg = new Message();
+		msg.what = msgCode;
+		
+		Handler handler = ViewManager.getInstance().getHandler();
+		if (handler != null) {
+			handler.sendMessage(msg);
+		} else {
+			ViewManager.getInstance().setHelpMsg(R.string.IDS_Unknown);
+		}
 	}
 
 }

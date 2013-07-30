@@ -47,8 +47,9 @@ import com.starsecurity.service.impl.FavouriteControlServiceImpl;
  * @date        创建日期           2013-03-18
  * @author       修改人           陈明珍/肖远东
  * @date        修改日期           2013-07-30
- * @description 修改记录	  
- *   2013-07-30 加入Handler，网络连线中断后自动切换播放按钮并给出提示 陈明珍       
+ * @description 修改记录	 
+ *   2013-07-30 使用UI消息接收机制处理非UI线程传递的界面更新消息(Handler) 陈明珍
+ *   2013-07-30 网络连线中断后自动切换播放按钮并给出提示 陈明珍       
  *   2013-07-30 加入获取最后一次设置功能  肖远东 
  *   2013-07-27 修正 BACK 键部分情况下出现异常 陈明珍
  *   2013-07-25 修正屏幕分辨率适应问题以及Android 4.2版本API兼容性问题 陈明珍
@@ -583,10 +584,24 @@ public class MainActivity extends Activity {
 				switch (msg.what) {
 				case MessageCode.CONNECTION_CLOSED: // 设置播放按钮为停止状态
 					isPlay = false;
-					updatePlayStatus();
+					updatePlayStatus(R.string.IDS_Connect_dispos);
 					break;
 				case MessageCode.ERR_UNKNOWN:	// 未知错误
 					ViewManager.getInstance().setHelpMsg(R.string.IDS_Unknown);
+					break;
+				case MessageCode.IDS_TIMEOUT:	// 连接超时
+					isPlay = false;
+					updatePlayStatus(R.string.IDS_Time_Out);
+					break;
+				case MessageCode.IDS_CONSERSUC: // 连接服务器成功
+					ViewManager.getInstance().setHelpMsg(R.string.DS_ConSerSuc);
+					break;
+				case MessageCode.IDS_CONSERFAIL: // 连接服务器失败
+					isPlay = false;
+					updatePlayStatus(R.string.IDS_ConSerFail);
+					break;
+				case MessageCode.IDS_CONNECTSERVER: // 网络连接中...
+					ViewManager.getInstance().setHelpMsg(R.string.IDS_ConnectServer);
 					break;
 				}
 			
@@ -783,17 +798,17 @@ public class MainActivity extends Activity {
     }  
     
     /**
-     * 更新播放按钮状态
+     * 更新播放按钮状态及提示信息
+     * @param helpMsgId 提示信息ID
      */
-    public void updatePlayStatus() {
+    public void updatePlayStatus(int helpMsgId) {
     	if (isPlay) { // 播放状态
     		playBtn.setBackgroundDrawable(getResources()
 					.getDrawable(R.drawable.linear_play));
     	} else {	// 停止状态
     		playBtn.setBackgroundDrawable(getResources().getDrawable(
 					R.drawable.linear_left));
-			ViewManager.getInstance().setHelpMsg(
-					R.string.IDS_Connect_dispos);
+			ViewManager.getInstance().setHelpMsg(helpMsgId);
     	}
     }
 
