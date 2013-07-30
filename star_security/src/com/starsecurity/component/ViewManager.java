@@ -11,6 +11,7 @@ package com.starsecurity.component;
 
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.os.Handler;
 import android.widget.TextView;
 
 import com.starsecurity.h264.VideoView;
@@ -35,6 +36,8 @@ public class ViewManager {
 	
 	private VideoView mainVideoView;			// 存储主界面视频控件
 	private VideoView fullVideoView;			// 存储全屏界面视频控件
+	
+	private Handler handler;					// 更新UI
 	
 	private static ContextWrapper context;
 	
@@ -186,6 +189,18 @@ public class ViewManager {
 		return context.getString(resourceId);
 	}
 
+	/**
+	 * @return the handler
+	 */
+	public Handler getHandler() {
+		return handler;
+	}
 
+	/**
+	 * @param handler the handler to set
+	 */
+	public void setHandler(Handler handler) {
+		this.handler = handler;
+	}
 	
 }

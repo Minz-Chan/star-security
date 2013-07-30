@@ -14,6 +14,9 @@ import java.io.InputStream;
 import java.net.Socket;
 
 
+import android.os.Handler;
+import android.os.Message;
+
 import com.starsecurity.R;
 import com.starsecurity.model.OWSP_LEN;
 import com.starsecurity.model.OwspPacketHeader;
@@ -49,8 +52,11 @@ public class H264StreamReceiver implements Runnable {
 	@Override
 	public void run() {
 		int i = 0;
-		
 		Connection conn = ConnectionManager.getConnection(conn_name);
+		Handler h1 = ViewManager.getInstance().getHandler();
+		Message msg = new Message();
+		
+		
 		
 		// 连接提示信息
 		ViewManager.getInstance().setIpText(conn.getSvr_ip());
@@ -121,6 +127,12 @@ public class H264StreamReceiver implements Runnable {
 				if (conn.getConnect_state() == 0) {
 					conn.getSock().close();
 					conn.setSock(null);
+					
+					if (h1 != null) {
+						msg.what = MessageCode.CONNECTION_CLOSED;
+						h1.sendMessage(msg);
+					}
+			
 					break;
 				}
 				
@@ -172,11 +184,15 @@ public class H264StreamReceiver implements Runnable {
 			
 			e.printStackTrace();
 		} catch(ArrayIndexOutOfBoundsException e) {
-			ViewManager.getInstance().setHelpMsg(R.string.IDS_Connect_dispos);	// 连接已经断开
+			//ViewManager.getInstance().setHelpMsg(R.string.IDS_Connect_dispos);	// 连接已经断开
+			msg.what = MessageCode.CONNECTION_CLOSED;
+			h1.sendMessage(msg);
 			e.printStackTrace();
 		} 
  		catch(Exception e) {
-			ViewManager.getInstance().setHelpMsg(R.string.IDS_Unknown);
+			//ViewManager.getInstance().setHelpMsg(R.string.IDS_Unknown);
+ 			msg.what = MessageCode.ERR_UNKNOWN;
+ 			h1.sendMessage(msg);
 			e.printStackTrace();
 		}
 

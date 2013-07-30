@@ -11,6 +11,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,6 +25,7 @@ import android.widget.TextView;
 import com.starsecurity.R;
 import com.starsecurity.component.Connection;
 import com.starsecurity.component.ConnectionManager;
+import com.starsecurity.component.MessageCode;
 import com.starsecurity.component.ViewManager;
 import com.starsecurity.h264.VideoView;
 import com.starsecurity.model.DVRDevice;
@@ -43,9 +46,12 @@ import com.starsecurity.service.impl.FavouriteControlServiceImpl;
  * @author       创建人              肖远东
  * @date        创建日期           2013-03-18
  * @author       修改人           陈明珍/肖远东
- * @date        修改日期           2013-06-08
- * @description 修改记录	         
+ * @date        修改日期           2013-07-30
+ * @description 修改记录	  
+ *   2013-07-30 加入Handler，网络连线中断后自动切换播放按钮并给出提示 陈明珍       
  *   2013-07-30 加入获取最后一次设置功能  肖远东 
+ *   2013-07-27 修正 BACK 键部分情况下出现异常 陈明珍
+ *   2013-07-25 修正屏幕分辨率适应问题以及Android 4.2版本API兼容性问题 陈明珍
  *   2013-06-08 加入断线重连功能（3分钟后重连） 陈明珍
  *   2013-05-17 加入控制停止动作controlService.stopAction 陈明珍
  *   2013-05-07 加入方向控制、放大/缩小、焦点放大/缩小、光圈放大/缩小功能  陈明珍
@@ -101,7 +107,8 @@ public class MainActivity extends Activity {
 	private String settingPort;
 	private String settingChannel;
 	
-
+	public Handler mHandler;				// UI消息处理
+	
 	private static int page = 0;			// 存放界面显示的通道切换组的页面
 	private static boolean isPlay = false;	// 标识是否正在播放
 	private static String functionTempStr;	// 存储临时文本信息
@@ -569,6 +576,26 @@ public class MainActivity extends Activity {
 			}
 		});
 		
+		
+		mHandler = new Handler() { 
+			@Override 
+			public void handleMessage(Message msg) { 
+				switch (msg.what) {
+				case MessageCode.CONNECTION_CLOSED: // 设置播放按钮为停止状态
+					isPlay = false;
+					updatePlayStatus();
+					break;
+				case MessageCode.ERR_UNKNOWN:	// 未知错误
+					ViewManager.getInstance().setHelpMsg(R.string.IDS_Unknown);
+					break;
+				}
+			
+			} 
+		}; 
+		
+		v.setHandler(mHandler);
+		
+		
 		/* 若网络异常或中断，3分钟后重连 */
 		AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);  
         
@@ -754,5 +781,20 @@ public class MainActivity extends Activity {
       
         return false;  
     }  
+    
+    /**
+     * 更新播放按钮状态
+     */
+    public void updatePlayStatus() {
+    	if (isPlay) { // 播放状态
+    		playBtn.setBackgroundDrawable(getResources()
+					.getDrawable(R.drawable.linear_play));
+    	} else {	// 停止状态
+    		playBtn.setBackgroundDrawable(getResources().getDrawable(
+					R.drawable.linear_left));
+			ViewManager.getInstance().setHelpMsg(
+					R.string.IDS_Connect_dispos);
+    	}
+    }
 
 }
