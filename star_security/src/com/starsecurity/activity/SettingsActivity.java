@@ -291,8 +291,8 @@ public class SettingsActivity extends Activity {
 				break;
 			case R.id.setting_cancelMenu:
 				//返回主界面
-				Intent intentCancel = getIntent();
-				setResult(Activity.RESULT_OK, intentCancel);
+				//Intent intentCancel = getIntent();
+				setResult(Activity.RESULT_OK, null);
 				finish();
 				break;
 		}
