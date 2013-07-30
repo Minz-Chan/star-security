@@ -118,4 +118,6 @@
     <string name="ddns_getlist_fail">Get Device Info fail</string>
     <string name="do_not_support">Width height changed,do not supported</string>
     <string name="DEVICE_LIST_ErrorReason">Connect failed，please check the domain and port</string>
+    <string name="DEVICE_SINGLE_ErrorReason">Get Device fail</string>
+    
 </resources>
