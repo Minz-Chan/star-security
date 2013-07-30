@@ -11,6 +11,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.bluetooth.BluetoothClass.Device;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -55,6 +56,8 @@ public class DeviceListActivity extends Activity {
 	 */
 	private static List<String> deviceNameList;
 	
+	private static DVRDevice singleDvrDevice;
+	
 	private static String errorReason;
 	
 	/***
@@ -64,6 +67,8 @@ public class DeviceListActivity extends Activity {
 	
 	private static final int PROGRESS_DIALOG = 1; 
 	
+	private static final int STATE_DEVICE_FAIL = 3;	//获取单个设备失败的返回值
+	private static final int STATE_DEVICE = 2;	//获取单个设备成功的返回值
 	private static final int STATE_SUCCESS = 1;
 	private static final int STATE_FAIL = 0;
 	
@@ -76,19 +81,64 @@ public class DeviceListActivity extends Activity {
 		public void handleMessage(Message msg) { // 处理Message，更新ListView
 			int state = msg.getData().getInt("state"); 
 			switch(state){ 
-			case STATE_SUCCESS:
-				dismissDialog(PROGRESS_DIALOG);
-				deviceListView.setAdapter(new ArrayAdapter<String>(getApplicationContext(), 
-                        android.R.layout.simple_list_item_1, 
-                        deviceNameList ));
-				/*为设备列表添加事件监听*/
-				deviceListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-					@Override
-					public void onItemClick(AdapterView<?> parent, View view,
-							int position, long id) {
+				case STATE_SUCCESS:
+					dismissDialog(PROGRESS_DIALOG);
+					deviceListView.setAdapter(new ArrayAdapter<String>(getApplicationContext(), 
+	                        android.R.layout.simple_list_item_1, 
+	                        deviceNameList ));
+					/*为设备列表添加事件监听*/
+					deviceListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+						@Override
+						public void onItemClick(AdapterView<?> parent, View view,
+								int position, long id) {
+							//存放所选平台到收藏夹中
+							//存放收藏夹的XMl文件
+							File myFavouritesFile=new File(filePath);		
+							//若首次使用，则创建XML存储文件
+					        if(!myFavouritesFile.exists()){
+					        	try {
+					        		favouriteControlService.createFileAndRoot(filePath, "Favourites");	//创建文件
+								} catch (Exception e) {
+									System.out.println(e.getMessage().toString());
+								}; 
+					        }else{
+					        	FavouriteRecord favouriteRecord = new FavouriteRecord();
+					        	DVRDevice dvrDevice = deviceList.get(position);
+					        	favouriteRecord.setFavouriteName(dvrDevice.getDeviceName());
+								favouriteRecord.setUserName(dvrDevice.getLoginUsername());
+								favouriteRecord.setPassword(dvrDevice.getLoginPassword());
+								favouriteRecord.setIPAddress(dvrDevice.getLoginIP());
+								favouriteRecord.setPort(dvrDevice.getMobliePhonePort());
+								favouriteRecord.setDefaultChannel(dvrDevice.getStarChannel());
+								favouriteRecord.setRecordName(dvrDevice.getDeviceName());
+					        	//检测此平台是否已经存储，若有则覆盖，若没有则添加
+					        	if(favouriteControlService.isExist(filePath, dvrDevice.getDeviceName())){
+					        		favouriteControlService.coverFavouriteElement(filePath, favouriteRecord);
+					        	}else{	
+					        		favouriteControlService.addFavouriteElement(filePath, favouriteRecord);
+					        	}
+					        	favouriteControlService.setLastRecord(filePath,favouriteRecord.getFavouriteName());
+					        }
+							
+							//返回主界面播放视频
+							Intent intent = getIntent();
+							intent.putExtra("DVRDevice",deviceList.get(position));
+							setResult(Activity.RESULT_FIRST_USER, intent);
+							DeviceListActivity.this.finish();
+						}
+					});
+					break; 
+				case STATE_FAIL: 
+					dismissDialog(PROGRESS_DIALOG);
+					Toast.makeText(getApplicationContext(),errorReason, Toast.LENGTH_LONG).show();
+					DeviceListActivity.this.finish();
+					break;
+				case STATE_DEVICE:
+					dismissDialog(PROGRESS_DIALOG);
+					if(singleDvrDevice!=null){
 						//存放所选平台到收藏夹中
 						//存放收藏夹的XMl文件
-						File myFavouritesFile=new File(filePath);		
+						File myFavouritesFile=new File(filePath);
 						//若首次使用，则创建XML存储文件
 				        if(!myFavouritesFile.exists()){
 				        	try {
@@ -98,7 +148,7 @@ public class DeviceListActivity extends Activity {
 							}; 
 				        }else{
 				        	FavouriteRecord favouriteRecord = new FavouriteRecord();
-				        	DVRDevice dvrDevice = deviceList.get(position);
+				        	DVRDevice dvrDevice = singleDvrDevice;
 				        	favouriteRecord.setFavouriteName(dvrDevice.getDeviceName());
 							favouriteRecord.setUserName(dvrDevice.getLoginUsername());
 							favouriteRecord.setPassword(dvrDevice.getLoginPassword());
@@ -114,22 +164,20 @@ public class DeviceListActivity extends Activity {
 				        	}
 				        	favouriteControlService.setLastRecord(filePath,favouriteRecord.getFavouriteName());
 				        }
-						
-						//返回主界面播放视频
+				        //返回主界面播放视频
 						Intent intent = getIntent();
-						intent.putExtra("DVRDevice",deviceList.get(position));
+						intent.putExtra("DVRDevice",singleDvrDevice);
 						setResult(Activity.RESULT_FIRST_USER, intent);
 						DeviceListActivity.this.finish();
 					}
-				});
-				break; 
-			case STATE_FAIL: 
-				dismissDialog(PROGRESS_DIALOG);
-				Toast.makeText(getApplicationContext(),errorReason, Toast.LENGTH_LONG).show();
-				DeviceListActivity.this.finish();
-				break;
-			default:
-				break;
+					break;
+				case STATE_DEVICE_FAIL:
+					dismissDialog(PROGRESS_DIALOG);
+					Toast.makeText(getApplicationContext(),errorReason, Toast.LENGTH_LONG).show();
+					DeviceListActivity.this.finish();
+					break;
+				default:
+					break;
 			} 
 		} 
 	}; 
@@ -184,9 +232,37 @@ public class DeviceListActivity extends Activity {
 				if(cloudService.readXmlStatus(doc)==null)
 				{
 					deviceList = cloudService.readXmlDVRDevices(doc);
+					//根据设备名称查找设备
+					if(ddns_devicenameStr!=null&&!ddns_devicenameStr.equals("")){
+						if(deviceList.size()!=0){
+							Iterator<DVRDevice> deviceListIter = deviceList.iterator();
+		        			deviceNameList = new ArrayList();
+		        			while(deviceListIter.hasNext()){
+		        				DVRDevice dvrDeviceTemp = deviceListIter.next();
+		        				if(ddns_devicenameStr.equals(dvrDeviceTemp.getDeviceName())){
+		        					singleDvrDevice = dvrDeviceTemp;
+		        					Message msg = handler.obtainMessage(); 
+		        	                Bundle deviceBundle = new Bundle(); 
+		        	                deviceBundle.putInt("state", STATE_DEVICE); 
+		        	                msg.setData(deviceBundle); 
+		        	                handler.sendMessage(msg);
+		        	                return;
+		        				}
+		        			}
+		        			//查找结束均无设备，则返回错误信息
+		        			errorReason = getString(R.string.DEVICE_SINGLE_ErrorReason);
+		        			Message msg = handler.obtainMessage(); 
+	    	                Bundle deviceBundle = new Bundle(); 
+	    	                deviceBundle.putInt("state", STATE_DEVICE_FAIL); 
+	    	                msg.setData(deviceBundle); 
+	    	                handler.sendMessage(msg);
+	    	                return;
+						}
+						
+					}
 					if(deviceList.size()!=0){
 	        			Iterator<DVRDevice> deviceListIter = deviceList.iterator();
-	        			deviceNameList = new ArrayList();
+	        			deviceNameList = new ArrayList<String>();
 	        			while(deviceListIter.hasNext()){
 	        				DVRDevice dvrDeviceTemp = deviceListIter.next();
 	        				deviceNameList.add(dvrDeviceTemp.getDeviceName());
