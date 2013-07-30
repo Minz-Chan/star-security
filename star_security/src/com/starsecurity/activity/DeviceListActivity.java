@@ -241,7 +241,8 @@ public class DeviceListActivity extends Activity {
 		        			deviceNameList = new ArrayList();
 		        			while(deviceListIter.hasNext()){
 		        				DVRDevice dvrDeviceTemp = deviceListIter.next();
-		        				if(ddns_devicenameStr.equals(dvrDeviceTemp.getDeviceName())){
+		        				String tempDeviceName = dvrDeviceTemp.getDeviceName().substring(4,dvrDeviceTemp.getDeviceName().length());
+		        				if(ddns_devicenameStr.equals(tempDeviceName)){
 		        					singleDvrDevice = dvrDeviceTemp;
 		        					Message msg = handler.obtainMessage(); 
 		        	                Bundle deviceBundle = new Bundle(); 
