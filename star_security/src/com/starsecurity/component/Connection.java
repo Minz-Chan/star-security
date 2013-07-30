@@ -170,9 +170,8 @@ public class Connection {
 		int typeId = DataProcessUtil.getHeaderOfData(obj).getTlv_type();
 		if (data.containsKey(typeId)) {
 			data.remove(typeId);
-		} else {
-			data.put(typeId, obj);
-		}
+		} 
+		data.put(typeId, obj);
 	}
 	
 	/**

@@ -31,6 +31,7 @@ import com.starsecurity.h264.VideoView;
 import com.starsecurity.model.DVRDevice;
 import com.starsecurity.model.FavouriteRecord;
 import com.starsecurity.model.TLV_T_Command;
+import com.starsecurity.model.TLV_V_ChannelResponse;
 import com.starsecurity.model.TLV_V_DVSInfoRequest;
 import com.starsecurity.service.ControlService;
 import com.starsecurity.service.ExtendedService;
@@ -439,6 +440,18 @@ public class MainActivity extends Activity {
 								.getMobliePhonePort()));
 						conn.setChannel_no(Integer.valueOf(dvrDevice
 								.getStarChannel()) - 1);
+						//根据播放通道显示通道组
+						int channelNumber = Integer.parseInt(dvrDevice
+								.getStarChannel());
+						if(channelNumber>0&&channelNumber<=4)
+							switchChannelBtnImages(0);
+						else if(channelNumber>4&&channelNumber<=8)
+							switchChannelBtnImages(1);
+						else if(channelNumber>8&&channelNumber<=12)
+							switchChannelBtnImages(2);
+						else if(channelNumber>12&&channelNumber<=16)
+							switchChannelBtnImages(3);
+						
 						controlService.playVideo();
 						isPlay = true;
 						playBtn.setBackgroundDrawable(getResources()
@@ -455,6 +468,17 @@ public class MainActivity extends Activity {
 						conn.setSvr_ip(settingServer);
 						conn.setPort(Integer.valueOf(settingPort));
 						conn.setChannel_no(Integer.parseInt(settingChannel) - 1);
+						//根据播放通道显示通道组
+						int channelNumber = Integer.parseInt(settingChannel);
+						if(channelNumber>0&&channelNumber<=4)
+							switchChannelBtnImages(0);
+						else if(channelNumber>4&&channelNumber<=8)
+							switchChannelBtnImages(1);
+						else if(channelNumber>8&&channelNumber<=12)
+							switchChannelBtnImages(2);
+						else if(channelNumber>12&&channelNumber<=16)
+							switchChannelBtnImages(3);
+						
 						controlService.playVideo();
 						isPlay = true;
 						playBtn.setBackgroundDrawable(getResources()
@@ -535,7 +559,10 @@ public class MainActivity extends Activity {
 						case 3:
 							switchChannelBtnImages(0);
 							break;
+					}
 				}
+				else if(tlvDVSInfoRequest==null&&!isCloudControl){
+					switchChannelBtnImages(1);
 				}
 				else if (dvrDevice!=null&&isCloudControl) {
 					switch (page) {
@@ -722,15 +749,6 @@ public class MainActivity extends Activity {
 					settingPort = bundle.getString("portStr");
 				if (bundle.getString("channelStr") != null){
 					settingChannel = bundle.getString("channelStr");
-					int channelNumber = Integer.parseInt(settingChannel);
-					if(channelNumber>0&&channelNumber<=4)
-						switchChannelBtnImages(0);
-					if(channelNumber>4&&channelNumber<=8)
-						switchChannelBtnImages(1);
-					if(channelNumber>8&&channelNumber<=12)
-						switchChannelBtnImages(2);
-					if(channelNumber>12&&channelNumber<=16)
-						switchChannelBtnImages(3);
 				}
 				isCloudControl = false;
 			}
