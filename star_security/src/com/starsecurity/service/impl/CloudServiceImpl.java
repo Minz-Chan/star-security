@@ -190,9 +190,7 @@ public class CloudServiceImpl implements CloudService {
 			dvrDevice.setWEBPort(dwpElement.getText().toString());
 			//<dna>(在线、离线)设备名称</dna>
 			Element dnaElement = element.element("dna");
-			String tempDeviceName = dnaElement.getText().toString();
-			String deviceName = tempDeviceName.substring(4,tempDeviceName.length());
-			dvrDevice.setDeviceName(deviceName);
+			dvrDevice.setDeviceName(dnaElement.getText().toString());
 			//<mp>手机端口号</mp>
 			Element mpElement = element.element("mp");
 			dvrDevice.setMobliePhonePort(mpElement.getText().toString());

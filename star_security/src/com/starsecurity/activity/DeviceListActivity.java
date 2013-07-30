@@ -104,7 +104,9 @@ public class DeviceListActivity extends Activity {
 					        }else{
 					        	FavouriteRecord favouriteRecord = new FavouriteRecord();
 					        	DVRDevice dvrDevice = deviceList.get(position);
-					        	favouriteRecord.setFavouriteName(dvrDevice.getDeviceName());
+								String tempDeviceName = dvrDevice.getDeviceName();
+								String deviceName = tempDeviceName.substring(4,tempDeviceName.length());
+					        	favouriteRecord.setFavouriteName(deviceName);
 								favouriteRecord.setUserName(dvrDevice.getLoginUsername());
 								favouriteRecord.setPassword(dvrDevice.getLoginPassword());
 								favouriteRecord.setIPAddress(dvrDevice.getLoginIP());
