@@ -86,4 +86,19 @@ public interface FavouriteControlService {
 	 * @return
 	 */
 	public String getLastRecordName(String fileName);
+	
+	/***
+	 * 设置最近选取通道
+	 * @param recordName	最近选取的记录名
+	 * @param fileName		XML文件名
+	 * @return
+	 */
+	public boolean setLastChannel(String fileName,String channel);
+	
+	/***
+	 * 获取最近选取通道
+	 * @param fileName		XML文件名
+	 * @return
+	 */
+	public String getLastChannel(String fileName);
 }

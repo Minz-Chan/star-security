@@ -128,7 +128,6 @@ public class SettingsActivity extends Activity {
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int position, long id) {
 				String selectedRecordName = (String) favouriteRecordSpinner.getSelectedItem();
-				favouriteControlService.setLastRecord(filePath,selectedRecordName);
 				FavouriteRecord favouriteRecord = favouriteControlService.getFavouriteRecordByName(filePath, selectedRecordName);
 				usernameEditText.setText(favouriteRecord.getUserName());
 				passwordEditText.setText(favouriteRecord.getPassword());
@@ -136,6 +135,8 @@ public class SettingsActivity extends Activity {
 				portEditText.setText(favouriteRecord.getPort());
 				recordNameEditText.setText(favouriteRecord.getFavouriteName());
 				channelSpinner.setSelection(Integer.parseInt(favouriteRecord.getDefaultChannel())-1);
+				favouriteControlService.setLastRecord(filePath,selectedRecordName);
+				favouriteControlService.setLastChannel(filePath,favouriteRecord.getDefaultChannel());
 			}
 
 			@Override
@@ -159,6 +160,7 @@ public class SettingsActivity extends Activity {
 						favouriteRecord.setDefaultChannel(channelSpinner.getSelectedItem().toString());
 						favouriteRecord.setRecordName(recordNameEditText.getText().toString());
 						favouriteControlService.setLastRecord(filePath,recordNameEditText.getText().toString());
+						favouriteControlService.setLastChannel(filePath,channelSpinner.getSelectedItem().toString());
 						if(favouriteControlService.addFavouriteElement(filePath, favouriteRecord)){
 							//更新界面				
 							List<String> favouriteRecordList = favouriteControlService.getFavouriteList(filePath);
@@ -193,6 +195,7 @@ public class SettingsActivity extends Activity {
 		            			if(favouriteControlService.coverFavouriteElement(filePath, favouriteRecord))
 		            				Toast.makeText(getApplicationContext(),getString(R.string.IDS_RecordSaveSuc), Toast.LENGTH_LONG).show();
 		            			favouriteControlService.setLastRecord(filePath,recordNameEditText.getText().toString());
+		            			favouriteControlService.setLastChannel(filePath,channelSpinner.getSelectedItem().toString());
 		            		}
 		            	}).setNegativeButton(getString(R.string.IDS_DELETE),new DialogInterface.OnClickListener() {
 		            		@Override
@@ -214,6 +217,7 @@ public class SettingsActivity extends Activity {
 										recordNameEditText.setText(favouriteRecordTemp.getFavouriteName());
 										channelSpinner.setSelection(Integer.parseInt(favouriteRecordTemp.getDefaultChannel())-1);	
 										favouriteControlService.setLastRecord(filePath,null);
+										favouriteControlService.setLastChannel(filePath, null);
 										Toast.makeText(getApplicationContext(),getString(R.string.IDS_DelSuc), Toast.LENGTH_LONG).show();
 									}
 									else{
@@ -227,6 +231,7 @@ public class SettingsActivity extends Activity {
 										recordNameEditText.setText(null);
 										channelSpinner.setSelection(0);
 										favouriteControlService.setLastRecord(filePath,null);
+										favouriteControlService.setLastChannel(filePath, null);
 									}
 		            			}
 		            		}

@@ -101,27 +101,26 @@ public class DeviceListActivity extends Activity {
 								} catch (Exception e) {
 									System.out.println(e.getMessage().toString());
 								}; 
-					        }else{
-					        	FavouriteRecord favouriteRecord = new FavouriteRecord();
-					        	DVRDevice dvrDevice = deviceList.get(position);
-								String tempDeviceName = dvrDevice.getDeviceName();
-								String deviceName = tempDeviceName.substring(4,tempDeviceName.length());
-					        	favouriteRecord.setFavouriteName(deviceName);
-								favouriteRecord.setUserName(dvrDevice.getLoginUsername());
-								favouriteRecord.setPassword(dvrDevice.getLoginPassword());
-								favouriteRecord.setIPAddress(dvrDevice.getLoginIP());
-								favouriteRecord.setPort(dvrDevice.getMobliePhonePort());
-								favouriteRecord.setDefaultChannel(dvrDevice.getStarChannel());
-								favouriteRecord.setRecordName(dvrDevice.getDeviceName());
-					        	//检测此平台是否已经存储，若有则覆盖，若没有则添加
-					        	if(favouriteControlService.isExist(filePath, dvrDevice.getDeviceName())){
-					        		favouriteControlService.coverFavouriteElement(filePath, favouriteRecord);
-					        	}else{	
-					        		favouriteControlService.addFavouriteElement(filePath, favouriteRecord);
-					        	}
-					        	favouriteControlService.setLastRecord(filePath,favouriteRecord.getFavouriteName());
 					        }
-							
+					        FavouriteRecord favouriteRecord = new FavouriteRecord();
+					        DVRDevice dvrDevice = deviceList.get(position);
+							String tempDeviceName = dvrDevice.getDeviceName();
+							String deviceName = tempDeviceName.substring(4,tempDeviceName.length());
+					        favouriteRecord.setFavouriteName(deviceName);
+							favouriteRecord.setUserName(dvrDevice.getLoginUsername());
+							favouriteRecord.setPassword(dvrDevice.getLoginPassword());
+							favouriteRecord.setIPAddress(dvrDevice.getLoginIP());
+							favouriteRecord.setPort(dvrDevice.getMobliePhonePort());
+							favouriteRecord.setDefaultChannel(dvrDevice.getStarChannel());
+							favouriteRecord.setRecordName(dvrDevice.getDeviceName());
+					        //检测此平台是否已经存储，若有则覆盖，若没有则添加
+					        if(favouriteControlService.isExist(filePath, dvrDevice.getDeviceName())){
+					        	favouriteControlService.coverFavouriteElement(filePath, favouriteRecord);
+					        }else{	
+					        	favouriteControlService.addFavouriteElement(filePath, favouriteRecord);
+					        }
+					        favouriteControlService.setLastRecord(filePath,favouriteRecord.getFavouriteName());
+					        favouriteControlService.setLastChannel(filePath, favouriteRecord.getDefaultChannel());
 							//返回主界面播放视频
 							Intent intent = getIntent();
 							intent.putExtra("DVRDevice",deviceList.get(position));
@@ -165,6 +164,7 @@ public class DeviceListActivity extends Activity {
 				        		favouriteControlService.addFavouriteElement(filePath, favouriteRecord);
 				        	}
 				        	favouriteControlService.setLastRecord(filePath,favouriteRecord.getFavouriteName());
+				        	favouriteControlService.setLastChannel(filePath, favouriteRecord.getDefaultChannel());
 				        }
 				        //返回主界面播放视频
 						Intent intent = getIntent();

@@ -48,6 +48,7 @@ public class FavouriteControlServiceImpl implements FavouriteControlService {
 		{
 			Element rootElement=document.getRootElement();
 			rootElement.addElement("LastRecord");
+			rootElement.addElement("LastChannel");
 			/* 将document中的内容写入文件中 */ 
 			OutputFormat format = OutputFormat.createPrettyPrint(); 
 			format.setEncoding("UTF-8"); 
@@ -260,13 +261,15 @@ public class FavouriteControlServiceImpl implements FavouriteControlService {
 			Document document = saxReader.read(new File(fileName));
 			Element rootElement=document.getRootElement();
 			Element favourite = rootElement.addElement("Favourite");
-			favourite.addAttribute("FavouriteName", dvrDevice.getDeviceName().toString());		//收藏名
+			String favouriteName = dvrDevice.getDeviceName().toString();
+			String subFavouriteName = favouriteName.substring(4,favouriteName.length());
+			favourite.addAttribute("FavouriteName", subFavouriteName);		//收藏名
 			favourite.addAttribute("UserName", dvrDevice.getLoginUsername().toString());		//用户名
 			favourite.addAttribute("Password", dvrDevice.getLoginPassword().toString());		//密码
 			favourite.addAttribute("IPAddress", dvrDevice.getLoginIP().toString());		//IP
 			favourite.addAttribute("Port", dvrDevice.getMobliePhonePort().toString());		//端口
 			favourite.addAttribute("DefaultChannel", dvrDevice.getStarChannel());		//默认通道
-			favourite.addAttribute("RecordName", dvrDevice.getDeviceName().toString());		//记录名
+			favourite.addAttribute("RecordName", subFavouriteName);		//记录名
 			
 			OutputFormat opf=new OutputFormat("",true,"UTF-8");
 			opf.setTrimText(true);
@@ -314,5 +317,41 @@ public class FavouriteControlServiceImpl implements FavouriteControlService {
 			e.printStackTrace();
 			return null;
 		} 	
+	}
+
+	@Override
+	public boolean setLastChannel(String fileName, String channel) {
+		SAXReader saxReader = new SAXReader(); 
+		try {
+			Document document = saxReader.read(new File(fileName));
+			Element rootElement=document.getRootElement();
+			List LastRecordList = rootElement.selectNodes("//Favourites/LastChannel");
+			Element LastRecordTemp = (Element) LastRecordList.get(0);
+			LastRecordTemp.addAttribute("LastChannelNumber", channel);
+			OutputFormat opf=new OutputFormat("",true,"UTF-8");
+			opf.setTrimText(true);
+			XMLWriter writer=new XMLWriter(new FileOutputStream(fileName),opf);
+			writer.write(document);
+			writer.close();
+			return SUCCESS;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return FAILED;
+		} 	
+	}
+
+	@Override
+	public String getLastChannel(String fileName) {
+		SAXReader saxReader = new SAXReader(); 
+		try {
+			Document document = saxReader.read(new File(fileName));
+			Element rootElement=document.getRootElement();
+			List LastRecordList = rootElement.selectNodes("//Favourites/LastChannel");
+			Element LastRecordTemp = (Element) LastRecordList.get(0);
+			return LastRecordTemp.attribute("LastChannelNumber").getText().toString();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		} 
 	}
 }

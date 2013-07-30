@@ -151,8 +151,9 @@ public class MainActivity extends Activity {
 		File myFavouritesFile=new File(filePath);		//存放收藏夹的XMl文件
 		//非首次使用，则获取XML存储文件最后一次使用记录
 		if(myFavouritesFile.exists()){
-			if(favouriteControlService.getLastRecordName(filePath)!=null){
-				String selectedRecordName= favouriteControlService.getLastRecordName(filePath);
+			String selectedRecordName= favouriteControlService.getLastRecordName(filePath);
+			String lastChannel = favouriteControlService.getLastChannel(filePath);
+			if(selectedRecordName!=null&&!selectedRecordName.equals("")){
 				FavouriteRecord lastFavouriteRecord = (FavouriteRecord) favouriteControlService.getFavouriteRecordByName(filePath,selectedRecordName);
 				isCloudControl = false;
 				settingUsername = lastFavouriteRecord.getUserName();
@@ -162,8 +163,12 @@ public class MainActivity extends Activity {
 					settingPassword = lastFavouriteRecord.getPassword();
 				}
 				settingServer = lastFavouriteRecord.getIPAddress(); 
-				settingPort = lastFavouriteRecord.getPort(); 
-				settingChannel = lastFavouriteRecord.getDefaultChannel(); 
+				settingPort = lastFavouriteRecord.getPort();
+				if(lastChannel==null){
+					settingChannel = lastFavouriteRecord.getDefaultChannel();
+				}else{
+					settingChannel = lastChannel;
+				}
 			}
 		}
 		
@@ -622,18 +627,22 @@ public class MainActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			switch (v.getId()) {
-			case R.id.btn_number_1:
-				controlService.switchChannel(page * 4 + 1);
-				break;
-			case R.id.btn_number_2:
-				controlService.switchChannel(page * 4 + 2);
-				break;
-			case R.id.btn_number_3:
-				controlService.switchChannel(page * 4 + 3);
-				break;
-			case R.id.btn_number_4:
-				controlService.switchChannel(page * 4 + 4);
-				break;
+				case R.id.btn_number_1:
+					controlService.switchChannel(page * 4 + 1);
+					favouriteControlService.setLastChannel(filePath, String.valueOf(page*4+1));
+					break;
+				case R.id.btn_number_2:
+					controlService.switchChannel(page * 4 + 2);
+					favouriteControlService.setLastChannel(filePath, String.valueOf(page*4+2));
+					break;
+				case R.id.btn_number_3:
+					controlService.switchChannel(page * 4 + 3);
+					favouriteControlService.setLastChannel(filePath, String.valueOf(page*4+3));
+					break;
+				case R.id.btn_number_4:
+					controlService.switchChannel(page * 4 + 4);
+					favouriteControlService.setLastChannel(filePath, String.valueOf(page*4+4));
+					break;
 			}
 		}
 	};
