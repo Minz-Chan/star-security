@@ -1,5 +1,8 @@
 package com.starsecurity.activity;
 
+import java.io.File;
+import java.util.List;
+
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
@@ -13,6 +16,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -22,13 +26,16 @@ import com.starsecurity.component.ConnectionManager;
 import com.starsecurity.component.ViewManager;
 import com.starsecurity.h264.VideoView;
 import com.starsecurity.model.DVRDevice;
+import com.starsecurity.model.FavouriteRecord;
 import com.starsecurity.model.TLV_T_Command;
 import com.starsecurity.model.TLV_V_DVSInfoRequest;
 import com.starsecurity.service.ControlService;
 import com.starsecurity.service.ExtendedService;
+import com.starsecurity.service.FavouriteControlService;
 import com.starsecurity.service.impl.CheckConnectionBroadcast;
 import com.starsecurity.service.impl.ControlServiceImpl;
 import com.starsecurity.service.impl.ExtendedServiceImpl;
+import com.starsecurity.service.impl.FavouriteControlServiceImpl;
 
 /***
  * 
@@ -37,7 +44,8 @@ import com.starsecurity.service.impl.ExtendedServiceImpl;
  * @date        创建日期           2013-03-18
  * @author       修改人           陈明珍/肖远东
  * @date        修改日期           2013-06-08
- * @description 修改记录	          
+ * @description 修改记录	         
+ *   2013-07-30 加入获取最后一次设置功能  肖远东 
  *   2013-06-08 加入断线重连功能（3分钟后重连） 陈明珍
  *   2013-05-17 加入控制停止动作controlService.stopAction 陈明珍
  *   2013-05-07 加入方向控制、放大/缩小、焦点放大/缩小、光圈放大/缩小功能  陈明珍
@@ -53,6 +61,11 @@ public class MainActivity extends Activity {
 	public static MainActivity mainActivity;
 	
 	private PendingIntent pi = null;
+	
+	/***
+	 * 手机存放收藏夹URL
+	 */
+	private static final String filePath = "/data/data/com.starsecurity/MyFavourites.xml";
 	
 	/** 底端按钮 */
 	private Button playBtn;					// 播放按钮
@@ -94,6 +107,9 @@ public class MainActivity extends Activity {
 	private static String functionTempStr;	// 存储临时文本信息
 	private static boolean isCloudControl = false;
 	
+	/** 使用记录单元实例 */
+	private FavouriteControlService favouriteControlService = new FavouriteControlServiceImpl("conn1");
+	
 	/** 控制单元实例 */
 	private ControlService controlService =  new ControlServiceImpl("conn1");	
 	
@@ -122,6 +138,26 @@ public class MainActivity extends Activity {
 		v.bindHelpMsgView(msgView);
 		
 		v.setMainVideoView(mVideoView);
+		
+		/* 获取最后一次设置功能  */
+		File myFavouritesFile=new File(filePath);		//存放收藏夹的XMl文件
+		//非首次使用，则获取XML存储文件最后一次使用记录
+		if(myFavouritesFile.exists()){
+			if(favouriteControlService.getLastRecordName(filePath)!=null){
+				String selectedRecordName= favouriteControlService.getLastRecordName(filePath);
+				FavouriteRecord lastFavouriteRecord = (FavouriteRecord) favouriteControlService.getFavouriteRecordByName(filePath,selectedRecordName);
+				isCloudControl = false;
+				settingUsername = lastFavouriteRecord.getUserName();
+				if(lastFavouriteRecord.getPassword()==null){
+					settingPassword = "";
+				}else{
+					settingPassword = lastFavouriteRecord.getPassword();
+				}
+				settingServer = lastFavouriteRecord.getIPAddress(); 
+				settingPort = lastFavouriteRecord.getPort(); 
+				settingChannel = lastFavouriteRecord.getDefaultChannel(); 
+			}
+		}
 		
 		// 控制按钮关联
 		controlUpBtn = (Button) findViewById(R.id.btn_control_up);
@@ -532,7 +568,6 @@ public class MainActivity extends Activity {
 				startActivityForResult(intent, 0);
 			}
 		});
-		
 		
 		/* 若网络异常或中断，3分钟后重连 */
 		AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);  
