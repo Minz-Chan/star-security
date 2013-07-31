@@ -537,6 +537,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				TLV_V_DVSInfoRequest tlvDVSInfoRequest = (TLV_V_DVSInfoRequest) ConnectionManager.getConnection("conn1").retrieveResultItem(TLV_T_Command.TLV_T_DVS_INFO_REQUEST);
+				//TLV_V_ChannelResponse tlvChannelResponse = (TLV_V_ChannelResponse) ConnectionManager.getConnection("conn1").retrieveResultItem(TLV_T_Command.TLV_T_CHANNLE_ANSWER);
 				if(tlvDVSInfoRequest!=null&&!isCloudControl){
 					int channelNuber = tlvDVSInfoRequest.getChannleNumber();
 					switch (page) {

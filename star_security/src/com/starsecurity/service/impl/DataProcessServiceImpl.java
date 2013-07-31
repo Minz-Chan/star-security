@@ -81,7 +81,7 @@ public class DataProcessServiceImpl implements DataProcessService {
 				tlv_V_VideoFrameInfo = (TLV_V_VideoFrameInfo) ByteArray2Object.convert2Object(TLV_V_VideoFrameInfo.class, data, flag, OWSP_LEN.TLV_V_VideoFrameInfo);
 				System.out.println(tlv_V_VideoFrameInfo);
 				
-				ConnectionManager.getConnection(conn_name).addResultItem(tlv_V_VideoFrameInfo);
+				//ConnectionManager.getConnection(conn_name).addResultItem(tlv_V_VideoFrameInfo);
 				
 			} else if ( tlv_Header.getTlv_type() == TLV_T_Command.TLV_T_VIDEO_PFRAME_DATA ) {
 				System.out.println("*********************** P Frame process start  *************************");
@@ -129,7 +129,7 @@ public class DataProcessServiceImpl implements DataProcessService {
 				TLV_V_VersionInfoRequest tlv_V_VersionInfoRequest;
 				tlv_V_VersionInfoRequest = (TLV_V_VersionInfoRequest) ByteArray2Object.convert2Object(TLV_V_VersionInfoRequest.class, data, flag, OWSP_LEN.TLV_V_VersionInfoRequest);
 				System.out.println(tlv_V_VersionInfoRequest);
-				ConnectionManager.getConnection(conn_name).addResultItem(tlv_V_VersionInfoRequest);
+				//ConnectionManager.getConnection(conn_name).addResultItem(tlv_V_VersionInfoRequest);
 			}
 			else if (tlv_Header.getTlv_type() == TLV_T_Command.TLV_T_DVS_INFO_REQUEST){	
 				TLV_V_DVSInfoRequest tlv_V_DVSInfoRequest;
@@ -182,7 +182,7 @@ public class DataProcessServiceImpl implements DataProcessService {
 					}
 				}
 				
-				ConnectionManager.getConnection(conn_name).addResultItem(tlv_V_StreamDataFormat);
+				//ConnectionManager.getConnection(conn_name).addResultItem(tlv_V_StreamDataFormat);
 			} else if (tlv_Header.getTlv_type() == TLV_T_Command.TLV_T_LOGIN_ANSWER) {
 				TLV_V_LoginResponse tlv_V_LoginResponse;
 				tlv_V_LoginResponse = (TLV_V_LoginResponse) ByteArray2Object.convert2Object(TLV_V_LoginResponse.class, data, flag, OWSP_LEN.TLV_V_LoginResponse);
