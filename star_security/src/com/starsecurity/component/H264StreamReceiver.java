@@ -113,6 +113,8 @@ public class H264StreamReceiver implements Runnable {
 			
 			while(!tlvContent.equals("")){
 				
+				sock.sendUrgentData(0xFF);				// 心跳包
+				
 				/* 数据处理 */
 				dataProcessService.process(tlvContent, (int)owspPacketHeader.getPacket_length());
 				//System.out.println("=================== finish data process ==================");
@@ -147,7 +149,7 @@ public class H264StreamReceiver implements Runnable {
 				
 				
 				/* 重置数据数组 */
-				resetArray(tlvContent);
+				//resetArray(tlvContent);
 				
 				/*
 				 * 受限于网络带宽限制或服务端发送速度限制，此处需等待所需数据被完整接收之后方可往下执行 
