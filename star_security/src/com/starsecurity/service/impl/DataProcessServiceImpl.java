@@ -203,7 +203,7 @@ public class DataProcessServiceImpl implements DataProcessService {
 					} else if (result == ResponseCode._RESPONSECODE_DEVICE_OFFLINE) { // 设备已离线
 						ViewManager.getInstance().setHelpMsg(R.string.IDS_ACQ_Off);
 					} else { // 其他
-						ViewManager.getInstance().setHelpMsg(R.string.IDS_LoginSerFail);  // 登录服务器失败
+						ViewManager.getInstance().setHelpMsg(R.string.IDS_UserInfoErr);  // 登录服务器失败，原因即用户或密码错误
 						
 					}  
 						

@@ -126,7 +126,7 @@ public class H264StreamReceiver implements Runnable {
 					conn.getSock().close();
 					conn.setSock(null);
 					
-					updateUIMessage(MessageCode.CONNECTION_CLOSED);
+					//updateUIMessage(MessageCode.CONNECTION_CLOSED);
 			
 					break;
 				}

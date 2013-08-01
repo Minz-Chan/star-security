@@ -45,7 +45,7 @@
     <string name="IDS_InternetOff">網絡已斷開</string>
     <string name="IDS_ChangeChannel">正在調臺</string>
     <string name="IDS_ACQ_Off">採集點離線</string>
-    <string name="IDS_UserInfoErr">用戶名密碼錯誤</string>
+    <string name="IDS_UserInfoErr">用戶名或密碼錯誤</string>
     <string name="IDS_Downloading">開始下載...</string>
     <string name="IDS_Pause">已暫停</string>
     <string name="IDS_Unknown">未知</string>

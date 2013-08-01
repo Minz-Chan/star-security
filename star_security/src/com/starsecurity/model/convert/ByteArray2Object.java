@@ -189,7 +189,7 @@ public class ByteArray2Object {
 			
 			TLV_V_LoginResponse tlv_V_LoginResponse = new TLV_V_LoginResponse();
 			tlv_V_LoginResponse.setResult(LByteConvert.bytesToUshort(tempByteArray, 0));
-			tlv_V_LoginResponse.setReserve(LByteConvert.bytesToUshort(tempByteArray, 0));
+			tlv_V_LoginResponse.setReserve(LByteConvert.bytesToUshort(tempByteArray, 2));
 			return tlv_V_LoginResponse;
 		}
 		
