@@ -9,8 +9,12 @@
  */
 package com.starsecurity.service.impl;
 
+import android.os.Handler;
+import android.os.Message;
+
 import com.starsecurity.R;
 import com.starsecurity.component.ConnectionManager;
+import com.starsecurity.component.MessageCode;
 import com.starsecurity.component.Timecounter;
 import com.starsecurity.component.ViewManager;
 import com.starsecurity.h264.VideoView;
@@ -189,24 +193,32 @@ public class DataProcessServiceImpl implements DataProcessService {
 				
 				int result = tlv_V_LoginResponse.getResult();
 				
+				Handler handler = ViewManager.getInstance().getHandler();
+				Message msg = new Message();
+				
 				if (result == ResponseCode._RESPONSECODE_SUCC) { // 登录服务器成功
 					ViewManager.getInstance().setHelpMsg(R.string.IDS_LoginSerSuccess);  
 				} else {
 					ConnectionManager.getConnection(conn_name).setConnect_state(0);	// 关闭连接
 					
 					if (result == ResponseCode._RESPONSECODE_USER_PWD_ERROR) { // 用户或密码错误
-						ViewManager.getInstance().setHelpMsg(R.string.IDS_LoginInfo);
+						msg.what = MessageCode._RESPONSECODE_USER_PWD_ERROR;
 					} else if (result == ResponseCode._RESPONSECODE_PDA_VERSION_ERROR) { // 版本不一致
-						ViewManager.getInstance().setHelpMsg(R.string.IDS_VersionErr);
+						msg.what = MessageCode._RESPONSECODE_PDA_VERSION_ERROR;
 					} else if (result == ResponseCode._RESPONSECODE_MAX_USER_ERROR) { // 最大用户数
-						ViewManager.getInstance().setHelpMsg(R.string.IDS_UserMax);
+						msg.what = MessageCode._RESPONSECODE_MAX_USER_ERROR;
 					} else if (result == ResponseCode._RESPONSECODE_DEVICE_OFFLINE) { // 设备已离线
-						ViewManager.getInstance().setHelpMsg(R.string.IDS_ACQ_Off);
+						msg.what = MessageCode._RESPONSECODE_DEVICE_OFFLINE;
 					} else { // 其他
-						ViewManager.getInstance().setHelpMsg(R.string.IDS_UserInfoErr);  // 登录服务器失败，原因即用户或密码错误
-						
+						// 登录服务器失败，原因即用户或密码错误
+						msg.what = MessageCode._RESPONSECODE_USER_PWD_ERROR;
+
 					}  
-						
+					
+					if (handler != null) {
+						handler.sendMessage(msg);
+					}
+					
 				}
 				
 			}

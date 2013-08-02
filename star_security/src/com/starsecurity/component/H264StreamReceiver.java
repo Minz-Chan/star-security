@@ -40,7 +40,6 @@ public class H264StreamReceiver implements Runnable {
 	private Socket sock;
 	private DataProcessService dataProcessService;
 	
-	
 
 	public H264StreamReceiver(String conn_name) {
 		this.conn_name = conn_name;
@@ -85,8 +84,16 @@ public class H264StreamReceiver implements Runnable {
 	    sock = conn.getSock();
 	    
 	    
+	    
  		try {
+ 			
+ 			
+ 			// 心跳包线程
+ 			//HeartbeatCheck hbc = new HeartbeatCheck(sock, handler);
+ 		    //new Thread(hbc).start();
+ 		    
 
+ 		    sock.setSoTimeout(8000);		// 3秒内没有接收到任何数据时即为超时
  			//socketReader = sock.getInputStream();
  			sockIn = new SocketInputStream(sock.getInputStream());
 
@@ -106,6 +113,7 @@ public class H264StreamReceiver implements Runnable {
 			
 			//System.out.println("=================== get packet start ==================");
 			// 根据包长度读取包内容
+			//int checkCount = 0;
 			byte[] tlvContent = new byte[65536];
 			sockIn.read(tlvContent, 0, (int) owspPacketHeader.getPacket_length() - 4);
 			//System.out.println("=================== get packet: " + ((int) owspPacketHeader.getPacket_length() - 4) + "bytes ==================");
@@ -113,7 +121,11 @@ public class H264StreamReceiver implements Runnable {
 			
 			while(!tlvContent.equals("")){
 				
-				sock.sendUrgentData(0xFF);				// 心跳包
+				/*
+				if ((++checkCount) == 50) {	// 当FPS= 6~25时，约每2~8秒确认一次服务器状态
+					sock.sendUrgentData(0xFF);				// 心跳包
+					checkCount = 0;
+				}*/
 				
 				/* 数据处理 */
 				dataProcessService.process(tlvContent, (int)owspPacketHeader.getPacket_length());
@@ -125,9 +137,7 @@ public class H264StreamReceiver implements Runnable {
 				if (conn.getConnect_state() == 0) {
 					conn.getSock().close();
 					conn.setSock(null);
-					
-					//updateUIMessage(MessageCode.CONNECTION_CLOSED);
-			
+	
 					break;
 				}
 				

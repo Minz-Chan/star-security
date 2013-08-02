@@ -636,6 +636,23 @@ public class MainActivity extends Activity {
 				case MessageCode.IDS_CONNECTSERVER: // 网络连接中...
 					ViewManager.getInstance().setHelpMsg(R.string.IDS_ConnectServer);
 					break;
+				case MessageCode._RESPONSECODE_USER_PWD_ERROR:
+					isPlay = false;
+					updatePlayStatus(R.string.IDS_UserInfoErr);
+					break;
+				case MessageCode._RESPONSECODE_PDA_VERSION_ERROR:
+					isPlay = false;
+					updatePlayStatus(R.string.IDS_VersionErr);
+					break;
+				case MessageCode._RESPONSECODE_MAX_USER_ERROR:
+					isPlay = false;
+					updatePlayStatus(R.string.IDS_UserMax);
+					break;
+				case MessageCode._RESPONSECODE_DEVICE_OFFLINE:
+					isPlay = false;
+					updatePlayStatus(R.string.IDS_ACQ_Off);
+					break;
+					
 				}
 			
 			} 
