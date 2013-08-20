@@ -95,7 +95,10 @@ public class H264DecodeUtil {
 				
 		            if(iTemp > 0) {
 		            	result = 1;
+		            } else if (iTemp == -2) {
+		            	return -2;
 		            }
+		            
 				}
 
 				NalBuf[0] = 0;

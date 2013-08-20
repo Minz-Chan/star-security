@@ -105,7 +105,11 @@ public class DataProcessServiceImpl implements DataProcessService {
 					v.postInvalidate();
 					System.out.println("*********************** update video: P Frame  *************************");
 					System.out.println("$$$$$Time diff: " + Timecounter.getInstance().getTimeDiff());
+				} else if (result == -2) {	// 分辨率切换
+					ConnectionManager.getConnection(conn_name).close();		// 关闭连接
+					updateUIMessage(MessageCode.CONNECTION_CLOSED);			// 提示连接断开
 				}
+				
 				System.out.println("*********************** P Frame process end  *************************");
 				
 			} else if ( tlv_Header.getTlv_type() == TLV_T_Command.TLV_T_VIDEO_IFRAME_DATA ) {
@@ -126,6 +130,9 @@ public class DataProcessServiceImpl implements DataProcessService {
 					v.postInvalidate();
 					System.out.println("*********************** update video: I Frame  *************************");
 					System.out.println("$$$$$Time diff: " + Timecounter.getInstance().getTimeDiff());
+				} else if (result == -2) {	// 分辨率切换
+					ConnectionManager.getConnection(conn_name).close();		// 关闭连接
+					updateUIMessage(MessageCode.CONNECTION_CLOSED);			// 提示连接断开
 				}
 				System.out.println("*********************** I Frame process end  *************************");
 
@@ -232,6 +239,23 @@ public class DataProcessServiceImpl implements DataProcessService {
 		
 		
 		return 0;
+	}
+	
+	
+	/**
+	 * 更新UI消息传递
+	 * @param msgCode 消息代码
+	 */
+	private void updateUIMessage(int msgCode) {
+		Message msg = new Message();
+		msg.what = msgCode;
+		
+		Handler handler = ViewManager.getInstance().getHandler();
+		if (handler != null) {
+			handler.sendMessage(msg);
+		} else {
+			ViewManager.getInstance().setHelpMsg(R.string.IDS_Unknown);
+		}
 	}
 
 }
