@@ -451,6 +451,14 @@ public class MainActivity extends Activity {
 							switchChannelBtnImages(2);
 						else if(channelNumber>12&&channelNumber<=16)
 							switchChannelBtnImages(3);
+						else if(channelNumber>16&&channelNumber<=20)
+							switchChannelBtnImages(4);
+						else if(channelNumber>20&&channelNumber<=24)
+							switchChannelBtnImages(5);
+						else if(channelNumber>24&&channelNumber<=28)
+							switchChannelBtnImages(6);
+						else if(channelNumber>28&&channelNumber<=32)
+							switchChannelBtnImages(7);
 						
 						controlService.playVideo();
 						isPlay = true;
@@ -478,6 +486,14 @@ public class MainActivity extends Activity {
 							switchChannelBtnImages(2);
 						else if(channelNumber>12&&channelNumber<=16)
 							switchChannelBtnImages(3);
+						else if(channelNumber>16&&channelNumber<=20)
+							switchChannelBtnImages(4);
+						else if(channelNumber>20&&channelNumber<=24)
+							switchChannelBtnImages(5);
+						else if(channelNumber>24&&channelNumber<=28)
+							switchChannelBtnImages(6);
+						else if(channelNumber>28&&channelNumber<=32)
+							switchChannelBtnImages(7);
 						
 						controlService.playVideo();
 						isPlay = true;
@@ -558,6 +574,30 @@ public class MainActivity extends Activity {
 								switchChannelBtnImages(3);
 							break;
 						case 3:
+							if (channelNuber == 16)
+								switchChannelBtnImages(0);
+							if (channelNuber > 16)
+								switchChannelBtnImages(4);
+							break;
+						case 4:
+							if (channelNuber == 20)
+								switchChannelBtnImages(0);
+							if (channelNuber > 20)
+								switchChannelBtnImages(5);
+							break;
+						case 5:
+							if (channelNuber == 24)
+								switchChannelBtnImages(0);
+							if (channelNuber > 24)
+								switchChannelBtnImages(6);
+							break;
+						case 6:
+							if (channelNuber == 28)
+								switchChannelBtnImages(0);
+							if (channelNuber > 28)
+								switchChannelBtnImages(7);
+							break;
+						case 7:
 							switchChannelBtnImages(0);
 							break;
 					}
@@ -584,6 +624,30 @@ public class MainActivity extends Activity {
 								switchChannelBtnImages(3);
 							break;
 						case 3:
+							if (Integer.parseInt(dvrDevice.getChannelNumber()) == 16)
+								switchChannelBtnImages(0);
+							if (Integer.parseInt(dvrDevice.getChannelNumber()) > 16)
+								switchChannelBtnImages(4);
+							break;
+						case 4:
+							if (Integer.parseInt(dvrDevice.getChannelNumber()) == 20)
+								switchChannelBtnImages(0);
+							if (Integer.parseInt(dvrDevice.getChannelNumber()) > 20)
+								switchChannelBtnImages(5);
+							break;
+						case 5:
+							if (Integer.parseInt(dvrDevice.getChannelNumber()) == 24)
+								switchChannelBtnImages(0);
+							if (Integer.parseInt(dvrDevice.getChannelNumber()) > 24)
+								switchChannelBtnImages(6);
+							break;
+						case 6:
+							if (Integer.parseInt(dvrDevice.getChannelNumber()) == 28)
+								switchChannelBtnImages(0);
+							if (Integer.parseInt(dvrDevice.getChannelNumber()) > 28)
+								switchChannelBtnImages(7);
+							break;
+						case 7:
 							switchChannelBtnImages(0);
 							break;
 					}
@@ -742,6 +806,50 @@ public class MainActivity extends Activity {
 				channelFour.setBackgroundDrawable(getResources().getDrawable(
 						R.drawable.btn_number16));
 				page = 3;
+				break;
+			case 4:
+				channelOne.setBackgroundDrawable(getResources().getDrawable(
+						R.drawable.btn_number17));
+				channelTwo.setBackgroundDrawable(getResources().getDrawable(
+						R.drawable.btn_number18));
+				channelThree.setBackgroundDrawable(getResources().getDrawable(
+						R.drawable.btn_number19));
+				channelFour.setBackgroundDrawable(getResources().getDrawable(
+						R.drawable.btn_number20));
+				page = 4;
+				break;
+			case 5:
+				channelOne.setBackgroundDrawable(getResources().getDrawable(
+						R.drawable.btn_number21));
+				channelTwo.setBackgroundDrawable(getResources().getDrawable(
+						R.drawable.btn_number22));
+				channelThree.setBackgroundDrawable(getResources().getDrawable(
+						R.drawable.btn_number23));
+				channelFour.setBackgroundDrawable(getResources().getDrawable(
+						R.drawable.btn_number24));
+				page = 5;
+				break;
+			case 6:
+				channelOne.setBackgroundDrawable(getResources().getDrawable(
+						R.drawable.btn_number25));
+				channelTwo.setBackgroundDrawable(getResources().getDrawable(
+						R.drawable.btn_number26));
+				channelThree.setBackgroundDrawable(getResources().getDrawable(
+						R.drawable.btn_number27));
+				channelFour.setBackgroundDrawable(getResources().getDrawable(
+						R.drawable.btn_number28));
+				page = 6;
+				break;
+			case 7:
+				channelOne.setBackgroundDrawable(getResources().getDrawable(
+						R.drawable.btn_number29));
+				channelTwo.setBackgroundDrawable(getResources().getDrawable(
+						R.drawable.btn_number30));
+				channelThree.setBackgroundDrawable(getResources().getDrawable(
+						R.drawable.btn_number31));
+				channelFour.setBackgroundDrawable(getResources().getDrawable(
+						R.drawable.btn_number32));
+				page = 7;
 				break;
 		}
 		return 1;
