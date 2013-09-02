@@ -77,15 +77,19 @@ public class DdbssettingActivity extends PreferenceActivity implements OnSharedP
         Preference pref = findPreference(key);  
         if (pref instanceof EditTextPreference) {
         	if(key.equals("password")){
-        		int passwordLength = ddns_password.getText().toString().length();
-            	StringBuffer passwordStr = new StringBuffer();
-            	for(int index = 0;index<passwordLength;index++)
-            		passwordStr.append("*");
-            	ddns_password.setSummary(passwordStr.toString());
+        		if(ddns_password!=null){
+        			if(ddns_password.getText()!=null){
+	        			int passwordLength = ddns_password.getText().length();
+	                	StringBuffer passwordStr = new StringBuffer();
+	                	for(int index = 0;index<passwordLength;index++)
+	                		passwordStr.append("*");
+	                	ddns_password.setSummary(passwordStr.toString());
+        			}
+        		}
         	}
         	else{
 	            EditTextPreference etp = (EditTextPreference) pref;  
-	            pref.setSummary(etp.getText()); 
+	            pref.setSummary(etp.getText());
         	}
         }  
     }  
