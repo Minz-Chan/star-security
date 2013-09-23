@@ -101,4 +101,56 @@ public interface FavouriteControlService {
 	 * @return
 	 */
 	public String getLastChannel(String fileName);
+	
+	/***
+	 * @param fileName		XML文件名
+	 * @param serverIP		云台服务器IP
+	 * @return
+	 */
+	public boolean setServerIP(String fileName,String serverIP);
+	
+	/***
+	 * @param fileName		XML文件名
+	 * @return
+	 */
+	public String getServerIP(String fileName);
+	
+	/***
+	 * @param fileName		XML文件名
+	 * @param serverPort	云台服务器端口
+	 * @return
+	 */
+	public boolean setServerPort(String fileName,String serverPort);
+	
+	/***
+	 * @param fileName		XML文件名
+	 * @return
+	 */
+	public String getServerPort(String fileName);
+	
+	/***
+	 * @param fileName		XML文件名
+	 * @param userName		云台用户名
+	 * @return
+	 */
+	public boolean setUserName(String fileName,String userName);
+	
+	/***
+	 * @param fileName		XML文件名
+	 * @return
+	 */
+	public String getUserName(String fileName);
+	
+	/***
+	 * @param fileName		XML文件名
+	 * @param password		云台用户名密码
+	 * @return
+	 */
+	public boolean setPassword(String fileName,String password);
+	
+	/***
+	 * @param fileName		XML文件名
+	 * @return
+	 */
+	public String getPassword(String fileName);
 }

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+	<TextView
+		android:layout_width="wrap_content"   
+		android:layout_height="wrap_content"   
+		android:text="@string/ddns_server" />
+
+	<EditText 
+	    android:id="@+id/ddnsEditTextServerIP"
+	    android:layout_width="fill_parent"   
+		android:layout_height="wrap_content"
+		android:text="xy.star-netsecurity.com"/>
+	
+	<TextView 
+		android:layout_width="wrap_content"   
+		android:layout_height="wrap_content"   
+		android:text="@string/ddns_port" />
+	
+	<EditText 
+	    android:id="@+id/ddnsEditTextServerPort"
+	    android:layout_width="fill_parent"   
+		android:layout_height="wrap_content"
+		android:text="80"/>
+	
+	<TextView  
+		android:layout_width="wrap_content"   
+		android:layout_height="wrap_content"   
+		android:text="@string/user_id" />
+
+	<EditText
+	    android:id="@+id/ddnsEditTextUserName"
+	    android:layout_width="fill_parent"   
+		android:layout_height="wrap_content"
+	    />
+	
+	<TextView  
+		android:layout_width="wrap_content"   
+		android:layout_height="wrap_content"   
+		android:text="@string/ddns_passworld" />
+
+	<EditText
+	    android:id="@+id/ddnsEditTextUserPassword"
+	    android:inputType="textPassword"
+	    android:layout_width="fill_parent"   
+		android:layout_height="wrap_content"
+	    />
+</LinearLayout>

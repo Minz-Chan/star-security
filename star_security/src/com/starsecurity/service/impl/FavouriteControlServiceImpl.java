@@ -49,6 +49,7 @@ public class FavouriteControlServiceImpl implements FavouriteControlService {
 			Element rootElement=document.getRootElement();
 			rootElement.addElement("LastRecord");
 			rootElement.addElement("LastChannel");
+			rootElement.addElement("CloudServerSetting");
 			/* 将document中的内容写入文件中 */ 
 			OutputFormat format = OutputFormat.createPrettyPrint(); 
 			format.setEncoding("UTF-8"); 
@@ -349,6 +350,150 @@ public class FavouriteControlServiceImpl implements FavouriteControlService {
 			List LastRecordList = rootElement.selectNodes("//Favourites/LastChannel");
 			Element LastRecordTemp = (Element) LastRecordList.get(0);
 			return LastRecordTemp.attribute("LastChannelNumber").getText().toString();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		} 
+	}
+
+	@Override
+	public boolean setServerIP(String fileName, String serverIP) {
+		SAXReader saxReader = new SAXReader(); 
+		try {
+			Document document = saxReader.read(new File(fileName));
+			Element rootElement=document.getRootElement();
+			List LastRecordList = rootElement.selectNodes("//Favourites/CloudServerSetting");
+			Element LastRecordTemp = (Element) LastRecordList.get(0);
+			LastRecordTemp.addAttribute("ServerIP", serverIP);
+			OutputFormat opf=new OutputFormat("",true,"UTF-8");
+			opf.setTrimText(true);
+			XMLWriter writer=new XMLWriter(new FileOutputStream(fileName),opf);
+			writer.write(document);
+			writer.close();
+			return SUCCESS;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return FAILED;
+		} 	
+	}
+
+	@Override
+	public String getServerIP(String fileName) {
+		SAXReader saxReader = new SAXReader(); 
+		try {
+			Document document = saxReader.read(new File(fileName));
+			Element rootElement=document.getRootElement();
+			List LastRecordList = rootElement.selectNodes("//Favourites/CloudServerSetting");
+			Element LastRecordTemp = (Element) LastRecordList.get(0);
+			return LastRecordTemp.attribute("ServerIP").getText().toString();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		} 
+	}
+
+	@Override
+	public boolean setServerPort(String fileName, String serverPort) {
+		SAXReader saxReader = new SAXReader(); 
+		try {
+			Document document = saxReader.read(new File(fileName));
+			Element rootElement=document.getRootElement();
+			List LastRecordList = rootElement.selectNodes("//Favourites/CloudServerSetting");
+			Element LastRecordTemp = (Element) LastRecordList.get(0);
+			LastRecordTemp.addAttribute("ServerPort", serverPort);
+			OutputFormat opf=new OutputFormat("",true,"UTF-8");
+			opf.setTrimText(true);
+			XMLWriter writer=new XMLWriter(new FileOutputStream(fileName),opf);
+			writer.write(document);
+			writer.close();
+			return SUCCESS;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return FAILED;
+		} 	
+	}
+
+	@Override
+	public String getServerPort(String fileName) {
+		SAXReader saxReader = new SAXReader(); 
+		try {
+			Document document = saxReader.read(new File(fileName));
+			Element rootElement=document.getRootElement();
+			List LastRecordList = rootElement.selectNodes("//Favourites/CloudServerSetting");
+			Element LastRecordTemp = (Element) LastRecordList.get(0);
+			return LastRecordTemp.attribute("ServerPort").getText().toString();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		} 
+	}
+
+	@Override
+	public boolean setUserName(String fileName, String userName) {
+		SAXReader saxReader = new SAXReader(); 
+		try {
+			Document document = saxReader.read(new File(fileName));
+			Element rootElement=document.getRootElement();
+			List LastRecordList = rootElement.selectNodes("//Favourites/CloudServerSetting");
+			Element LastRecordTemp = (Element) LastRecordList.get(0);
+			LastRecordTemp.addAttribute("UserName", userName);
+			OutputFormat opf=new OutputFormat("",true,"UTF-8");
+			opf.setTrimText(true);
+			XMLWriter writer=new XMLWriter(new FileOutputStream(fileName),opf);
+			writer.write(document);
+			writer.close();
+			return SUCCESS;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return FAILED;
+		} 
+	}
+
+	@Override
+	public String getUserName(String fileName) {
+		SAXReader saxReader = new SAXReader(); 
+		try {
+			Document document = saxReader.read(new File(fileName));
+			Element rootElement=document.getRootElement();
+			List LastRecordList = rootElement.selectNodes("//Favourites/CloudServerSetting");
+			Element LastRecordTemp = (Element) LastRecordList.get(0);
+			return LastRecordTemp.attribute("UserName").getText().toString();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		} 
+	}
+
+	@Override
+	public boolean setPassword(String fileName, String password) {
+		SAXReader saxReader = new SAXReader(); 
+		try {
+			Document document = saxReader.read(new File(fileName));
+			Element rootElement=document.getRootElement();
+			List LastRecordList = rootElement.selectNodes("//Favourites/CloudServerSetting");
+			Element LastRecordTemp = (Element) LastRecordList.get(0);
+			LastRecordTemp.addAttribute("Password", password);
+			OutputFormat opf=new OutputFormat("",true,"UTF-8");
+			opf.setTrimText(true);
+			XMLWriter writer=new XMLWriter(new FileOutputStream(fileName),opf);
+			writer.write(document);
+			writer.close();
+			return SUCCESS;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return FAILED;
+		} 
+	}
+
+	@Override
+	public String getPassword(String fileName) {
+		SAXReader saxReader = new SAXReader(); 
+		try {
+			Document document = saxReader.read(new File(fileName));
+			Element rootElement=document.getRootElement();
+			List LastRecordList = rootElement.selectNodes("//Favourites/CloudServerSetting");
+			Element LastRecordTemp = (Element) LastRecordList.get(0);
+			return LastRecordTemp.attribute("Password").getText().toString();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

@@ -1,7 +1,6 @@
 package com.starsecurity.activity;
 
 import java.io.File;
-import java.util.List;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -9,18 +8,21 @@ import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.starsecurity.R;
 import com.starsecurity.component.Connection;
@@ -31,7 +33,6 @@ import com.starsecurity.h264.VideoView;
 import com.starsecurity.model.DVRDevice;
 import com.starsecurity.model.FavouriteRecord;
 import com.starsecurity.model.TLV_T_Command;
-import com.starsecurity.model.TLV_V_ChannelResponse;
 import com.starsecurity.model.TLV_V_DVSInfoRequest;
 import com.starsecurity.service.ControlService;
 import com.starsecurity.service.ExtendedService;
@@ -109,6 +110,12 @@ public class MainActivity extends Activity {
 	private String settingPort;
 	private String settingChannel;
 	
+	/** 存放云台设置信息 */
+	private String ddnsUserNameString;
+	private String ddnsPasswordString;
+	private String ddnsServerIPString;
+	private String ddnsServerPortString;
+	
 	public Handler mHandler;				// UI消息处理
 	
 	private static int page = 0;			// 存放界面显示的通道切换组的页面
@@ -148,8 +155,64 @@ public class MainActivity extends Activity {
 		
 		v.setMainVideoView(mVideoView);
 		
-		/* 获取最后一次设置功能  */
 		File myFavouritesFile=new File(filePath);		//存放收藏夹的XMl文件
+		
+		/*若首次启动应用，则弹出对话框显示云台信息填写对话框*/
+		if(isFirstStart()){
+			//若有旧版本文件则删除重新创建
+			if(myFavouritesFile.exists()){
+				try {
+					myFavouritesFile.delete();
+					favouriteControlService.createFileAndRoot(filePath, "Favourites");	//创建文件
+				} catch (Exception e) {
+					System.out.println(e.getMessage().toString());
+				}; 
+			}
+			LayoutInflater factory = LayoutInflater.from(this);    
+			final View textEntryView = factory.inflate(R.layout.cloudsetting_dialog, null);
+			final EditText ddnsServerIP = (EditText) textEntryView.findViewById(R.id.ddnsEditTextServerIP);
+			final EditText ddnsServerPort = (EditText) textEntryView.findViewById(R.id.ddnsEditTextServerPort);
+			final EditText ddnsUserName = (EditText) textEntryView.findViewById(R.id.ddnsEditTextUserName);
+			final EditText ddnsUserPassword = (EditText) textEntryView.findViewById(R.id.ddnsEditTextUserPassword);
+			AlertDialog.Builder ad1 = new AlertDialog.Builder(MainActivity.this);    
+			ad1.setTitle(R.string.ddns_setting);    
+			ad1.setIcon(android.R.drawable.ic_dialog_info);    
+			ad1.setView(textEntryView);    
+			ad1.setPositiveButton(R.string.IDS_Btn_OK, new DialogInterface.OnClickListener() {    
+				public void onClick(DialogInterface dialog, int i) {
+					if(ddnsServerIP.getText()!=null){
+						ddnsServerIPString = ddnsServerIP.getText().toString();
+					}
+					if(ddnsServerPort.getText()!=null){
+						ddnsServerPortString = ddnsServerPort.getText().toString();
+					}
+					if(ddnsUserName.getText()!=null){
+						ddnsUserNameString = ddnsUserName.getText().toString();
+					}
+					if(ddnsUserPassword.getText()!=null){
+						ddnsPasswordString = ddnsUserPassword.getText().toString();
+					}
+					favouriteControlService.setServerIP(filePath,ddnsServerIPString);
+					favouriteControlService.setServerPort(filePath,ddnsServerPortString);
+					favouriteControlService.setUserName(filePath,ddnsUserNameString);
+					favouriteControlService.setPassword(filePath,ddnsPasswordString);
+					Toast.makeText(getApplicationContext(), R.string.IDS_RecordSaveSuc, Toast.LENGTH_LONG).show();
+				}
+			});    
+			ad1.setNegativeButton(R.string.IDS_Btn_Quit, new DialogInterface.OnClickListener() {    
+				public void onClick(DialogInterface dialog, int i) {
+					
+				}    
+			});    
+			ad1.show();// 显示对话框
+		}else{
+			ddnsServerIPString = favouriteControlService.getServerIP(filePath);
+			ddnsServerPortString = favouriteControlService.getServerPort(filePath);
+			ddnsUserNameString = favouriteControlService.getUserName(filePath);
+			ddnsPasswordString = favouriteControlService.getPassword(filePath);
+		}
+
+		/* 获取最后一次设置功能  */
 		//非首次使用，则获取XML存储文件最后一次使用记录
 		if(myFavouritesFile.exists()){
 			String selectedRecordName= favouriteControlService.getLastRecordName(filePath);
@@ -965,4 +1028,12 @@ public class MainActivity extends Activity {
     	}
     }
 
+    public boolean isFirstStart(){
+    	String ServerIP = favouriteControlService.getServerIP(filePath);
+    	if(ServerIP==null){
+    		return true;
+    	}else
+    		return false;
+    }
+    
 }
