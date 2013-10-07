@@ -31,6 +31,7 @@ import com.starsecurity.service.impl.DataProcessServiceImpl;
  * @author       修改人                陈明珍
  * @date        修改日期           2013-05-03
  * @description 修改说明	 
+ *   2013-10-07 修改原显示IP文本为显示设备名称（部分情况） 陈明珍
  *   2013-05-07 错误提示完善 陈明珍
  *   2013-05-03 提供信息使用res中string.xml的字符串资源 陈明珍
  *   2013-04-26 改进字节流接收方式，减少丢失数据情况 陈明珍
@@ -54,7 +55,7 @@ public class H264StreamReceiver implements Runnable {
 		Connection conn = ConnectionManager.getConnection(conn_name);
 		
 		// 连接提示信息
-		ViewManager.getInstance().setIpText(conn.getSvr_ip());
+		ViewManager.getInstance().setIpText(conn.getShowName());
 		updateUIMessage(MessageCode.IDS_CONNECTSERVER);
 		
 		// 建立连接

@@ -8,7 +8,6 @@ import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -48,8 +47,9 @@ import com.starsecurity.service.impl.FavouriteControlServiceImpl;
  * @author       创建人              肖远东
  * @date        创建日期           2013-03-18
  * @author       修改人           陈明珍/肖远东
- * @date        修改日期           2013-07-30
+ * @date        修改日期           2013-10-06
  * @description 修改记录	 
+ *   2013-10-06 DDNS搜索列表点击设备后直接播放视频 陈明珍
  *   2013-07-30 使用UI消息接收机制处理非UI线程传递的界面更新消息(Handler) 陈明珍
  *   2013-07-30 网络连线中断后自动切换播放按钮并给出提示 陈明珍       
  *   2013-07-30 加入获取最后一次设置功能  肖远东 
@@ -267,6 +267,20 @@ public class MainActivity extends Activity {
 		groupBtn = (Button) findViewById(R.id.btn_linear_group);
 		ddnsBtn = (Button) findViewById(R.id.btn_linear_ddns);
 		settingBtn = (Button) findViewById(R.id.btn_linear_setting);
+		
+		
+		ipView.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				intent.setClass(MainActivity.this, SearchableDeviceListActivity.class);
+				
+				startActivityForResult(intent, 0);
+			}
+			
+		});
+		
 		
 		// 控制按键单击、松开事件
 		controlUpBtn.setOnTouchListener(new OnTouchListener(){
@@ -503,6 +517,9 @@ public class MainActivity extends Activity {
 								.getMobliePhonePort()));
 						conn.setChannel_no(Integer.valueOf(dvrDevice
 								.getStarChannel()) - 1);
+						
+						conn.setShowName(dvrDevice.getDeviceName().substring(4));
+						
 						//根据播放通道显示通道组
 						int channelNumber = Integer.parseInt(dvrDevice
 								.getStarChannel());
@@ -539,6 +556,8 @@ public class MainActivity extends Activity {
 						conn.setSvr_ip(settingServer);
 						conn.setPort(Integer.valueOf(settingPort));
 						conn.setChannel_no(Integer.parseInt(settingChannel) - 1);
+						conn.setShowName(settingServer);
+						
 						//根据播放通道显示通道组
 						int channelNumber = Integer.parseInt(settingChannel);
 						if(channelNumber>0&&channelNumber<=4)
@@ -950,6 +969,8 @@ public class MainActivity extends Activity {
 				dvrDevice = (DVRDevice) data.getSerializableExtra("DVRDevice");
 				isCloudControl = true;
 			}
+			
+			playVideo();			
 			break;
 		}
 		super.onActivityResult(requestCode, resultCode, data);

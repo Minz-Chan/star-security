@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">星网安防</string>
-    <string name="app_name2">星网安防-v5.7.0</string>
+    <string name="app_name2">星网安防-v5.8.1</string>
+    <string name="app_name3">设备列表</string>
     <string name="action_settings">设置</string>
     <string name="IDS_ConnectTimeoutInterval">12000</string>
     
@@ -122,4 +123,6 @@
     <string name="do_not_support">不支持分辨率变动</string>
     <string name="DEVICE_LIST_ErrorReason">连接失败，请检查域名和端口设置</string>
     <string name="DEVICE_SINGLE_ErrorReason">获取设备失败</string>
+    <string name="IDS_PROMPT_DEVICENAMEINPUT">请输入设备名称</string>
+    <string name="IDS_PROMPT_NULLSETTING">请先设置域名服务器信息 !</string>
 </resources>

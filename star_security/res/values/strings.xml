@@ -2,7 +2,8 @@
 <resources>
 
     <string name="app_name">Star-Net Security</string>
-    <string name="app_name2">Star-Net Security-v3.7.6</string>
+    <string name="app_name2">Star-Net Security-v5.8.1</string>
+    <string name="app_name3">Device List</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     
@@ -125,4 +126,8 @@
     <string name="do_not_support">width height changed,do not supported</string>
     <string name="DEVICE_LIST_ErrorReason">Connect failed，please check the domain and port</string>
     <string name="DEVICE_SINGLE_ErrorReason">Get Device fail</string>
+    <string name="IDS_PROMPT_DEVICENAMEINPUT">Please input device name</string>
+    <string name="IDS_PROMPT_NULLSETTING">Please do the ddns setting first !</string>
+    
+    
 </resources>

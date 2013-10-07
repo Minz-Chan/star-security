@@ -37,9 +37,10 @@ import com.starsecurity.util.DataProcessUtil;
  * @author       创建人              陈明珍
  * @date        创建日期           2013-04-14
  * @author       修改人              陈明珍
- * @date        修改日期           2013-05-06
- * @description 修改说明	        
- *   2013-05-17 修正为允许password为空
+ * @date        修改日期           2013-10-07
+ * @description 修改说明	     
+ *   2013-10-07 加入显示名称属性 陈明珍   
+ *   2013-05-17 修正为允许password为空 陈明珍
  *   2013-05-07 加入返回数据存储项并提供存取接口 陈明珍
  *   2013-05-06 加入连接超时处理 陈明珍
  *   2013-05-05 使用Packet替代原有组包方式 陈明珍
@@ -50,6 +51,8 @@ public class Connection {
 	private String svr_ip;			// dvr端IP
 	private int port;				// dvr端口
 	private int channel_no;			// dvr通道号
+	
+	private String showName;		// 显示名称
 	
 	private int connect_state;		// 当前连接状态：1 连接成功； 0 连接失败
 	private Socket sock = null;
@@ -213,6 +216,12 @@ public class Connection {
 	public void setChannel_no(int channel_no) {
 		this.channel_no = channel_no;
 	}
+	public String getShowName() {
+		return showName;
+	}
+	public void setShowName(String showName) {
+		this.showName = showName;
+	}
 	public int getConnect_state() {
 		return connect_state;
 	}
@@ -225,7 +234,4 @@ public class Connection {
 	public void setSock(Socket sock) {
 		this.sock = sock;
 	}
-	
-	
-	
 }
