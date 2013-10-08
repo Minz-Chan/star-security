@@ -167,6 +167,8 @@ public class MainActivity extends Activity {
 				} catch (Exception e) {
 					System.out.println(e.getMessage().toString());
 				}; 
+			}else{
+				favouriteControlService.createFileAndRoot(filePath, "Favourites");	//创建文件
 			}
 			LayoutInflater factory = LayoutInflater.from(this);    
 			final View textEntryView = factory.inflate(R.layout.cloudsetting_dialog, null);

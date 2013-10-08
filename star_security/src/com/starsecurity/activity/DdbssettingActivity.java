@@ -16,6 +16,8 @@ import android.view.MenuItem;
 
 import com.starsecurity.R;
 import com.starsecurity.model.DVRDevice;
+import com.starsecurity.service.FavouriteControlService;
+import com.starsecurity.service.impl.FavouriteControlServiceImpl;
 
 /***
  * 
@@ -41,6 +43,13 @@ public class DdbssettingActivity extends PreferenceActivity implements OnSharedP
 	private String ddns_passwordStr;
 	private String ddns_devicenameStr;
 	
+	//读取已设置参数
+	private FavouriteControlService favouriteControlService = new FavouriteControlServiceImpl("conn1");
+	/***
+	 * 手机存放收藏夹URL
+	 */
+	private static final String filePath = "/data/data/com.starsecurity/MyFavourites.xml";
+	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -53,6 +62,12 @@ public class DdbssettingActivity extends PreferenceActivity implements OnSharedP
             user_id = (EditTextPreference) findPreference("ddbs_userid");
             ddns_password = (EditTextPreference) findPreference("password");
             ddns_devicename = (EditTextPreference) findPreference("device_name");
+            
+            ddns_server.setText(favouriteControlService.getServerIP(filePath));
+            ddns_port.setText(favouriteControlService.getServerPort(filePath));
+            user_id.setText(favouriteControlService.getUserName(filePath));
+            ddns_password.setText(favouriteControlService.getPassword(filePath));
+            
             //预览已设置参数
             if(ddns_server.getText()!=null)
             	ddns_server.setSummary(ddns_server.getText().toString());
