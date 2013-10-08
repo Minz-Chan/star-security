@@ -7,7 +7,8 @@
 	<TextView
 		android:layout_width="wrap_content"   
 		android:layout_height="wrap_content"   
-		android:text="@string/ddns_server" />
+		android:text="@string/ddns_server" 
+		android:textColor="#FFFFFF"/>
 
 	<EditText 
 	    android:id="@+id/ddnsEditTextServerIP"
@@ -18,7 +19,8 @@
 	<TextView 
 		android:layout_width="wrap_content"   
 		android:layout_height="wrap_content"   
-		android:text="@string/ddns_port" />
+		android:text="@string/ddns_port" 
+		android:textColor="#FFFFFF"/>
 	
 	<EditText 
 	    android:id="@+id/ddnsEditTextServerPort"
@@ -29,7 +31,8 @@
 	<TextView  
 		android:layout_width="wrap_content"   
 		android:layout_height="wrap_content"   
-		android:text="@string/user_id" />
+		android:text="@string/user_id" 
+		android:textColor="#FFFFFF"/>
 
 	<EditText
 	    android:id="@+id/ddnsEditTextUserName"
@@ -40,7 +43,8 @@
 	<TextView  
 		android:layout_width="wrap_content"   
 		android:layout_height="wrap_content"   
-		android:text="@string/ddns_passworld" />
+		android:text="@string/ddns_passworld" 
+		android:textColor="#FFFFFF"/>
 
 	<EditText
 	    android:id="@+id/ddnsEditTextUserPassword"
