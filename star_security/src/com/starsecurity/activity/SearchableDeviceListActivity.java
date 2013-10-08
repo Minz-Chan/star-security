@@ -11,7 +11,9 @@ import com.starsecurity.component.listview.DeviceListView;
 import com.starsecurity.component.listview.SynObject;
 import com.starsecurity.model.DVRDevice;
 import com.starsecurity.service.CloudService;
+import com.starsecurity.service.FavouriteControlService;
 import com.starsecurity.service.impl.CloudServiceImpl;
+import com.starsecurity.service.impl.FavouriteControlServiceImpl;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -51,6 +53,13 @@ public class SearchableDeviceListActivity extends Activity{
 	private List<DVRDevice> deviceInfoList;
 	
 	private SynObject synObj = new SynObject();
+	
+	/***
+	 * 手机存放收藏夹URL
+	 */
+	private static final String filePath = "/data/data/com.starsecurity/MyFavourites.xml";
+	/** 使用记录单元实例 */
+	private FavouriteControlService favouriteControlService = new FavouriteControlServiceImpl("conn1");
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +69,16 @@ public class SearchableDeviceListActivity extends Activity{
 		deviceListView = (DeviceListView) findViewById(R.id.lview_device);
 		
 		// 获取域名服务器、端口、用户名及密码
+		/*
 		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
 		ddns_server = pref.getString("ddns_server", "");
 		ddns_port = pref.getString("ddns_port", "");
 		user_id = pref.getString("ddbs_userid", "");
-		ddns_password = pref.getString("password", "");
+		ddns_password = pref.getString("password", "");*/
+		ddns_server = favouriteControlService.getServerIP(filePath);
+		ddns_port = favouriteControlService.getServerPort(filePath);
+		user_id = favouriteControlService.getUserName(filePath);
+		ddns_password = favouriteControlService.getPassword(filePath);
 		
 		if (!checkSetting()) {
 			Toast.makeText(this, getString(R.string.IDS_PROMPT_NULLSETTING), Toast.LENGTH_LONG);

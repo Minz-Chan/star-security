@@ -5,13 +5,17 @@ import java.io.File;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.Application;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.EditTextPreference;
+import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -145,6 +149,9 @@ public class MainActivity extends Activity {
 		
 		mVideoView.init();
 		
+		/** 界面间数据共享 */
+		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		
 		// 初始化上下文
 		ViewManager.initContext(this);
 		
@@ -198,6 +205,7 @@ public class MainActivity extends Activity {
 					favouriteControlService.setServerPort(filePath,ddnsServerPortString);
 					favouriteControlService.setUserName(filePath,ddnsUserNameString);
 					favouriteControlService.setPassword(filePath,ddnsPasswordString);
+					
 					Toast.makeText(getApplicationContext(), R.string.IDS_RecordSaveSuc, Toast.LENGTH_LONG).show();
 				}
 			});    
