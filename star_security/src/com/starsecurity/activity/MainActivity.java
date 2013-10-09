@@ -5,16 +5,15 @@ import java.io.File;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.Application;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.preference.EditTextPreference;
 import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -149,9 +148,6 @@ public class MainActivity extends Activity {
 		
 		mVideoView.init();
 		
-		/** 界面间数据共享 */
-		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		
 		// 初始化上下文
 		ViewManager.initContext(this);
 		
@@ -205,6 +201,14 @@ public class MainActivity extends Activity {
 					favouriteControlService.setServerPort(filePath,ddnsServerPortString);
 					favouriteControlService.setUserName(filePath,ddnsUserNameString);
 					favouriteControlService.setPassword(filePath,ddnsPasswordString);
+					
+					SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+					Editor editor = pref.edit();
+					editor.putString("ddns_server", ddnsServerIPString);
+					editor.putString("ddns_port", ddnsServerPortString);
+					editor.putString("ddbs_userid", ddnsUserNameString);
+					editor.putString("password", ddnsPasswordString);
+					editor.commit();
 					
 					Toast.makeText(getApplicationContext(), R.string.IDS_RecordSaveSuc, Toast.LENGTH_LONG).show();
 				}
@@ -981,6 +985,9 @@ public class MainActivity extends Activity {
 			}
 			
 			playVideo();			
+			break;
+		case SearchableDeviceListActivity.DDNS_ERR_NULLSETTING:
+			Toast.makeText(this, getString(R.string.IDS_PROMPT_NULLSETTING), Toast.LENGTH_LONG).show();
 			break;
 		}
 		super.onActivityResult(requestCode, resultCode, data);

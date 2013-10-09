@@ -35,7 +35,7 @@ import android.widget.Toast;
  *   2013-10-05 创建此文件 陈明珍
  */
 public class SearchableDeviceListActivity extends Activity{
-
+	
 	DeviceListView deviceListView;
 	
 	private String ddns_server;
@@ -44,9 +44,10 @@ public class SearchableDeviceListActivity extends Activity{
 	private String ddns_password;
 	
 	private final int PROGRESS_DIALOG = 0x1234;
-	private final int DDNS_RESP_SUCC = 0x1100;		// 获取设备信息成功
-	private final int DDNS_RESP_FAILURE = 0x1101;	// 获取设备信息失败
-	private final int DDNS_SYS_FAILURE = 0x1103;	// 非DDNS返回错误
+	private final int DDNS_RESP_SUCC = 0x1100;				// 获取设备信息成功
+	private final int DDNS_RESP_FAILURE = 0x1101;			// 获取设备信息失败
+	private final int DDNS_SYS_FAILURE = 0x1103;			// 非DDNS返回错误
+	public static final int DDNS_ERR_NULLSETTING = 0x1111;	// DDNS设置存在项为空
 	
 	private CloudService cloudService = new CloudServiceImpl("conn1");
 
@@ -54,12 +55,6 @@ public class SearchableDeviceListActivity extends Activity{
 	
 	private SynObject synObj = new SynObject();
 	
-	/***
-	 * 手机存放收藏夹URL
-	 */
-	private static final String filePath = "/data/data/com.starsecurity/MyFavourites.xml";
-	/** 使用记录单元实例 */
-	private FavouriteControlService favouriteControlService = new FavouriteControlServiceImpl("conn1");
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,26 +64,21 @@ public class SearchableDeviceListActivity extends Activity{
 		deviceListView = (DeviceListView) findViewById(R.id.lview_device);
 		
 		// 获取域名服务器、端口、用户名及密码
-		/*
 		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
 		ddns_server = pref.getString("ddns_server", "");
 		ddns_port = pref.getString("ddns_port", "");
 		user_id = pref.getString("ddbs_userid", "");
-		ddns_password = pref.getString("password", "");*/
-		ddns_server = favouriteControlService.getServerIP(filePath);
-		ddns_port = favouriteControlService.getServerPort(filePath);
-		user_id = favouriteControlService.getUserName(filePath);
-		ddns_password = favouriteControlService.getPassword(filePath);
+		ddns_password = pref.getString("password", "");
 		
 		if (!checkSetting()) {
-			Toast.makeText(this, getString(R.string.IDS_PROMPT_NULLSETTING), Toast.LENGTH_LONG);
+			this.setResult(DDNS_ERR_NULLSETTING);
 			this.finish();
+		} else {
+			requset4DeviceList();
+			
+			// 挂起等待请求结果
+			synObj.suspend();
 		}
-		
-		requset4DeviceList();
-		
-		// 挂起等待请求结果
-		synObj.suspend();		
 	}
 	
 	
@@ -128,8 +118,9 @@ public class SearchableDeviceListActivity extends Activity{
 	
 	
 	private boolean checkSetting() {
-		if (ddns_server.equals("") && ddns_port.equals("") && user_id.equals("")
-				&& ddns_password.equals("")) {
+		if (ddns_server == null || ddns_server.equals("") 
+				|| ddns_port == null || ddns_port.equals("") 
+				|| user_id == null || user_id.equals("")) {
 			return false;
 		}
 		
@@ -191,6 +182,4 @@ public class SearchableDeviceListActivity extends Activity{
 		
 	}
 
-	
-	
 }
