@@ -43,6 +43,7 @@ import com.starsecurity.service.impl.CheckConnectionBroadcast;
 import com.starsecurity.service.impl.ControlServiceImpl;
 import com.starsecurity.service.impl.ExtendedServiceImpl;
 import com.starsecurity.service.impl.FavouriteControlServiceImpl;
+import com.starsecurity.util.CommonUtils;
 
 /***
  * 
@@ -78,6 +79,9 @@ public class MainActivity extends Activity {
 	 * 手机存放收藏夹URL
 	 */
 	private static final String filePath = "/data/data/com.starsecurity/MyFavourites.xml";
+	
+	/** 设备列表按钮 */
+	private Button deviceListBtn;			// 设备列表按钮
 	
 	/** 底端按钮 */
 	private Button playBtn;					// 播放按钮
@@ -273,6 +277,8 @@ public class MainActivity extends Activity {
 		channelThree.setOnClickListener(switchChannel);
 		channelFour.setOnClickListener(switchChannel);
 		
+		// 设备列表按钮
+		deviceListBtn = (Button) findViewById(R.id.base_right_button); 
 		
 		// 底端按钮组与界面关联
 		playBtn = (Button) findViewById(R.id.btn_linear_left);
@@ -282,7 +288,7 @@ public class MainActivity extends Activity {
 		ddnsBtn = (Button) findViewById(R.id.btn_linear_ddns);
 		settingBtn = (Button) findViewById(R.id.btn_linear_setting);
 		
-		
+		/*
 		ipView.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -293,7 +299,7 @@ public class MainActivity extends Activity {
 				startActivityForResult(intent, 0);
 			}
 			
-		});
+		});*/
 		
 		
 		// 控制按键单击、松开事件
@@ -510,6 +516,19 @@ public class MainActivity extends Activity {
 				}
 				return false;
 			}
+		});
+		
+		// 设备列表按钮
+		deviceListBtn.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (!CommonUtils.isFastDoubleClick()) {
+					Intent intent = new Intent();
+					intent.setClass(MainActivity.this, SearchableDeviceListActivity.class);
+					
+					startActivityForResult(intent, 0);
+				}
+			}			
 		});
 		
 		//点击播放按钮时，开始播放视频

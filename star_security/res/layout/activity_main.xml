@@ -29,7 +29,8 @@
             <Button android:id="@+id/btn_number_4" android:background="@drawable/number_four" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="6.0dip" />
         </LinearLayout>
     </LinearLayout>
-    <TextView android:textSize="20.0px" android:gravity="center" android:id="@+id/ip_text" android:background="@drawable/text_background" android:layout_width="fill_parent" android:layout_height="40.0px" />
+<!--     <TextView android:textSize="20.0px" android:gravity="center" android:id="@+id/ip_text" android:background="@drawable/text_background" android:layout_width="fill_parent" android:layout_height="40.0px" /> -->
+	<include android:id="@+id/topbar" layout="@layout/topbar" /> 
     <TextView android:textSize="15.0px" android:id="@+id/help_msg" android:background="@drawable/text_midle" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_above="@+id/midle" />
-	<com.starsecurity.h264.VideoView android:id="@+id/p2p_view" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_above="@+id/help_msg" android:layout_below="@+id/ip_text" />
+	<com.starsecurity.h264.VideoView android:id="@+id/p2p_view" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_above="@+id/help_msg" android:layout_below="@+id/topbar" />
 </RelativeLayout>
