@@ -53,6 +53,8 @@ import com.starsecurity.util.CommonUtils;
  * @author       修改人           陈明珍/肖远东
  * @date        修改日期           2013-10-06
  * @description 修改记录	 
+ *   2013-10-11 
+ *   2013-10-11 顶部原显示IP位置布局变更加入设备列表按钮 陈明珍
  *   2013-10-06 DDNS搜索列表点击设备后直接播放视频 陈明珍
  *   2013-07-30 使用UI消息接收机制处理非UI线程传递的界面更新消息(Handler) 陈明珍
  *   2013-07-30 网络连线中断后自动切换播放按钮并给出提示 陈明珍       
@@ -116,6 +118,7 @@ public class MainActivity extends Activity {
 	private String settingServer;
 	private String settingPort;
 	private String settingChannel;
+	private String settingRecName;
 	
 	/** 存放云台设置信息 */
 	private String ddnsUserNameString;
@@ -589,7 +592,12 @@ public class MainActivity extends Activity {
 						conn.setSvr_ip(settingServer);
 						conn.setPort(Integer.valueOf(settingPort));
 						conn.setChannel_no(Integer.parseInt(settingChannel) - 1);
-						conn.setShowName(settingServer);
+						
+						if (settingRecName != null && !settingRecName.trim().equals("")) {
+							conn.setShowName(settingRecName);
+						} else {
+							conn.setShowName(settingServer);
+						}
 						
 						//根据播放通道显示通道组
 						int channelNumber = Integer.parseInt(settingChannel);
@@ -990,6 +998,9 @@ public class MainActivity extends Activity {
 					settingPort = bundle.getString("portStr");
 				if (bundle.getString("channelStr") != null){
 					settingChannel = bundle.getString("channelStr");
+				}
+				if (bundle.getString("recordNameStr") != null) {
+					settingRecName = bundle.getString("recordNameStr");
 				}
 				isCloudControl = false;
 			}

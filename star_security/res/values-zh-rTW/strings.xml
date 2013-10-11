@@ -109,7 +109,7 @@
     <string name="IDS_INFO_HELP">網絡正在連接中，是否確定斷開重新連接</string>
     <string name="IDS_SAVE_RECORD">保存記錄成功</string>
     <string name="IDS_DELETE_RECORD">刪除記錄成功</string>
-    <string name="ddns_setting">雲臺設置</string>
+    <string name="ddns_setting">網路設置</string>
     <string name="ddns_server">域名服務器</string>
     <string name="ddns_port">端口</string>
     <string name="user_id">用戶名</string>

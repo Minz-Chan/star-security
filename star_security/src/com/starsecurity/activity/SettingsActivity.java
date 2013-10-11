@@ -280,11 +280,13 @@ public class SettingsActivity extends Activity {
 				String server = serverEditText.getText().toString();
 				String port = portEditText.getText().toString();
 				String channel = (String) channelSpinner.getSelectedItem();
+				String recName = (String) recordNameEditText.getText().toString();
 				bundle.putString("usernameStr", username);
 				bundle.putString("passwordStr", password);
 				bundle.putString("serverStr", server);
 				bundle.putString("portStr", port);
 				bundle.putString("channelStr", channel);
+				bundle.putString("recordNameStr", recName);
 				Intent intent = getIntent();
 				intent.putExtras(bundle);
 				setResult(Activity.RESULT_OK, intent);

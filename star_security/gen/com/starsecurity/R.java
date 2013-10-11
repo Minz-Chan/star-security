@@ -192,21 +192,26 @@ public final class R {
         public static final int linear_setting_focused=0x7f0200a3;
         public static final int linear_setting_pressed=0x7f0200a4;
         public static final int linear_setting_show=0x7f0200a5;
-        public static final int number_four=0x7f0200a6;
-        public static final int number_four_focused=0x7f0200a7;
-        public static final int number_four_show=0x7f0200a8;
-        public static final int number_one_focused=0x7f0200a9;
-        public static final int number_one_show=0x7f0200aa;
-        public static final int number_three=0x7f0200ab;
-        public static final int number_three_focused=0x7f0200ac;
-        public static final int number_three_show=0x7f0200ad;
-        public static final int number_two=0x7f0200ae;
-        public static final int star_net=0x7f0200af;
-        public static final int text_background=0x7f0200b0;
-        public static final int text_midle=0x7f0200b1;
+        public static final int listview_devices_btn=0x7f0200a6;
+        public static final int listview_devices_btn_sel=0x7f0200a7;
+        public static final int number_four=0x7f0200a8;
+        public static final int number_four_focused=0x7f0200a9;
+        public static final int number_four_show=0x7f0200aa;
+        public static final int number_one_focused=0x7f0200ab;
+        public static final int number_one_show=0x7f0200ac;
+        public static final int number_three=0x7f0200ad;
+        public static final int number_three_focused=0x7f0200ae;
+        public static final int number_three_show=0x7f0200af;
+        public static final int number_two=0x7f0200b0;
+        public static final int star_net=0x7f0200b1;
+        public static final int text_background=0x7f0200b2;
+        public static final int text_midle=0x7f0200b3;
+        public static final int topbar_devices_button_selector=0x7f0200b4;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a002e;
+        public static final int action_settings=0x7f0a0031;
+        public static final int base_navigationbar=0x7f0a002c;
+        public static final int base_right_button=0x7f0a002e;
         public static final int bottom=0x7f0a0000;
         public static final int btn_control_down=0x7f0a0011;
         public static final int btn_control_focus=0x7f0a0014;
@@ -235,11 +240,11 @@ public final class R {
         public static final int ddnsEditTextServerPort=0x7f0a001c;
         public static final int ddnsEditTextUserName=0x7f0a001d;
         public static final int ddnsEditTextUserPassword=0x7f0a001e;
-        public static final int ddns_backMenu=0x7f0a002d;
-        public static final int ddns_requestMenu=0x7f0a002c;
+        public static final int ddns_backMenu=0x7f0a0030;
+        public static final int ddns_requestMenu=0x7f0a002f;
         public static final int deviceListView=0x7f0a001f;
         public static final int help_msg=0x7f0a0019;
-        public static final int ip_text=0x7f0a0018;
+        public static final int ip_text=0x7f0a002d;
         public static final int listView=0x7f0a0022;
         public static final int lview_device=0x7f0a0020;
         public static final int midle=0x7f0a0007;
@@ -252,9 +257,10 @@ public final class R {
         public static final int set_server=0x7f0a0026;
         public static final int set_spinner=0x7f0a0023;
         public static final int set_username=0x7f0a0024;
-        public static final int setting_cancelMenu=0x7f0a0030;
-        public static final int setting_settingMenu=0x7f0a002f;
+        public static final int setting_cancelMenu=0x7f0a0033;
+        public static final int setting_settingMenu=0x7f0a0032;
         public static final int sufFull=0x7f0a002b;
+        public static final int topbar=0x7f0a0018;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -264,6 +270,7 @@ public final class R {
         public static final int searchablelist=0x7f030004;
         public static final int settings=0x7f030005;
         public static final int suffull=0x7f030006;
+        public static final int topbar=0x7f030007;
     }
     public static final class menu {
         public static final int ddbssettingactivitymenu=0x7f090000;

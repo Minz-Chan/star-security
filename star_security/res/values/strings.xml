@@ -113,7 +113,7 @@
     <string name="IDS_SAVE_RECORD">Save success</string>
     <string name="IDS_DELETE_RECORD">Delete success</string>
     <string name="IDS_DATA_ERROR">Data Error</string>
-    <string name="ddns_setting">DDNS Setting</string>
+    <string name="ddns_setting">Network Setting</string>
     <string name="ddns_server">DDNS Server</string>
     <string name="ddns_port">Port</string>
     <string name="user_id">User ID</string>
