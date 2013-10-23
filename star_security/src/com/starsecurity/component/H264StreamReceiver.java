@@ -14,10 +14,12 @@ import java.io.InputStream;
 import java.net.Socket;
 
 
+
 import android.os.Handler;
 import android.os.Message;
 
 import com.starsecurity.R;
+import com.starsecurity.activity.MainActivity;
 import com.starsecurity.model.OWSP_LEN;
 import com.starsecurity.model.OwspPacketHeader;
 import com.starsecurity.model.convert.ByteArray2Object;
@@ -138,6 +140,8 @@ public class H264StreamReceiver implements Runnable {
 				if (conn.getConnect_state() == 0) {
 					conn.getSock().close();
 					conn.setSock(null);
+					
+					MainActivity.isPlay = false;
 	
 					break;
 				}

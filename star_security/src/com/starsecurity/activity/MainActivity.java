@@ -53,7 +53,8 @@ import com.starsecurity.util.CommonUtils;
  * @author       修改人           陈明珍/肖远东
  * @date        修改日期           2013-10-06
  * @description 修改记录	 
- *   2013-10-11 
+ *   2013-10-23 修正“向左拖动，出现全黑画面”、“保存图片成功后，做其他操作，一直显示保存图片提示。”、
+ *              “光圈变大和缩小图标的提示相反”问题    陈明珍
  *   2013-10-11 顶部原显示IP位置布局变更加入设备列表按钮 陈明珍
  *   2013-10-06 DDNS搜索列表点击设备后直接播放视频 陈明珍
  *   2013-07-30 使用UI消息接收机制处理非UI线程传递的界面更新消息(Handler) 陈明珍
@@ -129,7 +130,7 @@ public class MainActivity extends Activity {
 	public Handler mHandler;				// UI消息处理
 	
 	private static int page = 0;			// 存放界面显示的通道切换组的页面
-	private static boolean isPlay = false;	// 标识是否正在播放
+	public static boolean isPlay = false;	// 标识是否正在播放
 	private static String functionTempStr;	// 存储临时文本信息
 	private static boolean isCloudControl = false;
 	
@@ -442,7 +443,7 @@ public class MainActivity extends Activity {
 				if(event.getAction() == MotionEvent.ACTION_DOWN) {
 					if(isPlay){
 						functionTempStr = msgView.getText().toString();
-						msgView.setText(getString(R.string.IDS_OpticalOut));
+						msgView.setText(getString(R.string.IDS_OpticalIn));
 						controlService.adjustAperture(true);
 					}					
 				}
@@ -463,7 +464,7 @@ public class MainActivity extends Activity {
 				if(event.getAction() == MotionEvent.ACTION_DOWN) {
 					if(isPlay){
 						functionTempStr = msgView.getText().toString();
-						msgView.setText(getString(R.string.IDS_OpticalIn));
+						msgView.setText(getString(R.string.IDS_OpticalOut));
 						controlService.adjustAperture(false);
 					}					
 				}
@@ -636,23 +637,46 @@ public class MainActivity extends Activity {
 			}
 		});
 		
+		/*
 		captureBtn.setOnClickListener(new Button.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				extendedService.takePicture();		// 拍照
 			}
 			
+		});*/
+		
+		captureBtn.setOnTouchListener(new OnTouchListener(){
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				//单击事件
+				if(event.getAction() == MotionEvent.ACTION_DOWN) {
+					if(isPlay){
+						functionTempStr = msgView.getText().toString();
+						extendedService.takePicture();
+					}
+				}
+				//按钮松开时，显示播放参数
+				if(event.getAction() == MotionEvent.ACTION_UP) {
+					if(isPlay) {
+						msgView.setText(functionTempStr);
+					}
+				}
+				return false;
+			}
 		});
 		
 		// 全屏按钮
 		fullScreenBtn.setOnClickListener(new Button.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent();
-				intent.setClass(MainActivity.this, FullScreenActivity.class);
-				intent.putExtra("conn_name", "conn1");
-				
-				startActivity(intent);
+				if (isPlay) {
+					Intent intent = new Intent();
+					intent.setClass(MainActivity.this, FullScreenActivity.class);
+					intent.putExtra("conn_name", "conn1");
+					
+					startActivity(intent);
+				} 
 			}
 		});
 		
@@ -661,11 +685,13 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent();
-				intent.setClass(MainActivity.this, FullScreenActivity.class);
-				intent.putExtra("conn_name", "conn1");
-				
-				startActivity(intent);
+				if (isPlay && !CommonUtils.isFastDoubleClick()) {
+					Intent intent = new Intent();
+					intent.setClass(MainActivity.this, FullScreenActivity.class);
+					intent.putExtra("conn_name", "conn1");
+					
+					startActivity(intent);
+				}
 			}
 			
 		});
@@ -807,6 +833,7 @@ public class MainActivity extends Activity {
 					updatePlayStatus(R.string.IDS_Connect_dispos);
 					break;
 				case MessageCode.ERR_UNKNOWN:	// 未知错误
+					isPlay = false;
 					ViewManager.getInstance().setHelpMsg(R.string.IDS_Unknown);
 					break;
 				case MessageCode.IDS_TIMEOUT:	// 连接超时
