@@ -104,19 +104,25 @@ public class DdbssettingActivity extends PreferenceActivity implements OnSharedP
         		}
         	}
         	else if(key.equals("ddns_server")){
-        		favouriteControlService.setServerIP(filePath, ddns_server.getText().toString());
-        		EditTextPreference etp = (EditTextPreference) pref;  
-	            pref.setSummary(etp.getText());
+        		if(ddns_server.getText()!=null){
+	        		favouriteControlService.setServerIP(filePath, ddns_server.getText().toString());
+	        		EditTextPreference etp = (EditTextPreference) pref;  
+		            pref.setSummary(etp.getText());
+	            }
         	}
         	else if(key.equals("ddns_port")){
-        		favouriteControlService.setServerPort(filePath, ddns_port.getText().toString());
-        		EditTextPreference etp = (EditTextPreference) pref;  
-	            pref.setSummary(etp.getText());
+        		if(ddns_port.getText()!=null){
+	        		favouriteControlService.setServerPort(filePath, ddns_port.getText().toString());
+	        		EditTextPreference etp = (EditTextPreference) pref;  
+		            pref.setSummary(etp.getText());
+	            }
         	}
         	else if(key.equals("ddbs_userid")){
-        		favouriteControlService.setUserName(filePath, user_id.getText().toString());
-        		EditTextPreference etp = (EditTextPreference) pref;  
-	            pref.setSummary(etp.getText());
+        		if(user_id.getText()!=null){
+	        		favouriteControlService.setUserName(filePath, user_id.getText().toString());
+	        		EditTextPreference etp = (EditTextPreference) pref;  
+		            pref.setSummary(etp.getText());
+        		}
         	}
         	else{
         		EditTextPreference etp = (EditTextPreference) pref;  
