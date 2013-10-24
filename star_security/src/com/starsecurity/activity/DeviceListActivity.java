@@ -114,7 +114,7 @@ public class DeviceListActivity extends Activity {
 							favouriteRecord.setDefaultChannel(dvrDevice.getStarChannel());
 							favouriteRecord.setRecordName(dvrDevice.getDeviceName());
 					        //检测此平台是否已经存储，若有则覆盖，若没有则添加
-					        if(favouriteControlService.isExist(filePath, dvrDevice.getDeviceName())){
+					        if(favouriteControlService.isExist(filePath, deviceName)){
 					        	favouriteControlService.coverFavouriteElement(filePath, favouriteRecord);
 					        }else{	
 					        	favouriteControlService.addFavouriteElement(filePath, favouriteRecord);
