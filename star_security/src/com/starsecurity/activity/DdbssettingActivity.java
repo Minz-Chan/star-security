@@ -93,17 +93,33 @@ public class DdbssettingActivity extends PreferenceActivity implements OnSharedP
         if (pref instanceof EditTextPreference) {
         	if(key.equals("password")){
         		if(ddns_password!=null){
+        			favouriteControlService.setPassword(filePath, ddns_password.getText().toString());
         			if(ddns_password.getText()!=null){
 	        			int passwordLength = ddns_password.getText().length();
 	                	StringBuffer passwordStr = new StringBuffer();
 	                	for(int index = 0;index<passwordLength;index++)
 	                		passwordStr.append("*");
 	                	ddns_password.setSummary(passwordStr.toString());
-        			}
+        			}			
         		}
         	}
+        	else if(key.equals("ddns_server")){
+        		favouriteControlService.setServerIP(filePath, ddns_server.getText().toString());
+        		EditTextPreference etp = (EditTextPreference) pref;  
+	            pref.setSummary(etp.getText());
+        	}
+        	else if(key.equals("ddns_port")){
+        		favouriteControlService.setServerPort(filePath, ddns_port.getText().toString());
+        		EditTextPreference etp = (EditTextPreference) pref;  
+	            pref.setSummary(etp.getText());
+        	}
+        	else if(key.equals("ddbs_userid")){
+        		favouriteControlService.setUserName(filePath, user_id.getText().toString());
+        		EditTextPreference etp = (EditTextPreference) pref;  
+	            pref.setSummary(etp.getText());
+        	}
         	else{
-	            EditTextPreference etp = (EditTextPreference) pref;  
+        		EditTextPreference etp = (EditTextPreference) pref;  
 	            pref.setSummary(etp.getText());
         	}
         }  
