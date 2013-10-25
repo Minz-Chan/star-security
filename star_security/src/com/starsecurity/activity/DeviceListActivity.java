@@ -11,7 +11,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.bluetooth.BluetoothClass.Device;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -201,8 +202,16 @@ public class DeviceListActivity extends Activity {
 	@Override 
 	protected Dialog onCreateDialog(int id) { 
 		switch(id) { 
-		case PROGRESS_DIALOG: 
-			return ProgressDialog.show(this, "",getString(R.string.ddns_progress_text), true); 
+		case PROGRESS_DIALOG:
+			ProgressDialog progressDialog = ProgressDialog.show(this, "",getString(R.string.ddns_progress_text), true,true);
+			progressDialog.setOnCancelListener(new OnCancelListener(){
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					dismissDialog(PROGRESS_DIALOG);
+					DeviceListActivity.this.finish();
+				}
+			});
+			return progressDialog;
 		default: return null; 
 		} 
 	} 
