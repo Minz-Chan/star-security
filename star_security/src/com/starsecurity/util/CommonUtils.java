@@ -5,7 +5,7 @@ public class CommonUtils {
     public static boolean isFastDoubleClick() {
         long time = System.currentTimeMillis();
         long timeD = time - lastClickTime;
-        if ( 0 < timeD && timeD < 600) {   
+        if ( 0 < timeD && timeD < 800) {   
             return true;   
         }   
         lastClickTime = time;   

@@ -20,11 +20,19 @@ public class SynObject{
 
 	private Handler mHandler;
     protected Object result;
+    
+    
+    
+    public static final int STATUS_SUSPEND = 0x3301;
+    public static final int STATUS_RUN = 0x3302;
+    
+    private int status = STATUS_RUN;
 	
 	public SynObject() {}
 
 
 	public void resume() {
+		status = STATUS_RUN;
 		mHandler.sendEmptyMessage(0);
 	}
 	
@@ -38,11 +46,17 @@ public class SynObject{
 
 	public void suspend() {
 		try {
-		        Looper.getMainLooper();
-		        mHandler = new SynHandler();
-		        Looper.loop();
+			status = STATUS_SUSPEND;
+	        Looper.getMainLooper();
+	        mHandler = new SynHandler();
+	        Looper.loop();
 		} catch (Exception e) {
 			
 		}
+	}
+
+
+	public int getStatus() {
+		return status;
 	}
 }

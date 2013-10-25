@@ -18,6 +18,8 @@ import com.starsecurity.service.impl.FavouriteControlServiceImpl;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -55,6 +57,8 @@ public class SearchableDeviceListActivity extends Activity{
 	
 	private SynObject synObj = new SynObject();
 	
+	
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +92,10 @@ public class SearchableDeviceListActivity extends Activity{
 		@Override
 		public void handleMessage(Message msg) {
 			String errMsg;
+			
+			if (synObj.getStatus() == SynObject.STATUS_RUN) {
+				return;
+			}
 			
 			dismissDialog(PROGRESS_DIALOG);
 			
@@ -137,7 +145,16 @@ public class SearchableDeviceListActivity extends Activity{
 	protected Dialog onCreateDialog(int id) { 
 		switch(id) { 
 		case PROGRESS_DIALOG: 
-			return ProgressDialog.show(this, "",getString(R.string.ddns_progress_text), true); 
+			ProgressDialog progress = ProgressDialog.show(this, "",getString(R.string.ddns_progress_text), true, true);
+			progress.setOnCancelListener(new OnCancelListener(){
+					@Override
+					public void onCancel(DialogInterface dialog) {
+						dismissDialog(PROGRESS_DIALOG);
+						synObj.resume();
+						SearchableDeviceListActivity.this.finish();
+					}
+				});
+			return progress;
 		default: return null; 
 		} 
 	} 
