@@ -200,6 +200,12 @@ public class DVRDevice implements Serializable{
 	public void setIsUPNP(String isUPNP) {
 		this.isUPNP = isUPNP;
 	}
+
+	@Override
+	public String toString() {
+		return deviceName;
+	}
+
 	/***
 	 * <up>是否通过upnp上网(0.否，1.是)</up>
 	 */

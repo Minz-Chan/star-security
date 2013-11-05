@@ -2,6 +2,8 @@ package com.starsecurity.component.listview;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.starsecurity.component.ConnectionManager;
@@ -9,6 +11,7 @@ import com.starsecurity.model.DVRDevice;
 import com.starsecurity.model.FavouriteRecord;
 import com.starsecurity.service.FavouriteControlService;
 import com.starsecurity.service.impl.FavouriteControlServiceImpl;
+import com.starsecurity.util.PinyinComparator;
 
 import android.app.Activity;
 import android.content.Context;
@@ -57,6 +60,7 @@ public class DeviceListView extends SearchableListView {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void searchItem(String searchString) {
 		List list = super.getContentList();
@@ -69,6 +73,11 @@ public class DeviceListView extends SearchableListView {
 				resultList.add((DVRDevice) list.get(i));
 			}
 		}
+		
+		if (!resultList.isEmpty()) {
+			Collections.sort(resultList, new PinyinComparator());
+		}
+		
 		
 		super.updateListView(new ListViewAdapter(this.getContext(), resultList));	
 	}
