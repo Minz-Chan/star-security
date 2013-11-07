@@ -3,6 +3,14 @@ package com.starsecurity.util;
 import java.util.Comparator;
 import net.sourceforge.pinyin4j.PinyinHelper;
 
+/**
+ * @function     功能	                  拼音排序实现类
+ * @author       创建人                        陈明珍
+ * @date        创建日期           2013-11-05
+ * @author       修改人                        陈明珍
+ * @date        修改日期           2013-11-05
+ * @description 修改说明	            首次增加
+ */
 public class PinyinComparator implements Comparator<Object> {
 
     public int compare(Object o1, Object o2) {  
