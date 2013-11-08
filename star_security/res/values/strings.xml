@@ -7,7 +7,7 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     
-    <string name="IDS_ConnectTimeoutInterval">12000</string>
+    <string name="IDS_ConnectTimeoutInterval">20000</string>
     
     <string name="IDS_OVERRIDE">Override</string>
     <string name="IDS_DELETE">Delete</string>

@@ -4,7 +4,7 @@
     <string name="app_name2">星网安防-v5.9.0</string>
     <string name="app_name3">设备列表</string>
     <string name="action_settings">设置</string>
-    <string name="IDS_ConnectTimeoutInterval">12000</string>
+    <string name="IDS_ConnectTimeoutInterval">20000</string>
     
     <string name="IDS_OVERRIDE">覆盖</string>
     <string name="IDS_DELETE">删除</string>
