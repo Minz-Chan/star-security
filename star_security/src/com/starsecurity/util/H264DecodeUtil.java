@@ -97,6 +97,8 @@ public class H264DecodeUtil {
 		            	result = 1;
 		            } else if (iTemp == -2) {
 		            	return -2;
+		            } else if (iTemp < -66) {
+		            	return iTemp;
 		            }
 		            
 				}

@@ -109,6 +109,10 @@
     <string name="IDS_INFO_HELP">There is a connect are you sure to close and reconnect</string>
     <string name="IDS_SAVE_RECORD">Save success</string>
     <string name="IDS_DELETE_RECORD">Delete success</string>
+    <string name="IDS_UNSUPPORTEDPROFILE_MAIN">Unsupported profile type(Main Profile)</string>
+    <string name="IDS_UNSUPPORTEDPROFILE_EXTENDED">Unsupported profile type(Extended Profile)</string>
+    <string name="IDS_UNSUPPORTEDPROFILE_HIGH">Unsupported profile type(High Profile)</string>
+    <string name="IDS_UNSUPPORTEDPROFILE_UNKNOWN">Unsupported profile type</string>
     <string name="ddns_setting">Network Setting</string>
     <string name="ddns_server">DDNS Server</string>
     <string name="ddns_port">Port</string>

@@ -8,6 +8,7 @@ public class MessageCode {
 	public final static int IDS_CONSERFAIL = 5;				// 连接服务器失败
 	public final static int IDS_CONNECTSERVER = 6;			// 网络连接中...
 	
+	
 	public final static int _RESPONSECODE_USER_PWD_ERROR = 7;				// 用户或密码错误
 	public final static int _RESPONSECODE_PDA_VERSION_ERROR = 8;			// 版本不一致
 	public final static int _RESPONSECODE_MAX_USER_ERROR = 9;				// 最大用户数
@@ -16,5 +17,6 @@ public class MessageCode {
 	
 	
 	public final static int THREAD_STOP = 12;				// 线程停止 
+	public final static int IDS_UNSUPPORTEDPROFILE = 13;	// 不支持的profile
 	
 }

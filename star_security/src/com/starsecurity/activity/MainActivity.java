@@ -850,6 +850,11 @@ public class MainActivity extends Activity {
 				case MessageCode.IDS_CONNECTSERVER: // 网络连接中...
 					ViewManager.getInstance().setHelpMsg(R.string.IDS_ConnectServer);
 					break;
+				case MessageCode.IDS_UNSUPPORTEDPROFILE: // 不支持的profile
+					if (msg.arg1 < -66) {
+						ViewManager.getInstance().setHelpMsg(msg.arg1); // 显示相应的提示
+					}
+					break;
 				case MessageCode._RESPONSECODE_USER_PWD_ERROR:
 					isPlay = false;
 					updatePlayStatus(R.string.IDS_UserInfoErr);
@@ -866,7 +871,7 @@ public class MainActivity extends Activity {
 					isPlay = false;
 					updatePlayStatus(R.string.IDS_ACQ_Off);
 					break;
-					
+				
 				}
 			
 			} 

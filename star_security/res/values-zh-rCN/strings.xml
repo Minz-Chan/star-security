@@ -110,6 +110,10 @@
     <string name="IDS_SAVE_RECORD">保存记录成功</string>
     <string name="IDS_DELETE_RECORD">删除记录成功</string>
     <string name="IDS_DATA_ERROR">数据异常</string>
+    <string name="IDS_UNSUPPORTEDPROFILE_MAIN">不支持的类型（Main Profile）</string>
+    <string name="IDS_UNSUPPORTEDPROFILE_EXTENDED">不支持的类型（Extended Profile）</string>
+    <string name="IDS_UNSUPPORTEDPROFILE_HIGH">不支持的类型（High Profile）</string>
+    <string name="IDS_UNSUPPORTEDPROFILE_UNKNOWN">不支持的类型</string>
     <string name="ddns_setting">网络设置</string>
     <string name="ddns_server">域名服务器</string>
     <string name="ddns_port">端口</string>

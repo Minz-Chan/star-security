@@ -9,6 +9,7 @@
  */
 package com.starsecurity.service.impl;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
@@ -107,7 +108,27 @@ public class DataProcessServiceImpl implements DataProcessService {
 					System.out.println("$$$$$Time diff: " + Timecounter.getInstance().getTimeDiff());
 				} else if (result == -2) {	// 分辨率切换
 					ConnectionManager.getConnection(conn_name).close();		// 关闭连接
-					updateUIMessage(MessageCode.CONNECTION_CLOSED);			// 提示连接断开
+					
+					Message msg = new Message();
+					msg.what = MessageCode.CONNECTION_CLOSED;	// 提示连接断开
+					updateUIMessage(msg);
+				} else if (result < -66) { // 不支持的profile
+					ConnectionManager.getConnection(conn_name).close();		// 关闭连接
+					
+					Message msg = new Message();
+					msg.what = MessageCode.IDS_UNSUPPORTEDPROFILE;
+
+					if (result == -77) {
+						msg.arg1 = R.string.IDS_UNSUPPORTEDPROFILE_MAIN;	// 不支持的类型（Main Profile）
+					} else if (result == -88) {
+						msg.arg1 = R.string.IDS_UNSUPPORTEDPROFILE_EXTENDED; // 不支持的类型（Extended Profile）
+					} else if (result == -100) {
+						msg.arg1 = R.string.IDS_UNSUPPORTEDPROFILE_HIGH;	// 不支持的类型（High Profile）
+					} else {
+						msg.arg1 = R.string.IDS_UNSUPPORTEDPROFILE_UNKNOWN;	// 不支持的类型
+					}
+					
+					updateUIMessage(msg);
 				}
 				
 				System.out.println("*********************** P Frame process end  *************************");
@@ -132,8 +153,29 @@ public class DataProcessServiceImpl implements DataProcessService {
 					System.out.println("$$$$$Time diff: " + Timecounter.getInstance().getTimeDiff());
 				} else if (result == -2) {	// 分辨率切换
 					ConnectionManager.getConnection(conn_name).close();		// 关闭连接
-					updateUIMessage(MessageCode.CONNECTION_CLOSED);			// 提示连接断开
+					
+					Message msg = new Message();
+					msg.what = MessageCode.CONNECTION_CLOSED;	// 提示连接断开
+					updateUIMessage(msg);			
+				} else if (result < -66) { // 不支持的profile
+					ConnectionManager.getConnection(conn_name).close();		// 关闭连接
+					
+					Message msg = new Message();
+					msg.what = MessageCode.IDS_UNSUPPORTEDPROFILE;
+
+					if (result == -77) {
+						msg.arg1 = R.string.IDS_UNSUPPORTEDPROFILE_MAIN;	// 不支持的类型（Main Profile）
+					} else if (result == -88) {
+						msg.arg1 = R.string.IDS_UNSUPPORTEDPROFILE_EXTENDED; // 不支持的类型（Extended Profile）
+					} else if (result == -100) {
+						msg.arg1 = R.string.IDS_UNSUPPORTEDPROFILE_HIGH;	// 不支持的类型（High Profile）
+					} else {
+						msg.arg1 = R.string.IDS_UNSUPPORTEDPROFILE_UNKNOWN;	// 不支持的类型
+					}
+					
+					updateUIMessage(msg);
 				}
+				
 				System.out.println("*********************** I Frame process end  *************************");
 
 			} else if (tlv_Header.getTlv_type() == TLV_T_Command.TLV_T_VERSION_INFO_REQUEST){	
@@ -244,12 +286,9 @@ public class DataProcessServiceImpl implements DataProcessService {
 	
 	/**
 	 * 更新UI消息传递
-	 * @param msgCode 消息代码
+	 * @param msg 消息对象
 	 */
-	private void updateUIMessage(int msgCode) {
-		Message msg = new Message();
-		msg.what = msgCode;
-		
+	private void updateUIMessage(Message msg) {
 		Handler handler = ViewManager.getInstance().getHandler();
 		if (handler != null) {
 			handler.sendMessage(msg);

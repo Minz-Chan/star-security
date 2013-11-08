@@ -278,8 +278,8 @@ public final class R {
         public static final int settingsactivitymenu=0x7f090002;
     }
     public static final class string {
-        public static final int DEVICE_LIST_ErrorReason=0x7f070079;
-        public static final int DEVICE_SINGLE_ErrorReason=0x7f07007a;
+        public static final int DEVICE_LIST_ErrorReason=0x7f07007d;
+        public static final int DEVICE_SINGLE_ErrorReason=0x7f07007e;
         public static final int DS_AddFavSuc=0x7f070019;
         public static final int DS_ConSerSuc=0x7f070029;
         public static final int IDS_ABOUTBOX=0x7f070008;
@@ -350,8 +350,8 @@ public final class R {
         public static final int IDS_OpticalIn=0x7f070014;
         public static final int IDS_OpticalOut=0x7f070013;
         public static final int IDS_Out=0x7f07003d;
-        public static final int IDS_PROMPT_DEVICENAMEINPUT=0x7f07007b;
-        public static final int IDS_PROMPT_NULLSETTING=0x7f07007c;
+        public static final int IDS_PROMPT_DEVICENAMEINPUT=0x7f07007f;
+        public static final int IDS_PROMPT_NULLSETTING=0x7f070080;
         public static final int IDS_Password=0x7f070046;
         public static final int IDS_Pause=0x7f070030;
         public static final int IDS_Photo=0x7f070017;
@@ -373,6 +373,10 @@ public final class R {
         public static final int IDS_Stop=0x7f070028;
         public static final int IDS_Sure=0x7f07003e;
         public static final int IDS_Time_Out=0x7f070050;
+        public static final int IDS_UNSUPPORTEDPROFILE_EXTENDED=0x7f07006f;
+        public static final int IDS_UNSUPPORTEDPROFILE_HIGH=0x7f070070;
+        public static final int IDS_UNSUPPORTEDPROFILE_MAIN=0x7f07006e;
+        public static final int IDS_UNSUPPORTEDPROFILE_UNKNOWN=0x7f070071;
         public static final int IDS_Unknown=0x7f070031;
         public static final int IDS_Up=0x7f07000f;
         public static final int IDS_UpdateList=0x7f07001f;
@@ -391,18 +395,18 @@ public final class R {
         public static final int app_name=0x7f070000;
         public static final int app_name2=0x7f070001;
         public static final int app_name3=0x7f070002;
-        public static final int ddns_back=0x7f070074;
-        public static final int ddns_devicename=0x7f070075;
-        public static final int ddns_getlist_fail=0x7f070077;
-        public static final int ddns_passworld=0x7f070072;
-        public static final int ddns_port=0x7f070070;
-        public static final int ddns_progress_text=0x7f070076;
-        public static final int ddns_request=0x7f070073;
-        public static final int ddns_server=0x7f07006f;
-        public static final int ddns_setting=0x7f07006e;
-        public static final int do_not_support=0x7f070078;
+        public static final int ddns_back=0x7f070078;
+        public static final int ddns_devicename=0x7f070079;
+        public static final int ddns_getlist_fail=0x7f07007b;
+        public static final int ddns_passworld=0x7f070076;
+        public static final int ddns_port=0x7f070074;
+        public static final int ddns_progress_text=0x7f07007a;
+        public static final int ddns_request=0x7f070077;
+        public static final int ddns_server=0x7f070073;
+        public static final int ddns_setting=0x7f070072;
+        public static final int do_not_support=0x7f07007c;
         public static final int hello_world=0x7f070004;
-        public static final int user_id=0x7f070071;
+        public static final int user_id=0x7f070075;
     }
     public static final class style {
         /** 
