@@ -1,6 +1,7 @@
 package com.starsecurity.activity;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.List;
 
 import org.dom4j.Document;
@@ -35,6 +36,7 @@ import android.widget.Toast;
  * @date        修改日期           2013-10-06
  * @description 修改说明	 
  *   2013-10-05 创建此文件 陈明珍
+ *   2013-11-09 加入设备列表请求超时检测 陈明珍
  */
 public class SearchableDeviceListActivity extends Activity{
 	
@@ -48,6 +50,7 @@ public class SearchableDeviceListActivity extends Activity{
 	private final int PROGRESS_DIALOG = 0x1234;
 	private final int DDNS_RESP_SUCC = 0x1100;				// 获取设备信息成功
 	private final int DDNS_RESP_FAILURE = 0x1101;			// 获取设备信息失败
+	private final int DDNS_REQ_TIMEOUT = 0x1102;			// 设备列表请求超时
 	private final int DDNS_SYS_FAILURE = 0x1103;			// 非DDNS返回错误
 	public static final int DDNS_ERR_NULLSETTING = 0x1111;	// DDNS设置存在项为空
 	
@@ -116,6 +119,10 @@ public class SearchableDeviceListActivity extends Activity{
 				errMsg = getString(R.string.DEVICE_LIST_ErrorReason);
 				Toast.makeText(SearchableDeviceListActivity.this, errMsg, Toast.LENGTH_LONG).show();
 				SearchableDeviceListActivity.this.finish();
+				break;
+			case DDNS_REQ_TIMEOUT:
+				errMsg = getString(R.string.DEVICE_LIST_REQ_TIMEOUT);
+				Toast.makeText(SearchableDeviceListActivity.this, errMsg, Toast.LENGTH_LONG).show();
 				break;
 			default:
 				break;
@@ -188,6 +195,9 @@ public class SearchableDeviceListActivity extends Activity{
 				
 			} catch (DocumentException e) {
 				msg.what = DDNS_SYS_FAILURE;
+				e.printStackTrace();
+			} catch (SocketTimeoutException e) {
+				msg.what = DDNS_REQ_TIMEOUT;
 				e.printStackTrace();
 			} catch (IOException e) {
 				msg.what = DDNS_SYS_FAILURE;

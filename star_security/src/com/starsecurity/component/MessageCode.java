@@ -17,6 +17,5 @@ public class MessageCode {
 	
 	
 	public final static int THREAD_STOP = 12;				// 线程停止 
-	public final static int IDS_UNSUPPORTEDPROFILE = 13;	// 不支持的profile
-	
+	public final static int IDS_UNSUPPORTEDPROFILE = 13;	// 不支持的profile	
 }

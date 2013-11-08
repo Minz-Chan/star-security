@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -32,9 +33,10 @@ import com.starsecurity.util.MD5Util;
  * @function     功能	  云台控制接口实现类
  * @author       创建人              肖远东
  * @date        创建日期           2013-04-18
- * @author       修改人              肖远东
- * @date        修改日期           2013-04-18
- * @description 修改说明	          首次增加
+ * @author       修改人              陈明珍
+ * @date        修改日期           2013-11-09
+ * @description 修改说明	          
+ *     2013-11-09 加入HttpConnection超时设置（20s） 陈明珍
  */
 public class CloudServiceImpl implements CloudService {
 	private String conn_name;
@@ -65,7 +67,8 @@ public class CloudServiceImpl implements CloudService {
 			url = new URL(urlStr);
 			httpURLConnection = (HttpURLConnection) url.openConnection(); //获取连接
 			httpURLConnection.setRequestMethod("POST"); //设置请求方法为POST, 也可以为GET
-			httpURLConnection.setDoOutput(true);   
+			httpURLConnection.setDoOutput(true);  
+			httpURLConnection.setConnectTimeout(20000); // 设置连接超时时间为20s
 			String encoded = MD5Util.md5Encode(password);      
 			StringBuffer param = new StringBuffer("wu="+username+"&wp="+encoded+"&pn=");  //请求URL的查询参数     
 			OutputStream os = httpURLConnection.getOutputStream();   
@@ -80,6 +83,8 @@ public class CloudServiceImpl implements CloudService {
 			return doc;
 		} catch (DocumentException e) {
 			return null;
+		} catch (SocketTimeoutException e) {
+			throw e;
 		}
 	}
 

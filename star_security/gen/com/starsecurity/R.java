@@ -279,6 +279,7 @@ public final class R {
     }
     public static final class string {
         public static final int DEVICE_LIST_ErrorReason=0x7f07007d;
+        public static final int DEVICE_LIST_REQ_TIMEOUT=0x7f07007f;
         public static final int DEVICE_SINGLE_ErrorReason=0x7f07007e;
         public static final int DS_AddFavSuc=0x7f070019;
         public static final int DS_ConSerSuc=0x7f070029;
@@ -350,8 +351,8 @@ public final class R {
         public static final int IDS_OpticalIn=0x7f070014;
         public static final int IDS_OpticalOut=0x7f070013;
         public static final int IDS_Out=0x7f07003d;
-        public static final int IDS_PROMPT_DEVICENAMEINPUT=0x7f07007f;
-        public static final int IDS_PROMPT_NULLSETTING=0x7f070080;
+        public static final int IDS_PROMPT_DEVICENAMEINPUT=0x7f070080;
+        public static final int IDS_PROMPT_NULLSETTING=0x7f070081;
         public static final int IDS_Password=0x7f070046;
         public static final int IDS_Pause=0x7f070030;
         public static final int IDS_Photo=0x7f070017;

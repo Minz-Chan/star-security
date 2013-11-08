@@ -126,6 +126,7 @@
     <string name="do_not_support">不支持分辨率變動</string>
     <string name="DEVICE_LIST_ErrorReason">連線失敗，請檢查域名和端口設置</string>
     <string name="DEVICE_SINGLE_ErrorReason">獲取設備失敗</string>
+    <string name="DEVICE_LIST_REQ_TIMEOUT">設備列表請求超時，請檢查網路是否連接</string>
     <string name="IDS_PROMPT_DEVICENAMEINPUT">請輸入設備名稱</string>
     <string name="IDS_PROMPT_NULLSETTING">請先設定域名服務器資訊 !</string>
 </resources>

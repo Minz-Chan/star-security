@@ -1,6 +1,7 @@
 package com.starsecurity.activity;
 
 import java.io.File;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -37,10 +38,10 @@ import com.starsecurity.service.impl.FavouriteControlServiceImpl;
  * @function     功能	  	云台列表显示界面
  * @author       创建人              肖远东
  * @date        创建日期           2013-04-22
- * @author       修改人              肖远东
- * @date        修改日期           2013-04-22
- * @description 修改说明	          首次增加
- *
+ * @author       修改人              陈明珍
+ * @date        修改日期           2013-11-09
+ * @description 修改说明	          
+ *     2013-11-09 加入列表请求超时处理 陈明珍
  */
 @SuppressLint("SdCardPath")
 public class DeviceListActivity extends Activity {
@@ -294,6 +295,13 @@ public class DeviceListActivity extends Activity {
 	                msg.setData(messageBundle); 
 	                handler.sendMessage(msg);
                 }
+        	} catch (SocketTimeoutException e) {
+        		errorReason = getString(R.string.DEVICE_LIST_REQ_TIMEOUT);
+        		Message msg = handler.obtainMessage(); 
+                Bundle bundle = new Bundle(); 
+                bundle.putInt("state", STATE_FAIL); 
+                msg.setData(bundle); 
+                handler.sendMessage(msg);
         	}catch(Exception e){
         		Message msg = handler.obtainMessage(); 
                 Bundle bundle = new Bundle(); 
