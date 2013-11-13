@@ -107,16 +107,19 @@ public class DataProcessServiceImpl implements DataProcessService {
 					System.out.println("*********************** update video: P Frame  *************************");
 					System.out.println("$$$$$Time diff: " + Timecounter.getInstance().getTimeDiff());
 				} else if (result == -2) {	// 分辨率切换
-					ConnectionManager.getConnection(conn_name).close();		// 关闭连接
+					//ConnectionManager.getConnection(conn_name).close();		// 关闭连接
+					ConnectionManager.getConnection(conn_name).setConnect_state(0);
 					
 					Message msg = new Message();
 					msg.what = MessageCode.CONNECTION_CLOSED;	// 提示连接断开
 					updateUIMessage(msg);
 				} else if (result < -66) { // 不支持的profile
-					ConnectionManager.getConnection(conn_name).close();		// 关闭连接
+					//ConnectionManager.getConnection(conn_name).close();		// 关闭连接
+					ConnectionManager.getConnection(conn_name).setConnect_state(0);
 					
 					Message msg = new Message();
 					msg.what = MessageCode.IDS_UNSUPPORTEDPROFILE;
+					msg.arg2 = result;
 
 					if (result == -77) {
 						msg.arg1 = R.string.IDS_UNSUPPORTEDPROFILE_MAIN;	// 不支持的类型（Main Profile）
@@ -152,16 +155,19 @@ public class DataProcessServiceImpl implements DataProcessService {
 					System.out.println("*********************** update video: I Frame  *************************");
 					System.out.println("$$$$$Time diff: " + Timecounter.getInstance().getTimeDiff());
 				} else if (result == -2) {	// 分辨率切换
-					ConnectionManager.getConnection(conn_name).close();		// 关闭连接
+					//ConnectionManager.getConnection(conn_name).close();		// 关闭连接
+					ConnectionManager.getConnection(conn_name).setConnect_state(0);
 					
 					Message msg = new Message();
 					msg.what = MessageCode.CONNECTION_CLOSED;	// 提示连接断开
 					updateUIMessage(msg);			
 				} else if (result < -66) { // 不支持的profile
-					ConnectionManager.getConnection(conn_name).close();		// 关闭连接
+					//ConnectionManager.getConnection(conn_name).close();		// 关闭连接
+					ConnectionManager.getConnection(conn_name).setConnect_state(0);
 					
 					Message msg = new Message();
 					msg.what = MessageCode.IDS_UNSUPPORTEDPROFILE;
+					msg.arg2 = result;
 
 					if (result == -77) {
 						msg.arg1 = R.string.IDS_UNSUPPORTEDPROFILE_MAIN;	// 不支持的类型（Main Profile）

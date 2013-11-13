@@ -851,7 +851,7 @@ public class MainActivity extends Activity {
 					ViewManager.getInstance().setHelpMsg(R.string.IDS_ConnectServer);
 					break;
 				case MessageCode.IDS_UNSUPPORTEDPROFILE: // 不支持的profile
-					if (msg.arg1 < -66) {
+					if (msg.arg2 < -66) {
 						ViewManager.getInstance().setHelpMsg(msg.arg1); // 显示相应的提示
 					}
 					break;

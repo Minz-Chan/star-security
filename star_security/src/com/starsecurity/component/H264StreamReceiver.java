@@ -138,7 +138,8 @@ public class H264StreamReceiver implements Runnable {
 				
 				/* 检测连接状态 */
 				if (conn.getConnect_state() == 0) {
-					conn.getSock().close();
+					//conn.getSock().close();
+					conn.close();
 					conn.setSock(null);
 					
 					MainActivity.isPlay = false;
