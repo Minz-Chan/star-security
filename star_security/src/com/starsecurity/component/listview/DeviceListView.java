@@ -177,7 +177,7 @@ public class DeviceListView extends SearchableListView {
 		favouriteRecord.setRecordName(device.getDeviceName());
 		
         // 检测此平台是否已经存储，若有则覆盖，若没有则添加
-        if(favouriteControlService.isExist(filePath, device.getDeviceName())){
+        if(favouriteControlService.isExist(filePath, deviceName)){
         	favouriteControlService.coverFavouriteElement(filePath, favouriteRecord);
         }else{	
         	favouriteControlService.addFavouriteElement(filePath, favouriteRecord);
