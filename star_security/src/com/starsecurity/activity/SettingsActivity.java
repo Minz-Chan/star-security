@@ -25,6 +25,7 @@ import com.starsecurity.R;
 import com.starsecurity.model.FavouriteRecord;
 import com.starsecurity.service.FavouriteControlService;
 import com.starsecurity.service.impl.FavouriteControlServiceImpl;
+import com.starsecurity.util.DataValidateUtil;
 
 /***
  * 
@@ -150,6 +151,10 @@ public class SettingsActivity extends Activity {
 		save_deleButton.setOnClickListener(new Button.OnClickListener(){
 			@Override
 			public void onClick(View v) {
+				// 验证输入配置有效性
+				if (!validateInput()) {
+					return;
+				}
 				if(!recordNameEditText.getText().toString().equals("")){
 					if(!favouriteControlService.isExist(filePath, recordNameEditText.getText().toString())){
 						FavouriteRecord favouriteRecord = new FavouriteRecord();
@@ -281,6 +286,12 @@ public class SettingsActivity extends Activity {
 				String port = portEditText.getText().toString();
 				String channel = (String) channelSpinner.getSelectedItem();
 				String recName = (String) recordNameEditText.getText().toString();
+				
+				// 验证输入配置有效性
+				if (!validateInput()) {
+					return false;
+				}
+				
 				bundle.putString("usernameStr", username);
 				bundle.putString("passwordStr", password);
 				bundle.putString("serverStr", server);
@@ -299,6 +310,34 @@ public class SettingsActivity extends Activity {
 				finish();
 				break;
 		}
+		return true;
+	}
+	
+	/**
+	 * 验证输入数据有效性
+	 * @return
+	 */
+	private boolean validateInput() {
+		if (!DataValidateUtil.isValidUsername(usernameEditText.getText().toString())) {
+			Toast.makeText(this, getString(R.string.IDS_Error_UserName), Toast.LENGTH_LONG).show();
+			return false;
+		}
+		
+		if (!DataValidateUtil.isValidPassword(passwordEditText.getText().toString())) {
+			Toast.makeText(this, getString(R.string.IDS_Error_PassWorld), Toast.LENGTH_LONG).show();
+			return false;
+		}
+		
+		if (!DataValidateUtil.isValidServer(serverEditText.getText().toString())) {
+			Toast.makeText(this, getString(R.string.IDS_Error_Server), Toast.LENGTH_LONG).show();
+			return false;
+		}
+		
+		if (!DataValidateUtil.isValidPort(portEditText.getText().toString())) {
+			Toast.makeText(this, getString(R.string.IDS_Error_Port), Toast.LENGTH_LONG).show();
+			return false;
+		}
+		
 		return true;
 	}
 }
