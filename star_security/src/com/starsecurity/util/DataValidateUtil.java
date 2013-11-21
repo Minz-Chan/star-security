@@ -94,6 +94,29 @@ public class DataValidateUtil {
 	}
 	
 	/**
+	 * 验证输入是否为有效的域名服务器端口号
+	 * @param s 输入字符串
+	 * @return 
+	 *   true, 有效
+	 *   false, 无效
+	 */
+	public static boolean isValidDomianPort(String s) {
+		int port = 0;
+		
+		try {
+			port = Integer.parseInt(s);
+		} catch (NumberFormatException e) {
+			return false;
+		}
+		
+		if (port < 0 || port > 65535) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	/**
 	 * 验证输入是否为有效的通道号
 	 * @param s 输入字符串
 	 * @return 

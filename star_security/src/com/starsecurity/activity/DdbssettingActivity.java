@@ -247,12 +247,12 @@ public class DdbssettingActivity extends PreferenceActivity implements OnSharedP
 			return false;
 		}
 		
-		if ((ddns_server.getText()!=null)||!DataValidateUtil.isValidServer(ddns_server.getText().toString())) {
+		if ((ddns_server.getText()==null)||!DataValidateUtil.isValidServer(ddns_server.getText().toString())) {
 			Toast.makeText(this, getString(R.string.IDS_Error_Server), Toast.LENGTH_LONG).show();
 			return false;
 		}
 		
-		if ((ddns_port.getText()!=null)||!DataValidateUtil.isValidPort(ddns_port.getText().toString())) {
+		if ((ddns_port.getText()==null)||!DataValidateUtil.isValidDomianPort(ddns_port.getText().toString())) {
 			Toast.makeText(this, getString(R.string.IDS_Error_Port), Toast.LENGTH_LONG).show();
 			return false;
 		}
