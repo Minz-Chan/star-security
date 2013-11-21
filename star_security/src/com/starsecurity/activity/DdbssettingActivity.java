@@ -13,11 +13,13 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.starsecurity.R;
 import com.starsecurity.model.DVRDevice;
 import com.starsecurity.service.FavouriteControlService;
 import com.starsecurity.service.impl.FavouriteControlServiceImpl;
+import com.starsecurity.util.DataValidateUtil;
 
 /***
  * 
@@ -25,8 +27,8 @@ import com.starsecurity.service.impl.FavouriteControlServiceImpl;
  * @author       创建人              肖远东
  * @date        创建日期           2013-03-18
  * @author       修改人              肖远东
- * @date        修改日期           2013-04-18
- * @description 修改说明	          首次增加
+ * @date        修改日期           2013-11-21
+ * @description 修改说明	          增加输入数据验证及默认配置参数
  *
  */
 public class DdbssettingActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
@@ -69,9 +71,17 @@ public class DdbssettingActivity extends PreferenceActivity implements OnSharedP
             ddns_password.setText(favouriteControlService.getPassword(filePath));
             
             //预览已设置参数
-            if(ddns_server.getText()!=null)
+            if(ddns_server.getText()==null||ddns_server.getText().toString().equals("")){        	
+            	ddns_server.setSummary("xy.star-netsecurity.com");
+            	ddns_server.setText("xy.star-netsecurity.com");
+            }  	
+            else
             	ddns_server.setSummary(ddns_server.getText().toString());
-            if(ddns_port.getText()!=null)
+            if(ddns_port.getText()==null||ddns_port.getText().toString().equals("")){
+            	ddns_port.setText("80");
+            	ddns_port.setSummary("80");
+            }
+            else
             	ddns_port.setSummary(ddns_port.getText().toString());
             if(user_id.getText()!=null)
             	user_id.setSummary(user_id.getText().toString());
@@ -212,8 +222,41 @@ public class DdbssettingActivity extends PreferenceActivity implements OnSharedP
      */
     @Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+    	// 验证输入配置有效性
+		if (!validateInput()) {
+			return false;
+		}
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.ddbssettingactivitymenu, menu);
+		return true;
+	}
+    
+
+    /**
+	 * 验证输入数据有效性
+	 * @return
+	 */
+	private boolean validateInput() {
+		if (user_id.getText()==null||!DataValidateUtil.isValidUsername(user_id.getText().toString())) {
+			Toast.makeText(this, getString(R.string.IDS_Error_UserName), Toast.LENGTH_LONG).show();
+			return false;
+		}
+		
+		if ((ddns_password.getText()!=null)&&!DataValidateUtil.isValidPassword(ddns_password.getText().toString())) {
+			Toast.makeText(this, getString(R.string.IDS_Error_PassWorld), Toast.LENGTH_LONG).show();
+			return false;
+		}
+		
+		if ((ddns_server.getText()!=null)||!DataValidateUtil.isValidServer(ddns_server.getText().toString())) {
+			Toast.makeText(this, getString(R.string.IDS_Error_Server), Toast.LENGTH_LONG).show();
+			return false;
+		}
+		
+		if ((ddns_port.getText()!=null)||!DataValidateUtil.isValidPort(ddns_port.getText().toString())) {
+			Toast.makeText(this, getString(R.string.IDS_Error_Port), Toast.LENGTH_LONG).show();
+			return false;
+		}
+		
 		return true;
 	}
 }

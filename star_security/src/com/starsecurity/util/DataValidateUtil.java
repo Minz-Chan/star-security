@@ -4,9 +4,9 @@ package com.starsecurity.util;
  * @function     功能	                数据校验
  * @author       创建人                 陈明珍
  * @date        创建日期           2013-11-20
- * @author       修改人                 陈明珍
- * @date        修改日期           2013-11-20
- * @description 修改说明	            
+ * @author       修改人                 肖远东
+ * @date        修改日期           2013-11-21
+ * @description 修改说明	          增加修改函数
  */
 public class DataValidateUtil {
 
@@ -48,6 +48,21 @@ public class DataValidateUtil {
 	 *    false, 无效
 	 */
 	public static boolean isValidServer(String s) {
+		if (s.trim().length() == 0) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	/***
+	 * 验证域名服务器地址是否有效（不为空）
+	 * @param s
+	 * @return
+	 *    true, 有效
+	 *    false, 无效
+	 */
+	public static boolean isValidDomainServer(String s){
 		if (s.trim().length() == 0) {
 			return false;
 		}
