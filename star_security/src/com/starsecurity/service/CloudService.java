@@ -35,8 +35,9 @@ public interface CloudService {
 	 * @param deviceName
 	 * @return
 	 * @throws IOException
+	 * @throws DocumentException 
 	 */
-	public Document SendURLPost(String domain,String port,String username,String password,String deviceName) throws IOException; 
+	public Document SendURLPost(String domain,String port,String username,String password,String deviceName) throws IOException, DocumentException; 
 	
 	/***
 	 * 云台返回的XML文件状态信息解析

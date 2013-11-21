@@ -216,8 +216,8 @@ public final class R {
         public static final int btn_control_down=0x7f0a0011;
         public static final int btn_control_focus=0x7f0a0014;
         public static final int btn_control_focusadd=0x7f0a000c;
-        public static final int btn_control_jujiao=0x7f0a0015;
-        public static final int btn_control_jujiaoadd=0x7f0a000d;
+        public static final int btn_control_jujiao=0x7f0a000d;
+        public static final int btn_control_jujiaoadd=0x7f0a0015;
         public static final int btn_control_left=0x7f0a0012;
         public static final int btn_control_right=0x7f0a000a;
         public static final int btn_control_up=0x7f0a0009;

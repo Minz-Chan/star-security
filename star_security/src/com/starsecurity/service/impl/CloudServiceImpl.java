@@ -56,8 +56,9 @@ public class CloudServiceImpl implements CloudService {
 	 * @param deviceName
 	 * @return
 	 * @throws IOException
+	 * @throws DocumentException 
 	 */
-	public Document SendURLPost(String domain,String port,String username,String password,String deviceName) throws IOException {
+	public Document SendURLPost(String domain,String port,String username,String password,String deviceName) throws IOException, DocumentException {
 		try {
 			String urlStr;
 			URL url;
@@ -82,7 +83,7 @@ public class CloudServiceImpl implements CloudService {
 			inputStr.close();
 			return doc;
 		} catch (DocumentException e) {
-			return null;
+			throw e;
 		} catch (SocketTimeoutException e) {
 			throw e;
 		}
