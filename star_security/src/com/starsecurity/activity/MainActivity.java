@@ -1,6 +1,8 @@
 package com.starsecurity.activity;
 
 import java.io.File;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -637,15 +639,30 @@ public class MainActivity extends Activity {
 			}
 		});
 		
-		/*
+		
 		captureBtn.setOnClickListener(new Button.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				extendedService.takePicture();		// 拍照
+				if ( !CommonUtils.isFastDoubleClick() && isPlay) {
+					functionTempStr = msgView.getText().toString();
+					extendedService.takePicture();		// 拍照
+					
+					TimerTask taskChangePrompt = new TimerTask(){
+					    public void run(){
+					    	Message msg = new Message();
+					    	msg.what = MessageCode.SAVE_PICTURE;
+					    	mHandler.sendMessage(msg);
+					    }
+					};
+					
+					Timer timer = new Timer();
+					timer.schedule(taskChangePrompt, 200);
+				}
 			}
 			
-		});*/
+		});
 		
+		/*
 		captureBtn.setOnTouchListener(new OnTouchListener(){
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
@@ -664,7 +681,7 @@ public class MainActivity extends Activity {
 				}
 				return false;
 			}
-		});
+		});*/
 		
 		// 全屏按钮
 		fullScreenBtn.setOnClickListener(new Button.OnClickListener() {
@@ -871,7 +888,9 @@ public class MainActivity extends Activity {
 					isPlay = false;
 					updatePlayStatus(R.string.IDS_ACQ_Off);
 					break;
-				
+				case MessageCode.SAVE_PICTURE:
+					msgView.setText(functionTempStr);
+					break;
 				}
 			
 			} 
