@@ -195,6 +195,14 @@ public class DataProcessServiceImpl implements DataProcessService {
 				tlv_V_DVSInfoRequest = (TLV_V_DVSInfoRequest) ByteArray2Object.convert2Object(TLV_V_DVSInfoRequest.class, data, flag, OWSP_LEN.TLV_V_DVSInfoRequest);
 				System.out.println(tlv_V_DVSInfoRequest);
 				ConnectionManager.getConnection(conn_name).addResultItem(tlv_V_DVSInfoRequest);
+				
+				//发送连接成功,可获取最大通道数
+				Handler handler = ViewManager.getInstance().getHandler();
+				Message msg = new Message();
+				msg.what = MessageCode.IDS_CONNECTMAXCHANNEL;
+				if (handler != null) {
+					handler.sendMessage(msg);
+				}
 			} else if (tlv_Header.getTlv_type() == TLV_T_Command.TLV_T_CHANNLE_ANSWER){	
 				TLV_V_ChannelResponse tlv_V_ChannelResponse;
 				tlv_V_ChannelResponse = (TLV_V_ChannelResponse) ByteArray2Object.convert2Object(TLV_V_ChannelResponse.class, data, flag, OWSP_LEN.TLV_V_ChannelResponse);

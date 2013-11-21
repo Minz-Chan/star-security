@@ -29,6 +29,7 @@ import com.starsecurity.util.DataValidateUtil;
  * @author       修改人              肖远东
  * @date        修改日期           2013-11-21
  * @description 修改说明	          增加输入数据验证及默认配置参数
+ * 	2013-11-21 DDNS默认配置消失		肖远东
  *
  */
 public class DdbssettingActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {

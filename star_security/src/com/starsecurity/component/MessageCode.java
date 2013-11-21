@@ -21,4 +21,6 @@ public class MessageCode {
 	
 	public final static int SAVE_PICTURE = 14; 				// 拍照
 	
+	public final static int IDS_CONNECTMAXCHANNEL = 50;			// 连接成功，可获取最大通道数...
+	
 }

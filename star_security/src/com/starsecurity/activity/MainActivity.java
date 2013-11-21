@@ -891,6 +891,13 @@ public class MainActivity extends Activity {
 				case MessageCode.SAVE_PICTURE:
 					msgView.setText(functionTempStr);
 					break;
+				case MessageCode.IDS_CONNECTMAXCHANNEL:
+					TLV_V_DVSInfoRequest tlvDVSInfoRequest = (TLV_V_DVSInfoRequest) ConnectionManager.getConnection("conn1").retrieveResultItem(TLV_T_Command.TLV_T_DVS_INFO_REQUEST);
+					int maxChannelNumber = tlvDVSInfoRequest.getChannleNumber();
+					if(maxChannelNumber<Integer.parseInt(settingChannel)){
+						switchChannelBtnImages(0);
+					}
+					break;
 				}
 			
 			} 
