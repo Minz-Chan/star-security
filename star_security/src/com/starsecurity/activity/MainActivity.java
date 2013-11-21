@@ -892,9 +892,21 @@ public class MainActivity extends Activity {
 					msgView.setText(functionTempStr);
 					break;
 				case MessageCode.IDS_CONNECTMAXCHANNEL:
+					if (settingChannel == null || settingChannel.trim().equals("")) {
+						settingChannel = "1";
+					}
 					TLV_V_DVSInfoRequest tlvDVSInfoRequest = (TLV_V_DVSInfoRequest) ConnectionManager.getConnection("conn1").retrieveResultItem(TLV_T_Command.TLV_T_DVS_INFO_REQUEST);
 					int maxChannelNumber = tlvDVSInfoRequest.getChannleNumber();
-					if(maxChannelNumber<Integer.parseInt(settingChannel)){
+					
+					int defaultChannelNo;
+					try {
+						defaultChannelNo = Integer.parseInt(settingChannel);
+					} catch (NumberFormatException e) {
+						defaultChannelNo = 0;
+						e.printStackTrace();
+					}
+					
+					if (maxChannelNumber < defaultChannelNo){
 						switchChannelBtnImages(0);
 					}
 					break;
