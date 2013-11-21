@@ -19,8 +19,8 @@
     <string name="IDS_Down">向下</string>
     <string name="IDS_ZoomOut">放大</string>
     <string name="IDS_ZoomIn">縮小</string>
-    <string name="IDS_OpticalOut">光圈放大</string>
-    <string name="IDS_OpticalIn">光圈縮小</string>
+    <string name="IDS_OpticalOut">光圈縮小</string>
+    <string name="IDS_OpticalIn">光圈放大</string>
     <string name="IDS_FocusOut">焦點放大</string>
     <string name="IDS_FocusIn">焦點縮小</string>
     <string name="IDS_Photo">拍照</string>

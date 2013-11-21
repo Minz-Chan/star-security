@@ -20,8 +20,8 @@
     <string name="IDS_Right">Right</string>
     <string name="IDS_Up">Up</string>
     <string name="IDS_Down">Down</string>
-    <string name="IDS_ZoomOut">ZoomIn</string>
-    <string name="IDS_ZoomIn">ZoomOut</string>
+    <string name="IDS_ZoomOut">ZoomOut</string>
+    <string name="IDS_ZoomIn">ZoomIn</string>
     <string name="IDS_OpticalOut">Add_Aperture</string>
     <string name="IDS_OpticalIn">Sub_Aperture</string>
     <string name="IDS_FocusOut">Add_Focus</string>
