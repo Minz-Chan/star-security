@@ -6,7 +6,8 @@ package com.starsecurity.util;
  * @date        创建日期           2013-11-20
  * @author       修改人                 肖远东
  * @date        修改日期           2013-11-21
- * @description 修改说明	          增加修改函数
+ * @description 修改说明	   
+ *   2013-11-21 增加修改函数 肖远东       
  */
 public class DataValidateUtil {
 
