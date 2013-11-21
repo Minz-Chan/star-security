@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">星网安防</string>
-    <string name="app_name2">星网安防-v5.9.1</string>
+    <string name="app_name2">星网安防-v5.9.2</string>
     <string name="app_name3">设备列表</string>
     <string name="action_settings">设置</string>
     <string name="IDS_ConnectTimeoutInterval">20000</string>

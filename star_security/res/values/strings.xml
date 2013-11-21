@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Star-Net Security</string>
-    <string name="app_name2">Star-Net Security-v5.9.1</string>
+    <string name="app_name2">Star-Net Security-v5.9.2</string>
     <string name="app_name3">Device List</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
