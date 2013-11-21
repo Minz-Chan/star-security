@@ -26,6 +26,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.starsecurity.R;
+import com.starsecurity.component.ConnectionManager;
+import com.starsecurity.component.listview.SynObject;
 import com.starsecurity.model.DVRDevice;
 import com.starsecurity.model.FavouriteRecord;
 import com.starsecurity.service.CloudService;
@@ -76,15 +78,27 @@ public class DeviceListActivity extends Activity {
 	
 	private CloudService cloudService = new CloudServiceImpl("conn1");
 	private FavouriteControlService favouriteControlService = new FavouriteControlServiceImpl("conn1");
+	
+	private SynObject synObj = new SynObject();
+	
 	/***
 	 * 处理子线程消息，并更新界面
 	 */
 	private final Handler handler = new Handler(Looper.getMainLooper()) {
 		public void handleMessage(Message msg) { // 处理Message，更新ListView
 			int state = msg.getData().getInt("state"); 
+
+			if (synObj.getStatus() == SynObject.STATUS_RUN) {
+				return;
+			}
+			
+			dismissDialog(PROGRESS_DIALOG);
+			
+			// 解除挂起， 程序往下执行
+			synObj.resume();
+			
 			switch(state){ 
 				case STATE_SUCCESS:
-					dismissDialog(PROGRESS_DIALOG);
 					deviceListView.setAdapter(new ArrayAdapter<String>(getApplicationContext(), 
 	                        android.R.layout.simple_list_item_1, 
 	                        deviceNameList ));
@@ -123,6 +137,9 @@ public class DeviceListActivity extends Activity {
 					        }
 					        favouriteControlService.setLastRecord(filePath,favouriteRecord.getFavouriteName());
 					        favouriteControlService.setLastChannel(filePath, favouriteRecord.getDefaultChannel());
+					        
+					        ConnectionManager.getConnection("conn1").close();	// 返回播放之前关闭当前连接
+					        
 							//返回主界面播放视频
 							Intent intent = getIntent();
 							intent.putExtra("DVRDevice",deviceList.get(position));
@@ -132,12 +149,10 @@ public class DeviceListActivity extends Activity {
 					});
 					break; 
 				case STATE_FAIL: 
-					dismissDialog(PROGRESS_DIALOG);
 					Toast.makeText(getApplicationContext(),errorReason, Toast.LENGTH_LONG).show();
 					DeviceListActivity.this.finish();
 					break;
 				case STATE_DEVICE:
-					dismissDialog(PROGRESS_DIALOG);
 					if(singleDvrDevice!=null){
 						//存放所选平台到收藏夹中
 						//存放收藏夹的XMl文件
@@ -168,6 +183,9 @@ public class DeviceListActivity extends Activity {
 				        	favouriteControlService.setLastRecord(filePath,favouriteRecord.getFavouriteName());
 				        	favouriteControlService.setLastChannel(filePath, favouriteRecord.getDefaultChannel());
 				        }
+				        
+				        ConnectionManager.getConnection("conn1").close();
+				        
 				        //返回主界面播放视频
 						Intent intent = getIntent();
 						intent.putExtra("DVRDevice",singleDvrDevice);
@@ -195,6 +213,9 @@ public class DeviceListActivity extends Activity {
 		
 		showDialog(PROGRESS_DIALOG); 
         new ProgressDeviceListThread(handler).start();
+        
+        // 挂起等待请求结果
+     	synObj.suspend();
 	}
 
 	/***
@@ -209,6 +230,7 @@ public class DeviceListActivity extends Activity {
 				@Override
 				public void onCancel(DialogInterface dialog) {
 					dismissDialog(PROGRESS_DIALOG);
+					synObj.resume();
 					DeviceListActivity.this.finish();
 				}
 			});
