@@ -55,6 +55,7 @@ import com.starsecurity.util.CommonUtils;
  * @author       修改人           陈明珍/肖远东
  * @date        修改日期           2013-10-06
  * @description 修改记录	 
+ * 	 2013-11-22 添加“最大通道数为1，不允许切换通道功能”	肖远东
  *   2013-10-23 修正“向左拖动，出现全黑画面”、“保存图片成功后，做其他操作，一直显示保存图片提示。”、
  *              “光圈变大和缩小图标的提示相反”问题    陈明珍
  *   2013-10-11 顶部原显示IP位置布局变更加入设备列表按钮 陈明珍
@@ -928,22 +929,44 @@ public class MainActivity extends Activity {
 	private OnClickListener switchChannel = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
+			int maxChannelNumber = 1;
+			TLV_V_DVSInfoRequest tlvDVSInfoRequest = (TLV_V_DVSInfoRequest) ConnectionManager.getConnection("conn1").retrieveResultItem(TLV_T_Command.TLV_T_DVS_INFO_REQUEST);
+			if(tlvDVSInfoRequest!=null&&!isCloudControl){
+				maxChannelNumber = tlvDVSInfoRequest.getChannleNumber();
+			}else if(tlvDVSInfoRequest==null&&!isCloudControl){
+				maxChannelNumber = 1;
+			}
+			else if (dvrDevice!=null&&isCloudControl) {
+				if(dvrDevice.getChannelNumber()!=null){
+					maxChannelNumber = Integer.parseInt(dvrDevice.getChannelNumber());
+				}
+				
+			}
+
 			switch (v.getId()) {
 				case R.id.btn_number_1:
-					controlService.switchChannel(page * 4 + 1);
-					favouriteControlService.setLastChannel(filePath, String.valueOf(page*4+1));
+					if(maxChannelNumber>=page * 4 + 1){
+						controlService.switchChannel(page * 4 + 1);
+						favouriteControlService.setLastChannel(filePath, String.valueOf(page*4+1));
+					}
 					break;
 				case R.id.btn_number_2:
-					controlService.switchChannel(page * 4 + 2);
-					favouriteControlService.setLastChannel(filePath, String.valueOf(page*4+2));
+					if(maxChannelNumber>=page * 4 + 2){
+						controlService.switchChannel(page * 4 + 2);
+						favouriteControlService.setLastChannel(filePath, String.valueOf(page*4+2));
+					}
 					break;
 				case R.id.btn_number_3:
-					controlService.switchChannel(page * 4 + 3);
-					favouriteControlService.setLastChannel(filePath, String.valueOf(page*4+3));
+					if(maxChannelNumber>=page * 4 + 3){
+						controlService.switchChannel(page * 4 + 3);
+						favouriteControlService.setLastChannel(filePath, String.valueOf(page*4+3));
+					}
 					break;
 				case R.id.btn_number_4:
-					controlService.switchChannel(page * 4 + 4);
-					favouriteControlService.setLastChannel(filePath, String.valueOf(page*4+4));
+					if(maxChannelNumber>=page * 4 + 4){
+						controlService.switchChannel(page * 4 + 4);
+						favouriteControlService.setLastChannel(filePath, String.valueOf(page*4+4));
+					}
 					break;
 			}
 		}
