@@ -14,15 +14,12 @@ import com.starsecurity.component.ViewManager;
 import com.starsecurity.h264.VideoView;
 import com.starsecurity.service.ExtendedService;
 import com.starsecurity.service.impl.ExtendedServiceImpl;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.view.WindowManager;
-import android.widget.Button;
 
 
 
@@ -58,7 +55,10 @@ public class FullScreenActivity extends Activity {
 
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				onBackPressed();
+				if (extendedService != null) {
+					extendedService.restoreFromFullScreen();
+				}
+				FullScreenActivity.this.finish();
 				return true;
 			}
 		});
@@ -66,14 +66,14 @@ public class FullScreenActivity extends Activity {
 		
 	}
 
+	@SuppressLint("NewApi")
 	@Override
 	public void onBackPressed() {
 		if (extendedService != null) {
 			extendedService.restoreFromFullScreen();
 		}
 		
-		super.onBackPressed();
-		
+		super.onBackPressed();		
 	}
 	
 	
