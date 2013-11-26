@@ -37,6 +37,7 @@ import com.starsecurity.h264.VideoView;
 import com.starsecurity.model.DVRDevice;
 import com.starsecurity.model.FavouriteRecord;
 import com.starsecurity.model.TLV_T_Command;
+import com.starsecurity.model.TLV_V_ChannelResponse;
 import com.starsecurity.model.TLV_V_DVSInfoRequest;
 import com.starsecurity.service.ControlService;
 import com.starsecurity.service.ExtendedService;
@@ -55,6 +56,8 @@ import com.starsecurity.util.CommonUtils;
  * @author       修改人           陈明珍/肖远东
  * @date        修改日期           2013-10-06
  * @description 修改记录	 
+ *   2013-11-26 当返回的最大支持通道数为1时，点击除1外的其他通道，不响应点击事件且图标为灰色
+ *   			若请求的通道为当前正在播放的通道，则不响应切换请求。	肖远东
  * 	 2013-11-22 添加“最大通道数为1，不允许切换通道功能”	肖远东
  *   2013-10-23 修正“向左拖动，出现全黑画面”、“保存图片成功后，做其他操作，一直显示保存图片提示。”、
  *              “光圈变大和缩小图标的提示相反”问题    陈明珍
@@ -720,7 +723,6 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				TLV_V_DVSInfoRequest tlvDVSInfoRequest = (TLV_V_DVSInfoRequest) ConnectionManager.getConnection("conn1").retrieveResultItem(TLV_T_Command.TLV_T_DVS_INFO_REQUEST);
-				//TLV_V_ChannelResponse tlvChannelResponse = (TLV_V_ChannelResponse) ConnectionManager.getConnection("conn1").retrieveResultItem(TLV_T_Command.TLV_T_CHANNLE_ANSWER);
 				if(tlvDVSInfoRequest!=null&&!isCloudControl){
 					int channelNuber = tlvDVSInfoRequest.getChannleNumber();
 					switch (page) {
@@ -906,9 +908,25 @@ public class MainActivity extends Activity {
 						defaultChannelNo = 0;
 						e.printStackTrace();
 					}
-					
 					if (maxChannelNumber < defaultChannelNo){
 						switchChannelBtnImages(0);
+					}
+					if(maxChannelNumber==1){
+						channelOne.setBackgroundDrawable(getResources().getDrawable(
+								R.drawable.control_number1));
+						channelTwo.setClickable(false);
+						channelTwo.setBackgroundDrawable(getResources().getDrawable(
+								R.drawable.btn_number2_show_disable));
+						channelThree.setClickable(false);
+						channelThree.setBackgroundDrawable(getResources().getDrawable(
+								R.drawable.btn_number3_show_disable));
+						channelFour.setClickable(false);
+						channelFour.setBackgroundDrawable(getResources().getDrawable(
+								R.drawable.btn_number4_show_disable));
+					}else{
+						channelTwo.setClickable(true);
+						channelThree.setClickable(true);
+						channelFour.setClickable(true);
 					}
 					break;
 				}
@@ -931,6 +949,7 @@ public class MainActivity extends Activity {
 		public void onClick(View v) {
 			int maxChannelNumber = 1;
 			TLV_V_DVSInfoRequest tlvDVSInfoRequest = (TLV_V_DVSInfoRequest) ConnectionManager.getConnection("conn1").retrieveResultItem(TLV_T_Command.TLV_T_DVS_INFO_REQUEST);
+			TLV_V_ChannelResponse tlvChannelResponse = (TLV_V_ChannelResponse) ConnectionManager.getConnection("conn1").retrieveResultItem(TLV_T_Command.TLV_T_CHANNLE_ANSWER);
 			if(tlvDVSInfoRequest!=null&&!isCloudControl){
 				maxChannelNumber = tlvDVSInfoRequest.getChannleNumber();
 			}else if(tlvDVSInfoRequest==null&&!isCloudControl){
@@ -942,32 +961,47 @@ public class MainActivity extends Activity {
 				}
 				
 			}
-
-			switch (v.getId()) {
-				case R.id.btn_number_1:
-					if(maxChannelNumber>=page * 4 + 1){
-						controlService.switchChannel(page * 4 + 1);
-						favouriteControlService.setLastChannel(filePath, String.valueOf(page*4+1));
-					}
-					break;
-				case R.id.btn_number_2:
-					if(maxChannelNumber>=page * 4 + 2){
-						controlService.switchChannel(page * 4 + 2);
-						favouriteControlService.setLastChannel(filePath, String.valueOf(page*4+2));
-					}
-					break;
-				case R.id.btn_number_3:
-					if(maxChannelNumber>=page * 4 + 3){
-						controlService.switchChannel(page * 4 + 3);
-						favouriteControlService.setLastChannel(filePath, String.valueOf(page*4+3));
-					}
-					break;
-				case R.id.btn_number_4:
-					if(maxChannelNumber>=page * 4 + 4){
-						controlService.switchChannel(page * 4 + 4);
-						favouriteControlService.setLastChannel(filePath, String.valueOf(page*4+4));
-					}
-					break;
+			if(tlvChannelResponse!=null){
+				int currentChannel = tlvChannelResponse.getCurrentChannel();
+				currentChannel+=1;
+				switch (v.getId()) {
+					case R.id.btn_number_1:
+						if(currentChannel == page * 4 + 1){
+							return;
+						}
+						if(maxChannelNumber>=page * 4 + 1){
+							controlService.switchChannel(page * 4 + 1);
+							favouriteControlService.setLastChannel(filePath, String.valueOf(page*4+1));
+						}
+						break;
+					case R.id.btn_number_2:
+						if(currentChannel == page * 4 + 2){
+							return;
+						}
+						if(maxChannelNumber>=page * 4 + 2){
+							controlService.switchChannel(page * 4 + 2);
+							favouriteControlService.setLastChannel(filePath, String.valueOf(page*4+2));
+						}
+						break;
+					case R.id.btn_number_3:
+						if(currentChannel == page * 4 + 3){
+							return;
+						}
+						if(maxChannelNumber>=page * 4 + 3){
+							controlService.switchChannel(page * 4 + 3);
+							favouriteControlService.setLastChannel(filePath, String.valueOf(page*4+3));
+						}
+						break;
+					case R.id.btn_number_4:
+						if(currentChannel == page * 4 + 4){
+							return;
+						}
+						if(maxChannelNumber>=page * 4 + 4){
+							controlService.switchChannel(page * 4 + 4);
+							favouriteControlService.setLastChannel(filePath, String.valueOf(page*4+4));
+						}
+						break;
+				}
 			}
 		}
 	};
