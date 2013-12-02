@@ -54,8 +54,9 @@ import com.starsecurity.util.CommonUtils;
  * @author       创建人              肖远东
  * @date        创建日期           2013-03-18
  * @author       修改人           陈明珍/肖远东
- * @date        修改日期           2013-10-06
+ * @date        修改日期           2013-12-02
  * @description 修改记录	 
+ *   2013-12-02 修正光圈放大和光圈缩小提示相反 陈明珍
  *   2013-11-26 当返回的最大支持通道数为1时，点击除1外的其他通道，不响应点击事件且图标为灰色
  *   			若请求的通道为当前正在播放的通道，则不响应切换请求。	肖远东
  * 	 2013-11-22 添加“最大通道数为1，不允许切换通道功能”	肖远东
@@ -271,8 +272,8 @@ public class MainActivity extends Activity {
 		controlRightBtn = (Button) findViewById(R.id.btn_control_right);
 		zoomAddBtn = (Button) findViewById(R.id.btn_control_zoomadd);
 		zoomReduceBtn = (Button) findViewById(R.id.btn_control_zoom);
-		apertureAddBtn = (Button) findViewById(R.id.btn_control_jujiaoadd);
-		apertureReduceBtn = (Button) findViewById(R.id.btn_control_jujiao);
+		apertureAddBtn = (Button) findViewById(R.id.btn_control_jujiao);
+		apertureReduceBtn = (Button) findViewById(R.id.btn_control_jujiaoadd);
 		focusAddBtn = (Button) findViewById(R.id.btn_control_focusadd);
 		focusReduceBtn = (Button) findViewById(R.id.btn_control_focus);
 		
