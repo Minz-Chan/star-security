@@ -87,6 +87,7 @@
     <string name="IDS_Continue">是的</string>
     <string name="IDS_Dispos">取消</string>
     <string name="IDS_Saveimg">保存图片到/SDCard/ImageSave/</string>
+    <string name="IDS_Error_Sdcard">未找到SD卡或不可写</string>
     <string name="IDS_FILE">图片保存成功!</string>
     <string name="IDS_CreateFolderFailure">创建目录/SDCard/ImageSave/失败</string>
     <string name="IDS_Ready">准备就绪</string>

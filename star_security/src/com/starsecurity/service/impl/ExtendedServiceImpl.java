@@ -13,7 +13,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Environment;
 
 import com.starsecurity.R;
 import com.starsecurity.component.Connection;
@@ -43,42 +46,60 @@ public class ExtendedServiceImpl implements ExtendedService {
 	}
 
 	@Override
-	public Bitmap takePicture() {
-		VideoView v = ViewManager.getInstance().getVideoView();
-		Bitmap bmp = null;
+	public File takePicture() {
+		boolean mExternalStorageWriteable = false;
+		String state = Environment.getExternalStorageState();
 		
-		v.setDrawingCacheEnabled(true);
-		bmp = Bitmap.createBitmap(v.getDrawingCache());
-		
-		File dir = new File("/sdcard/ImageSave");
-		if (!dir.exists()) {
-			if (!dir.mkdir()) {
-				// 创建目录/SDCard/ImageSave/失败
-				ViewManager.getInstance().setHelpMsg(R.string.IDS_CreateFolderFailure);
+	    if (Environment.MEDIA_MOUNTED.equals(state)) {
+	        mExternalStorageWriteable = true;
+	    } 
+	    
+	    
+	    if (mExternalStorageWriteable) { // 存储空间可写
+	    	VideoView v = ViewManager.getInstance().getVideoView();
+			Bitmap bmp = null;
+			
+			v.setDrawingCacheEnabled(true);
+			bmp = Bitmap.createBitmap(v.getDrawingCache());
+			
+			String path = Environment.getExternalStorageDirectory() + File.separator;
+			File dir = new File(path + "ImageSave");
+			if (!dir.exists()) {
+				if (!dir.mkdir()) {
+					// 创建目录/SDCard/ImageSave/失败
+					ViewManager.getInstance().setHelpMsg(R.string.IDS_CreateFolderFailure);
+					return null;
+				}
+			}
+
+			FileOutputStream out = null;
+			SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			String filename = sDateFormat.format(new java.util.Date()) + ".jpg";
+			filename = filename.replace(" ", "");
+			filename = filename.replace("-", "");
+			filename = filename.replace(":", "");
+			
+			File img = new File(dir.getPath() + File.separator +  filename);
+			
+			try {
+		       out = new FileOutputStream(img);
+
+		       bmp.compress(Bitmap.CompressFormat.JPEG, 90, out);
+		       out.close();
+		       
+		       ViewManager.getInstance().setHelpMsg(R.string.IDS_Saveimg);
+			} catch (Exception e) {
+				e.printStackTrace();
+				ViewManager.getInstance().setHelpMsg(R.string.IDS_Unknown);
 				return null;
 			}
-		}
-
-		FileOutputStream out = null;
-		SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		String filename = sDateFormat.format(new java.util.Date()) + ".jpg";
-		filename = filename.replace(" ", "");
-		filename = filename.replace("-", "");
-		filename = filename.replace(":", "");
-		try {
-	       out = new FileOutputStream(dir.getPath() + "/"+  filename);
-
-	       bmp.compress(Bitmap.CompressFormat.JPEG, 90, out);
-	       out.close();
-	       //ViewManager.getInstance().setHelpMsg(R.string.IDS_FILE);
-	       ViewManager.getInstance().setHelpMsg(R.string.IDS_Saveimg);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		v.setDrawingCacheEnabled(false);
-
-		return bmp;
+			
+			v.setDrawingCacheEnabled(false);
+			return img;
+	    } else { // 存储空间不可写
+	    	ViewManager.getInstance().setHelpMsg(R.string.IDS_Error_Sdcard);
+	    	return null;
+	    }
 	}
 
 	@Override

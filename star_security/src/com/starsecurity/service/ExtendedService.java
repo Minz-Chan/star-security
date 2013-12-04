@@ -9,6 +9,8 @@
  */
 package com.starsecurity.service;
 
+import java.io.File;
+
 import android.graphics.Bitmap;
 
 /**
@@ -25,7 +27,7 @@ public interface ExtendedService {
 	 * 拍照功能
 	 * @return
 	 */
-	public Bitmap takePicture();
+	public File takePicture();
 	
 	/**
 	 * 进行全屏模式

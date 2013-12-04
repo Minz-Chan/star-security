@@ -8,15 +8,21 @@ import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -56,6 +62,7 @@ import com.starsecurity.util.CommonUtils;
  * @author       修改人           陈明珍/肖远东
  * @date        修改日期           2013-12-02
  * @description 修改记录	 
+ *   2013-12-04 修正新拍照片在相册无法即时更新问题 陈明珍
  *   2013-12-02 修正光圈放大和光圈缩小提示相反 陈明珍
  *   2013-11-26 当返回的最大支持通道数为1时，点击除1外的其他通道，不响应点击事件且图标为灰色
  *   			若请求的通道为当前正在播放的通道，则不响应切换请求。	肖远东
@@ -650,7 +657,11 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				if ( !CommonUtils.isFastDoubleClick() && isPlay) {
 					functionTempStr = msgView.getText().toString();
-					extendedService.takePicture();		// 拍照
+
+					File img = extendedService.takePicture();
+					if (img != null) {
+						exportToGallery(img.getAbsolutePath());
+					}
 					
 					TimerTask taskChangePrompt = new TimerTask(){
 					    public void run(){
@@ -1230,6 +1241,22 @@ public class MainActivity extends Activity {
     		return true;
     	}else
     		return false;
+    }
+    
+    /**
+     * 扫描、刷新相册
+     */
+    private Uri exportToGallery(String filename) {
+        // Save the name and description of a video in a ContentValues map.
+        final ContentValues values = new ContentValues(2);
+        values.put(MediaStore.Video.Media.MIME_TYPE, "image/jpeg");
+        values.put(MediaStore.Video.Media.DATA, filename);
+        // Add a new record (identified by uri)
+        final Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                values);
+        sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                Uri.parse("file://"+ filename)));
+        return uri;
     }
     
 }

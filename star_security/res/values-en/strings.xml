@@ -87,6 +87,7 @@
     <string name="IDS_Continue">Continue</string>
     <string name="IDS_Dispos">Dispos</string>
     <string name="IDS_Saveimg">Save the image to/SDCard/ImageSave/</string>
+    <string name="IDS_Error_Sdcard">Can not find SD card or unwriteable</string>
     <string name="IDS_FILE">file sucessfuly!</string>
     <string name="IDS_CreateFolderFailure">Create /SDCard/ImageSave/ failure</string>
     <string name="IDS_Ready">Ready</string>
