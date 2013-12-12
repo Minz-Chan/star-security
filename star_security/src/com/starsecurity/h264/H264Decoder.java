@@ -23,6 +23,7 @@ package com.starsecurity.h264;
 public class H264Decoder {
 	
 	static {
+		System.loadLibrary("ffmpeg");
         System.loadLibrary("H264Decoder");
     }
 
