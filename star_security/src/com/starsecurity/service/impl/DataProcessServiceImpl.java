@@ -49,7 +49,7 @@ public class DataProcessServiceImpl implements DataProcessService {
 	private String conn_name;
 	private H264DecodeUtil h264 = new H264DecodeUtil();
 
-	
+	private boolean isIFrameFinished = false;
 	
 	public DataProcessServiceImpl(String conn_name) {
 		super();
@@ -89,6 +89,12 @@ public class DataProcessServiceImpl implements DataProcessService {
 				//ConnectionManager.getConnection(conn_name).addResultItem(tlv_V_VideoFrameInfo);
 				
 			} else if ( tlv_Header.getTlv_type() == TLV_T_Command.TLV_T_VIDEO_PFRAME_DATA ) {
+				
+				// 若第1帧接到的不是I帧，则后续的P帧不处理
+				if (!isIFrameFinished) {
+					return 0;
+				}
+				
 				System.out.println("*********************** P Frame process start  *************************");
 				byte[] tmp = (byte[]) ByteArray2Object.convert2Object(TLV_V_VideoData.class, data, flag, tlv_Header.getTlv_len());
 				
@@ -149,6 +155,7 @@ public class DataProcessServiceImpl implements DataProcessService {
 					ViewManager.getInstance().setHelpMsg(R.string.IDS_Unknown);
 				}
 				
+				isIFrameFinished = true;
 				
 				if(result == 1) {
 					v.postInvalidate();
@@ -215,6 +222,9 @@ public class DataProcessServiceImpl implements DataProcessService {
 				}
 				
 				ConnectionManager.getConnection(conn_name).addResultItem(tlv_V_ChannelResponse);
+				
+				// 通道切换时，第1帧必须为I帧
+				isIFrameFinished = false;
 				
 				System.out.println(tlv_V_ChannelResponse);
 				System.out.println("Result: " + tlv_V_ChannelResponse.getResult()
