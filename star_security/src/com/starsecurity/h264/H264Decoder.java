@@ -30,6 +30,7 @@ public class H264Decoder {
 	private static native int InitDecoder(int width, int height);
     private static native int UninitDecoder(); 
     private static native int DecoderNal(byte[] in, int insize, byte[] out);
+    private static native int ProbeSPS(byte[] in, int insize, byte[] para);
     
     /**
      * 解码器初始化
@@ -58,5 +59,22 @@ public class H264Decoder {
      */
     public int decode(byte[] in, int insize, byte[] out) {
     	return DecoderNal(in, insize, out);
+    }
+    
+    /**
+     * 探测SPS相关参数
+     * @param in 包含一个NAL单元的字节数组(以0x00000001开头)
+     * @param insize 字节数组长度
+     * @param param 待填充参数数组
+     *        param[0] profile_idc
+     *        param[1] level_idc
+     *        param[2] pic_width_in_mbs_minus_1
+     *        param[3] pic_height_in_map_units_minus_1
+     *        param[4] seq_parameter_set_id
+     *        param[5] num_ref_frames       
+     * @return 成功返回1，失败返回0
+     */
+    public int probe_sps(byte[] in, int insize, byte[] param) {
+    	return ProbeSPS(param, insize, param);
     }
 }

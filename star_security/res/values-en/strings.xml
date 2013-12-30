@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Star-Net Security</string>
-    <string name="app_name2">Star-Net Security-v5.10.0</string>
+    <string name="app_name2">Star-Net Security-v5.10.1</string>
     <string name="app_name3">Device List</string>
     <string name="action_settings">Settings</string>
     <string name="IDS_ConnectTimeoutInterval">20000</string>

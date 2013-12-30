@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.starsecurity"
     android:versionCode="27"
-    android:versionName="5.10.0" >
+    android:versionName="5.10.1" >
 
     <uses-sdk android:minSdkVersion="3"/>
 	<uses-permission android:name="android.permission.INTERNET"/>

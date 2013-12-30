@@ -9,7 +9,9 @@
  */
 package com.starsecurity.util;
 
+import com.starsecurity.component.ViewManager;
 import com.starsecurity.h264.H264Decoder;
+import com.starsecurity.h264.VideoView;
 
 /**
  * @function     功能	  h264码流解码工具类
@@ -55,6 +57,8 @@ public class H264DecodeUtil {
     	int bytesRead = len;    	
     	int SockBufUsed = 0;
     	
+    	byte[] param = new byte[7];
+    	
     	if(bytesRead < 0) {
     		return result;
     	}
@@ -76,8 +80,21 @@ public class H264DecodeUtil {
 					bFirst = false;
 				} else {				// a complete NAL data, include 0x00000001 trail
 					if (bFindPPS == true) { // picture parameter set
-						if ((NalBuf[4] & 0x1F) == 7) { // if pps
+						if ((NalBuf[4] & 0x1F) == 7) { // if sps
 							bFindPPS = false;
+							
+							if (decoder.probe_sps(NalBuf, NalBufUsed - 4, param) == 1) { 
+								VideoView v = ViewManager.getInstance().getVideoView();
+								int realWidth = ((param[2] + 1) * 16);
+								int realHeight = ((param[3] + 1) * 16);
+								if (v.getWidth1() != realWidth || v.getHeight1()
+										!= realHeight) {
+									init(realWidth, realHeight);
+									VideoView.changeScreenRevolution(realWidth, realHeight);
+									v.init();
+								}
+							}
+							
 						} else {				// if NAL unit sequence is not 'sps, pps, ...', reread from buffer
 			   				NalBuf[0] = 0;
 		    				NalBuf[1] = 0;
