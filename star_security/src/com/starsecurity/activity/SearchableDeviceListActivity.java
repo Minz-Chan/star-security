@@ -35,6 +35,7 @@ import android.widget.Toast;
  * @author       修改人                陈明珍
  * @date        修改日期           2013-10-06
  * @description 修改说明	 
+ *   2014-01-03 修正请求超时情况显示空设备列表，改为不显示 陈明珍
  *   2013-10-05 创建此文件 陈明珍
  *   2013-11-09 加入设备列表请求超时检测 陈明珍
  */
@@ -123,6 +124,7 @@ public class SearchableDeviceListActivity extends Activity{
 			case DDNS_REQ_TIMEOUT:
 				errMsg = getString(R.string.DEVICE_LIST_REQ_TIMEOUT);
 				Toast.makeText(SearchableDeviceListActivity.this, errMsg, Toast.LENGTH_LONG).show();
+				SearchableDeviceListActivity.this.finish();
 				break;
 			default:
 				break;
