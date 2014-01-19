@@ -75,6 +75,6 @@ public class H264Decoder {
      * @return 成功返回1，失败返回0
      */
     public int probe_sps(byte[] in, int insize, byte[] param) {
-    	return ProbeSPS(param, insize, param);
+    	return ProbeSPS(in, insize, param);
     }
 }
