@@ -100,6 +100,7 @@ public class VideoView extends ImageView {
     	buffer = ByteBuffer.wrap(mPixel);
     	VideoBit = Bitmap.createBitmap(width, height, Config.RGB_565);
     	
+    	
     	/*int i = mPixel.length;
     	
         for (i = 0; i < mPixel.length; i++) {
@@ -128,10 +129,11 @@ public class VideoView extends ImageView {
 		height = height1;
 		mPixel = new byte[width * height * 2];
 		
+		/*
 		int i = mPixel.length;
 		for (i = 0; i < mPixel.length; i++) {
         	mPixel[i] = (byte)0x00;
-        }
+        }*/
 		
 	}
 
