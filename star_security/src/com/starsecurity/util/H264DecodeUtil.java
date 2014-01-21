@@ -84,15 +84,21 @@ public class H264DecodeUtil {
 							bFindPPS = false;
 							
 							if (decoder.probe_sps(NalBuf, NalBufUsed - 4, param) == 1) { 
+								System.out.println("->H264DecodeUtil->probe_sps");
 								VideoView v = ViewManager.getInstance().getVideoView();
 								int realWidth = ((param[2] + 1) * 16);
 								int realHeight = ((param[3] + 1) * 16);
+								System.out.printf("real widthxheight: %dx%d\n", realWidth, realHeight);
+								System.out.printf("curr widthxheight: %dx%d\n", v.getWidth1(), v.getHeight1());
 								if (v.getWidth1() != realWidth || v.getHeight1()
 										!= realHeight) {
+									System.out.println("test");
 									init(realWidth, realHeight);
 									VideoView.changeScreenRevolution(realWidth, realHeight);
 									v.init();
 								}
+							} else {
+								System.out.println("->H264DecodeUtil->probe_sps , can not return 1");
 							}
 							
 						} else {				// if NAL unit sequence is not 'sps, pps, ...', reread from buffer
@@ -161,4 +167,22 @@ public class H264DecodeUtil {
 
     	return i;
     }
+
+	public boolean isbFindPPS() {
+		return bFindPPS;
+	}
+
+	public void setbFindPPS(boolean bFindPPS) {
+		this.bFindPPS = bFindPPS;
+	}
+
+	public boolean isbFirst() {
+		return bFirst;
+	}
+
+	public void setbFirst(boolean bFirst) {
+		this.bFirst = bFirst;
+	}
+    
+    
 }

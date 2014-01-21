@@ -146,6 +146,9 @@ public class DataProcessServiceImpl implements DataProcessService {
 				System.out.println("*********************** I Frame process start  *************************");
 				byte[] tmp = (byte[]) ByteArray2Object.convert2Object(TLV_V_VideoData.class, data, flag, tlv_Header.getTlv_len());
 				
+				h264.setbFirst(true);
+				h264.setbFindPPS(true);
+				
 				int result = 0;
 				
 				try {
