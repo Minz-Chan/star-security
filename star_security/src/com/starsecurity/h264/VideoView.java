@@ -66,7 +66,13 @@ public class VideoView extends ImageView {
         	 * 就要注意每次起始位置。我看了自己的代码，果然这个错误是对一个ByteBuffer进行连续二次
         	 * 拷贝时，第二次的起始位置没有重置为0导致的。
         	 */
-        	buffer.rewind();		    	
+        	buffer.rewind();	
+        	
+        	if ((VideoBit.getWidth() * VideoBit.getHeight() * 2) 
+        			!= (buffer.position() + buffer.remaining())) {
+        		return;
+        	}
+        	
         	VideoBit.copyPixelsFromBuffer(buffer);	
         	
         	if (isFullScreenMode) {
