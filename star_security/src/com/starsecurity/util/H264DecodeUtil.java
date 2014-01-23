@@ -72,14 +72,19 @@ public class H264DecodeUtil {
 			NalBufUsed += nalLen;
 			SockBufUsed += nalLen;
 			
+			/*
+			if (SockBufUsed == bytesRead) { // reach the end of packet, the last NAL unit
+				mTrans = 1;
+			}*/
+			
 			/* decode process while NalBuf contains a complete NAL unit */
 			while (mTrans == 1) {	
 				mTrans = 0xFFFFFFFF;	
 
-				if (bFirst == true) {	// the first start flag, pass
+				if (bFirst == true && NalBufUsed == 4) {	// the first start flag, pass
 					bFirst = false;
 				} else {				// a complete NAL data, include 0x00000001 trail
-					if (bFindPPS == true) { // picture parameter set
+					if (bFindPPS == true && bFirst == false) { // picture parameter set
 						if ((NalBuf[4] & 0x1F) == 7) { // if sps
 							bFindPPS = false;
 							
@@ -111,6 +116,8 @@ public class H264DecodeUtil {
 		    				
 							break;
 						}
+					} else if (bFirst == true) {
+						bFirst = false;
 					}
 					// decode nal unit when there exists a complete NAL unit in NalBuf
 					// the second parameter is the length of NAL unit
@@ -118,6 +125,10 @@ public class H264DecodeUtil {
 				
 		            if(iTemp > 0) {
 		            	result = 1;
+		            	/*
+		            	if (SockBufUsed == bytesRead) {
+		            		NalBufUsed = 4;
+		            	}*/
 		            } else if (iTemp == -2) {
 		            	return -2;
 		            } else if (iTemp < -66) {
