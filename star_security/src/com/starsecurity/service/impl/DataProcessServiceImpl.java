@@ -218,7 +218,7 @@ public class DataProcessServiceImpl implements DataProcessService {
 				tlv_V_ChannelResponse = (TLV_V_ChannelResponse) ByteArray2Object.convert2Object(TLV_V_ChannelResponse.class, data, flag, OWSP_LEN.TLV_V_ChannelResponse);
 				
 				if (tlv_V_ChannelResponse.getResult() == 1) { // 通道请求成功
-					ConnectionManager.getConnection(conn_name).setChannel_no(tlv_V_ChannelResponse.getCurrentChannel());
+					//ConnectionManager.getConnection(conn_name).setChannel_no(tlv_V_ChannelResponse.getCurrentChannel());
 				} else { // 通道请求失败
 					
 					

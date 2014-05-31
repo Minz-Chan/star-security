@@ -126,6 +126,7 @@ public class ControlServiceImpl implements ControlService {
 			channelRequest.setDestChannel((short)(channel_no - 1));
 			channelRequest.setReserve(new short[]{0, 0});
 			
+			conn.setChannel_no((short)(channel_no - 1));
 
 			Packet p = new Packet();
 			p.add(channelRequest);
