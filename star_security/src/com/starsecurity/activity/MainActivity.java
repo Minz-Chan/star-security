@@ -1,6 +1,7 @@
 package com.starsecurity.activity;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -52,7 +53,9 @@ import com.starsecurity.service.impl.CheckConnectionBroadcast;
 import com.starsecurity.service.impl.ControlServiceImpl;
 import com.starsecurity.service.impl.ExtendedServiceImpl;
 import com.starsecurity.service.impl.FavouriteControlServiceImpl;
+import com.starsecurity.util.ActivityUtility;
 import com.starsecurity.util.CommonUtils;
+import com.starsecurity.util.ToastUtils;
 
 /***
  * 
@@ -160,7 +163,22 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		
+		if (ActivityUtility.getScreenSize(this).x > ActivityUtility.getScreenSize(this).y) {
+			ActivityUtility.hideTitleBar(this);
+			ViewManager.getInstance().setWideScreen(true);
+			
+			setContentView(R.layout.ws_activity_main);
+			ToastUtils.show(this, "status height: " + String.valueOf(getStatusBarHeight(this)));
+			//ToastUtils.show(this, "width: " + ActivityUtility.getScreenSize(this).x
+			//		+ "height: " + ActivityUtility.getScreenSize(this).y);
+		} else {
+			ViewManager.getInstance().setWideScreen(false);
+			
+			setContentView(R.layout.activity_main);
+		}
+		
+		
 		
 		mainActivity = this;
 		
@@ -593,8 +611,14 @@ public class MainActivity extends Activity {
 						
 						controlService.playVideo();
 						isPlay = true;
-						playBtn.setBackgroundDrawable(getResources()
-								.getDrawable(R.drawable.linear_play));
+						if (isWideScreen()) {
+							playBtn.setBackgroundDrawable(getResources()
+									.getDrawable(R.drawable.ws_linear_play));
+						} else {
+							playBtn.setBackgroundDrawable(getResources()
+									.getDrawable(R.drawable.linear_play));
+						}
+						
 					} else if (settingUsername != null && settingServer != null
 							&& settingPort != null && settingChannel != null&&!isCloudControl) {
 						Connection conn = ConnectionManager
@@ -635,15 +659,27 @@ public class MainActivity extends Activity {
 						
 						controlService.playVideo();
 						isPlay = true;
-						playBtn.setBackgroundDrawable(getResources()
-								.getDrawable(R.drawable.linear_play));
+						if (isWideScreen()) {
+							playBtn.setBackgroundDrawable(getResources()
+									.getDrawable(R.drawable.ws_linear_play));
+						} else {
+							playBtn.setBackgroundDrawable(getResources()
+									.getDrawable(R.drawable.linear_play));
+						}
+						
 					}
 				} else {
 					// 停止播放视频
 					controlService.stopVideo();
 					isPlay = false;
-					playBtn.setBackgroundDrawable(getResources().getDrawable(
-							R.drawable.linear_left));
+					if (isWideScreen()) {
+						playBtn.setBackgroundDrawable(getResources().getDrawable(
+								R.drawable.ws_linear_left));
+					} else {
+						playBtn.setBackgroundDrawable(getResources().getDrawable(
+								R.drawable.linear_left));
+					}
+					
 					// msgView.setText(getString(R.string.IDS_Connect_dispos));
 					ViewManager.getInstance().setHelpMsg(
 							R.string.IDS_Connect_dispos);
@@ -924,17 +960,32 @@ public class MainActivity extends Activity {
 						switchChannelBtnImages(0);
 					}
 					if(maxChannelNumber==1){
-						channelOne.setBackgroundDrawable(getResources().getDrawable(
-								R.drawable.control_number1));
-						channelTwo.setClickable(false);
-						channelTwo.setBackgroundDrawable(getResources().getDrawable(
-								R.drawable.btn_number2_show_disable));
-						channelThree.setClickable(false);
-						channelThree.setBackgroundDrawable(getResources().getDrawable(
-								R.drawable.btn_number3_show_disable));
-						channelFour.setClickable(false);
-						channelFour.setBackgroundDrawable(getResources().getDrawable(
-								R.drawable.btn_number4_show_disable));
+						if (isWideScreen()) {
+							channelOne.setBackgroundDrawable(getResources().getDrawable(
+									R.drawable.ws_btn_number1));
+							channelTwo.setClickable(false);
+							channelTwo.setBackgroundDrawable(getResources().getDrawable(
+									R.drawable.ws_btn_number2_disabled));
+							channelThree.setClickable(false);
+							channelThree.setBackgroundDrawable(getResources().getDrawable(
+									R.drawable.ws_btn_number3_disabled));
+							channelFour.setClickable(false);
+							channelFour.setBackgroundDrawable(getResources().getDrawable(
+									R.drawable.ws_btn_number4_disabled));
+						} else {
+							channelOne.setBackgroundDrawable(getResources().getDrawable(
+									R.drawable.control_number1));
+							channelTwo.setClickable(false);
+							channelTwo.setBackgroundDrawable(getResources().getDrawable(
+									R.drawable.btn_number2_show_disable));
+							channelThree.setClickable(false);
+							channelThree.setBackgroundDrawable(getResources().getDrawable(
+									R.drawable.btn_number3_show_disable));
+							channelFour.setClickable(false);
+							channelFour.setBackgroundDrawable(getResources().getDrawable(
+									R.drawable.btn_number4_show_disable));
+						}
+						
 					}else{
 						channelTwo.setClickable(true);
 						channelThree.setClickable(true);
@@ -1026,91 +1077,187 @@ public class MainActivity extends Activity {
 	private int switchChannelBtnImages(int index) {
 		switch (index) {
 			case 0:
-				channelOne.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.control_number1));
-				channelTwo.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.number_two));
-				channelThree.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.number_three));
-				channelFour.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.number_four));
+				if (isWideScreen()) {
+					channelOne.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number1));
+					channelTwo.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number2));
+					channelThree.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number3));
+					channelFour.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number4));
+				} else {
+					channelOne.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.control_number1));
+					channelTwo.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.number_two));
+					channelThree.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.number_three));
+					channelFour.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.number_four));
+				}
+				
 				page = 0;
 				break;
 			case 1:
-				channelOne.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_number5));
-				channelTwo.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_number6));
-				channelThree.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_number7));
-				channelFour.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_number8));
+				if (isWideScreen()) {
+					channelOne.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number5));
+					channelTwo.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number6));
+					channelThree.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number7));
+					channelFour.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number8));
+				} else {
+					channelOne.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.btn_number5));
+					channelTwo.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.btn_number6));
+					channelThree.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.btn_number7));
+					channelFour.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.btn_number8));
+				}
+				
 				page = 1;
 				break;
 			case 2:
-				channelOne.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_number9));
-				channelTwo.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_number10));
-				channelThree.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_number11));
-				channelFour.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_number12));
+				if (isWideScreen()) {
+					channelOne.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number9));
+					channelTwo.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number10));
+					channelThree.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number11));
+					channelFour.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number12));
+				} else {
+					channelOne.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.btn_number9));
+					channelTwo.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.btn_number10));
+					channelThree.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.btn_number11));
+					channelFour.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.btn_number12));
+				}
+				
 				page = 2;
 				break;
 			case 3:
-				channelOne.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_number13));
-				channelTwo.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_number14));
-				channelThree.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_number15));
-				channelFour.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_number16));
+				if (isWideScreen()) {
+					channelOne.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number13));
+					channelTwo.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number14));
+					channelThree.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number15));
+					channelFour.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number16));
+				} else {
+					channelOne.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.btn_number13));
+					channelTwo.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.btn_number14));
+					channelThree.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.btn_number15));
+					channelFour.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.btn_number16));
+				}
+				
 				page = 3;
 				break;
 			case 4:
-				channelOne.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_number17));
-				channelTwo.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_number18));
-				channelThree.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_number19));
-				channelFour.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_number20));
+				if (isWideScreen()) {
+					channelOne.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number17));
+					channelTwo.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number18));
+					channelThree.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number19));
+					channelFour.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number20));
+				} else {
+					channelOne.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.btn_number17));
+					channelTwo.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.btn_number18));
+					channelThree.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.btn_number19));
+					channelFour.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.btn_number20));
+				}
+				
 				page = 4;
 				break;
 			case 5:
-				channelOne.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_number21));
-				channelTwo.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_number22));
-				channelThree.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_number23));
-				channelFour.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_number24));
+				if (isWideScreen()) {
+					channelOne.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number21));
+					channelTwo.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number22));
+					channelThree.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number23));
+					channelFour.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number24));
+				} else {
+					channelOne.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.btn_number21));
+					channelTwo.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.btn_number22));
+					channelThree.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.btn_number23));
+					channelFour.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.btn_number24));
+				}
+				
 				page = 5;
 				break;
 			case 6:
-				channelOne.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_number25));
-				channelTwo.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_number26));
-				channelThree.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_number27));
-				channelFour.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_number28));
+				if (isWideScreen()) {
+					channelOne.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number25));
+					channelTwo.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number26));
+					channelThree.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number27));
+					channelFour.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number28));
+				} else {
+					channelOne.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.btn_number25));
+					channelTwo.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.btn_number26));
+					channelThree.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.btn_number27));
+					channelFour.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.btn_number28));
+				}
+				
 				page = 6;
 				break;
 			case 7:
-				channelOne.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_number29));
-				channelTwo.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_number30));
-				channelThree.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_number31));
-				channelFour.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_number32));
+				if (isWideScreen()) {
+					channelOne.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number29));
+					channelTwo.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number30));
+					channelThree.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number31));
+					channelFour.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.ws_btn_number32));
+				} else {
+					channelOne.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.btn_number29));
+					channelTwo.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.btn_number30));
+					channelThree.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.btn_number31));
+					channelFour.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.btn_number32));
+				}
+				
 				page = 7;
 				break;
 		}
@@ -1226,11 +1373,23 @@ public class MainActivity extends Activity {
      */
     public void updatePlayStatus(int helpMsgId) {
     	if (isPlay) { // 播放状态
-    		playBtn.setBackgroundDrawable(getResources()
-					.getDrawable(R.drawable.linear_play));
+    		if (isWideScreen()) {
+    			playBtn.setBackgroundDrawable(getResources()
+    					.getDrawable(R.drawable.ws_linear_play));
+    		} else {
+    			playBtn.setBackgroundDrawable(getResources()
+    					.getDrawable(R.drawable.linear_play));
+    		}
+    		
     	} else {	// 停止状态
-    		playBtn.setBackgroundDrawable(getResources().getDrawable(
-					R.drawable.linear_left));
+    		if (isWideScreen()) {
+    			playBtn.setBackgroundDrawable(getResources().getDrawable(
+    					R.drawable.ws_linear_left));
+    		} else {
+    			playBtn.setBackgroundDrawable(getResources().getDrawable(
+    					R.drawable.linear_left));
+    		}
+    		
 			ViewManager.getInstance().setHelpMsg(helpMsgId);
     	}
     }
@@ -1257,6 +1416,27 @@ public class MainActivity extends Activity {
         sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
                 Uri.parse("file://"+ filename)));
         return uri;
+    }
+    
+    public static int getStatusBarHeight(Context context){
+        Class<?> c = null;
+        Object obj = null;
+        Field field = null;
+        int x = 0, statusBarHeight = 0;
+        try {
+            c = Class.forName("com.android.internal.R$dimen");
+            obj = c.newInstance();
+            field = c.getField("status_bar_height");
+            x = Integer.parseInt(field.get(obj).toString());
+            statusBarHeight = context.getResources().getDimensionPixelSize(x);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        return statusBarHeight;
+    }
+    
+    private boolean isWideScreen() {
+    	return ViewManager.getInstance().isWideScreen();
     }
     
 }

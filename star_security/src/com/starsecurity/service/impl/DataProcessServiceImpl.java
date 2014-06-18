@@ -257,6 +257,13 @@ public class DataProcessServiceImpl implements DataProcessService {
 					if (width > 0 && height > 0) {
 						h264.init(width, height);	// 初始化视频分辨率
 						//ViewManager.getInstance().getMainVideoView().changeScreenRevolution(width, height);
+						
+						if (width >= height) {	// 走廊模式
+							ViewManager.getInstance().setCorridorMode(true);
+						} else {
+							ViewManager.getInstance().setCorridorMode(false);
+						}
+						
 						VideoView.changeScreenRevolution(width, height);
 						ViewManager.getInstance().getMainVideoView().init();
 					}

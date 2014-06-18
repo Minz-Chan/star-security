@@ -11,6 +11,7 @@ package com.starsecurity.h264;
 
 import java.nio.ByteBuffer;
 
+import com.starsecurity.component.ViewManager;
 import com.starsecurity.util.BitmapUtil;
 
 import android.content.Context;
@@ -40,6 +41,7 @@ public class VideoView extends ImageView {
 	private static byte [] mPixel = new byte[width * height * 2];
     private ByteBuffer buffer;
 	private Bitmap VideoBit;     
+	
 	
 	private boolean isFullScreenMode = false;
 
@@ -76,15 +78,25 @@ public class VideoView extends ImageView {
         	VideoBit.copyPixelsFromBuffer(buffer);	
         	
         	if (isFullScreenMode) {
-        		Matrix m = new Matrix();
-                m.setRotate(90);
         		
-                // 旋转
-                Bitmap tmp = Bitmap.createBitmap(VideoBit, 0, 0, VideoBit.getWidth(), VideoBit.getHeight(),
-                		m, true);
         		
-                canvas.drawBitmap(Bitmap.createScaledBitmap(tmp, getWidth(), getHeight(), true)
-                		, 0, 0, null); ; 
+        		if (!ViewManager.getInstance().isWideScreen()) {
+        			Matrix m = new Matrix();
+        			m.setRotate(90);
+        			
+        			// 旋转
+                    Bitmap tmp = Bitmap.createBitmap(VideoBit, 0, 0, VideoBit.getWidth(), VideoBit.getHeight(),
+                    		m, true);
+            		
+                    canvas.drawBitmap(Bitmap.createScaledBitmap(tmp, getWidth(), getHeight(), true)
+                    		, 0, 0, null); ; 
+        		} else {
+        			canvas.drawBitmap(Bitmap.createScaledBitmap(VideoBit, getWidth(), getHeight(), true)
+                    		, 0, 0, null);
+        		}
+                
+        		
+                
         	} else {
         		canvas.drawBitmap(Bitmap.createScaledBitmap(VideoBit, getWidth(), getHeight(), true)
                 		, 0, 0, null); 
@@ -107,7 +119,12 @@ public class VideoView extends ImageView {
         	mPixel[i] = (byte)0x00;
         }*/
         
-        setScaleType(ImageView.ScaleType.FIT_XY);
+    	if (ViewManager.getInstance().isCorridorMode()) {
+    		setScaleType(ImageView.ScaleType.FIT_CENTER);
+    	} else {
+    		setScaleType(ImageView.ScaleType.FIT_XY);
+    	}
+        
     }
 
 	public byte[] getmPixel() {
@@ -144,7 +161,5 @@ public class VideoView extends ImageView {
 	public int getHeight1() {
 		return height;
 	}
-	
-	
-	
+
 }

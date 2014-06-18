@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
   xmlns:android="http://schemas.android.com/apk/res/android">
-    <com.starsecurity.h264.VideoView android:id="@+id/sufFull" android:background="@drawable/cat" android:fitsSystemWindows="true" android:clickable="true" android:layout_width="fill_parent" android:layout_height="fill_parent" android:keepScreenOn="true" />
+    <com.starsecurity.h264.VideoView android:id="@+id/sufFull" android:fitsSystemWindows="true" android:clickable="true" android:layout_width="fill_parent" android:layout_height="fill_parent" android:keepScreenOn="true" />
 </RelativeLayout>

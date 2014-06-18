@@ -41,6 +41,9 @@ public class ViewManager {
 	
 	private static ContextWrapper context;
 	
+	private boolean isWideScreen = false;		// 是否为宽屏
+	private boolean isCorridorMode = false;		// 是否为走廊模式
+	
 	private ViewManager() {
 
 	}
@@ -202,5 +205,20 @@ public class ViewManager {
 	public void setHandler(Handler handler) {
 		this.handler = handler;
 	}
-	
+
+	public boolean isWideScreen() {
+		return isWideScreen;
+	}
+
+	public void setWideScreen(boolean isWideScreen) {
+		this.isWideScreen = isWideScreen;
+	}
+
+	public boolean isCorridorMode() {
+		return isCorridorMode;
+	}
+
+	public void setCorridorMode(boolean isCorridorMode) {
+		this.isCorridorMode = isCorridorMode;
+	}
 }
