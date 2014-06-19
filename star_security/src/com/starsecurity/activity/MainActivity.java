@@ -942,6 +942,9 @@ public class MainActivity extends Activity {
 				case MessageCode.SAVE_PICTURE:
 					msgView.setText(functionTempStr);
 					break;
+				case MessageCode.UPDATE_VIDEO_SCALE:
+					ViewManager.getInstance().getMainVideoView().init();
+					break;
 				case MessageCode.IDS_CONNECTMAXCHANNEL:
 					if (settingChannel == null || settingChannel.trim().equals("")) {
 						settingChannel = "1";

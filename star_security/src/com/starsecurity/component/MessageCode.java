@@ -20,7 +20,7 @@ public class MessageCode {
 	public final static int IDS_UNSUPPORTEDPROFILE = 13;	// 不支持的profile	
 	
 	public final static int SAVE_PICTURE = 14; 				// 拍照
-	
+	public final static int UPDATE_VIDEO_SCALE = 15;		// 更新视频区域的Scale
 	public final static int IDS_CONNECTMAXCHANNEL = 50;			// 连接成功，可获取最大通道数...
 	
 }

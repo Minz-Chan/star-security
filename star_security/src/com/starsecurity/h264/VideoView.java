@@ -17,8 +17,10 @@ import com.starsecurity.util.BitmapUtil;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Bitmap.Config;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
@@ -77,31 +79,31 @@ public class VideoView extends ImageView {
         	
         	VideoBit.copyPixelsFromBuffer(buffer);	
         	
-        	if (isFullScreenMode) {
-        		
-        		
+        	Bitmap video = VideoBit;
+        	
+        	if (isFullScreenMode && !ViewManager.getInstance().isCorridorMode()) {
         		if (!ViewManager.getInstance().isWideScreen()) {
         			Matrix m = new Matrix();
         			m.setRotate(90);
         			
         			// 旋转
-                    Bitmap tmp = Bitmap.createBitmap(VideoBit, 0, 0, VideoBit.getWidth(), VideoBit.getHeight(),
-                    		m, true);
-            		
-                    canvas.drawBitmap(Bitmap.createScaledBitmap(tmp, getWidth(), getHeight(), true)
-                    		, 0, 0, null); ; 
-        		} else {
-        			canvas.drawBitmap(Bitmap.createScaledBitmap(VideoBit, getWidth(), getHeight(), true)
-                    		, 0, 0, null);
-        		}
-                
-        		
-                
+                    video = Bitmap.createBitmap(VideoBit, 0, 0, VideoBit.getWidth(), VideoBit.getHeight(),
+                    	m, true);
+        		} 
+        	} 
+        	
+
+        	
+        	if (ViewManager.getInstance().isCorridorMode()) {
+        		//canvas.drawBitmap(video, 0, 0, null); 
+        		this.setImageBitmap(video);
         	} else {
-        		canvas.drawBitmap(Bitmap.createScaledBitmap(VideoBit, getWidth(), getHeight(), true)
+        		canvas.drawBitmap(Bitmap.createScaledBitmap(video, getWidth(), getHeight(), true)
                 		, 0, 0, null); 
         	}
-
+        	
+        	
+        	
         }
     }
     
@@ -119,10 +121,13 @@ public class VideoView extends ImageView {
         	mPixel[i] = (byte)0x00;
         }*/
         
+    	this.setBackgroundColor(Color.BLACK);
+    	
     	if (ViewManager.getInstance().isCorridorMode()) {
-    		setScaleType(ImageView.ScaleType.FIT_CENTER);
+    		this.setScaleType(ImageView.ScaleType.FIT_END);
+    		this.setAdjustViewBounds(true);
     	} else {
-    		setScaleType(ImageView.ScaleType.FIT_XY);
+    		this.setScaleType(ImageView.ScaleType.FIT_XY);
     	}
         
     }
