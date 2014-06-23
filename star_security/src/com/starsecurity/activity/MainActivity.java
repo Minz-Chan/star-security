@@ -169,7 +169,7 @@ public class MainActivity extends Activity {
 			ViewManager.getInstance().setWideScreen(true);
 			
 			setContentView(R.layout.ws_activity_main);
-			ToastUtils.show(this, "status height: " + String.valueOf(getStatusBarHeight(this)));
+			//ToastUtils.show(this, "status height: " + String.valueOf(getStatusBarHeight(this)));
 			//ToastUtils.show(this, "width: " + ActivityUtility.getScreenSize(this).x
 			//		+ "height: " + ActivityUtility.getScreenSize(this).y);
 		} else {
@@ -214,7 +214,15 @@ public class MainActivity extends Activity {
 				favouriteControlService.createFileAndRoot(filePath, "Favourites");	//创建文件
 			}
 			LayoutInflater factory = LayoutInflater.from(this);    
-			final View textEntryView = factory.inflate(R.layout.cloudsetting_dialog, null);
+			//final View textEntryView = factory.inflate(R.layout.cloudsetting_dialog, null);
+			View textEntryView = null;
+			if (ViewManager.getInstance().isWideScreen()) {
+				textEntryView = factory.inflate(
+						R.layout.ws_cloudsetting_dialog, null);
+			} else {
+				textEntryView = factory.inflate(R.layout.cloudsetting_dialog,
+						null);
+			}
 			final EditText ddnsServerIP = (EditText) textEntryView.findViewById(R.id.ddnsEditTextServerIP);
 			final EditText ddnsServerPort = (EditText) textEntryView.findViewById(R.id.ddnsEditTextServerPort);
 			final EditText ddnsUserName = (EditText) textEntryView.findViewById(R.id.ddnsEditTextUserName);
@@ -886,7 +894,14 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent();
-				intent.setClass(MainActivity.this, DdbssettingActivity.class);
+				//intent.setClass(MainActivity.this, DdbssettingActivity.class);
+				if (ViewManager.getInstance().isWideScreen()) {
+					intent.setClass(MainActivity.this,
+							WsDdbssettingActivity.class);
+				} else {
+					intent.setClass(MainActivity.this,
+							DdbssettingActivity.class);
+				}
 				startActivityForResult(intent, 0);
 			}
 		});

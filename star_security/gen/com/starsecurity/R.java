@@ -375,7 +375,7 @@ public final class R {
         public static final int ws_topbar_devices_button_selector=0x7f02015a;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a0031;
+        public static final int action_settings=0x7f0a0036;
         public static final int base_navigationbar=0x7f0a002c;
         public static final int base_right_button=0x7f0a002e;
         public static final int bottom=0x7f0a0000;
@@ -406,8 +406,13 @@ public final class R {
         public static final int ddnsEditTextServerPort=0x7f0a001c;
         public static final int ddnsEditTextUserName=0x7f0a001d;
         public static final int ddnsEditTextUserPassword=0x7f0a001e;
-        public static final int ddns_backMenu=0x7f0a0030;
-        public static final int ddns_requestMenu=0x7f0a002f;
+        public static final int ddns_backMenu=0x7f0a0035;
+        public static final int ddns_devicename=0x7f0a0033;
+        public static final int ddns_password=0x7f0a0032;
+        public static final int ddns_port=0x7f0a0030;
+        public static final int ddns_requestMenu=0x7f0a0034;
+        public static final int ddns_server=0x7f0a002f;
+        public static final int ddns_userid=0x7f0a0031;
         public static final int deviceListView=0x7f0a001f;
         public static final int help_msg=0x7f0a0019;
         public static final int ip_text=0x7f0a002d;
@@ -423,8 +428,8 @@ public final class R {
         public static final int set_server=0x7f0a0026;
         public static final int set_spinner=0x7f0a0023;
         public static final int set_username=0x7f0a0024;
-        public static final int setting_cancelMenu=0x7f0a0033;
-        public static final int setting_settingMenu=0x7f0a0032;
+        public static final int setting_cancelMenu=0x7f0a0038;
+        public static final int setting_settingMenu=0x7f0a0037;
         public static final int sufFull=0x7f0a002b;
         public static final int topbar=0x7f0a0018;
     }
@@ -438,7 +443,8 @@ public final class R {
         public static final int suffull=0x7f030006;
         public static final int topbar=0x7f030007;
         public static final int ws_activity_main=0x7f030008;
-        public static final int ws_topbar=0x7f030009;
+        public static final int ws_cloudsetting_dialog=0x7f030009;
+        public static final int ws_topbar=0x7f03000a;
     }
     public static final class menu {
         public static final int ddbssettingactivitymenu=0x7f090000;
@@ -598,5 +604,6 @@ public final class R {
     public static final class xml {
         public static final int ddbssetting=0x7f040000;
         public static final int preferences=0x7f040001;
+        public static final int ws_ddbssettings=0x7f040002;
     }
 }
