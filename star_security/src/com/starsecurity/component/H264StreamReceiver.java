@@ -15,6 +15,7 @@ import java.net.Socket;
 
 
 
+
 import android.os.Handler;
 import android.os.Message;
 
@@ -96,7 +97,9 @@ public class H264StreamReceiver implements Runnable {
  		    //new Thread(hbc).start();
  		    
 
- 		    sock.setSoTimeout(8000);		// 3秒内没有接收到任何数据时即为超时
+ 		    sock.setSoTimeout(Integer.valueOf(ViewManager.getInstance()
+ 		    		.getStringById(R.string.IDS_ConnectTimeoutInterval)));		// X秒内没有接收到任何数据时即为超时
+ 		    
  			//socketReader = sock.getInputStream();
  			sockIn = new SocketInputStream(sock.getInputStream());
 
