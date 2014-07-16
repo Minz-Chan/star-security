@@ -104,7 +104,7 @@ public class DataProcessServiceImpl implements DataProcessService {
 					result = h264.decodePacket(tmp, tmp.length, v.getmPixel());
 				} catch(Exception e) {
 					// 解码过程发生异常
-					ViewManager.getInstance().setHelpMsg(R.string.IDS_Unknown);
+					//ViewManager.getInstance().setHelpMsg(R.string.IDS_Unknown);
 				}
 				
 				
@@ -155,7 +155,7 @@ public class DataProcessServiceImpl implements DataProcessService {
 					result = h264.decodePacket(tmp, tmp.length, v.getmPixel());
 				} catch(Exception e) {
 					// 解码过程发生异常
-					ViewManager.getInstance().setHelpMsg(R.string.IDS_Unknown);
+					//ViewManager.getInstance().setHelpMsg(R.string.IDS_Unknown);
 				}
 				
 				isIFrameFinished = true;
