@@ -127,7 +127,7 @@
     <string name="do_not_support">Width height changed,do not supported</string>
     <string name="DEVICE_LIST_ErrorReason">Connect failed，please check the domain and port</string>
     <string name="DEVICE_SINGLE_ErrorReason">Get Device fail</string>
-    <string name="DEVICE_LIST_REQ_TIMEOUT">Request timeout, please check network status</string>
+    <string name="DEVICE_LIST_REQ_TIMEOUT">Request timeout, please check the domain and port</string>
     <string name="IDS_PROMPT_DEVICENAMEINPUT">Please input device name</string>
     <string name="IDS_PROMPT_NULLSETTING">Please do the ddns setting first !</string>    
 </resources>
