@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">SNview</string>
-    <string name="app_name2">SNview-v5.10.6</string>
+    <string name="app_name2">SNview-v5.10.7</string>
     <string name="app_name3">Device List</string>
     <string name="action_settings">Settings</string>
     <string name="IDS_ConnectTimeoutInterval">60000</string>

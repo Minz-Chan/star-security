@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.text.Editable;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -117,7 +118,7 @@ public class DeviceListView extends SearchableListView {
 			mTextView.setText(list.get(position).getDeviceName());
 			mTextView.setTextColor(Color.WHITE);  
 			mTextView.setTextSize(20);
-			mTextView.setHeight(30);
+			//mTextView.setHeight(30);
 			
 			return mTextView;
 		}

@@ -120,7 +120,7 @@ public class H264StreamReceiver implements Runnable {
 			//System.out.println("=================== get packet start ==================");
 			// 根据包长度读取包内容
 			//int checkCount = 0;
-			byte[] tlvContent = new byte[65536];
+			byte[] tlvContent = new byte[1048576];  // 1 * 1024 * 1024
 			sockIn.read(tlvContent, 0, (int) owspPacketHeader.getPacket_length() - 4);
 			//System.out.println("=================== get packet: " + ((int) owspPacketHeader.getPacket_length() - 4) + "bytes ==================");
 			//System.out.println("=================== get packet end ==================");
