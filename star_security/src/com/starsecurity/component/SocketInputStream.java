@@ -35,7 +35,7 @@ public class SocketInputStream extends FilterInputStream {
 		int iRead = 0;
 		int iShouldBeRead = len;
 		
-		while (iRead < iShouldBeRead) {   
+		while (iRead < iShouldBeRead) {
 			iRead += super.read(b, iRead, iShouldBeRead - iRead);   
 		} 
 		

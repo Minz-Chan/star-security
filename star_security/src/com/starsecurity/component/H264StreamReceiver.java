@@ -100,6 +100,10 @@ public class H264StreamReceiver implements Runnable {
  		    sock.setSoTimeout(Integer.valueOf(ViewManager.getInstance()
  		    		.getStringById(R.string.IDS_ConnectTimeoutInterval)));		// X秒内没有接收到任何数据时即为超时
  		    
+ 		    //sock.setSendBufferSize(200 * 1024);
+ 		    //sock.setReceiveBufferSize(200 * 1024);
+ 		    //sock.setTcpNoDelay(true);
+ 		    
  			//socketReader = sock.getInputStream();
  			sockIn = new SocketInputStream(sock.getInputStream());
 
@@ -120,7 +124,10 @@ public class H264StreamReceiver implements Runnable {
 			//System.out.println("=================== get packet start ==================");
 			// 根据包长度读取包内容
 			//int checkCount = 0;
-			byte[] tlvContent = new byte[1048576];  // 1 * 1024 * 1024
+			byte[] tlvContent = new byte[65535];  // 1 * 1024 * 1024
+			
+			tlvContent = makesureBufferEnough(tlvContent, (int)owspPacketHeader.getPacket_length() - 4);
+			
 			sockIn.read(tlvContent, 0, (int) owspPacketHeader.getPacket_length() - 4);
 			//System.out.println("=================== get packet: " + ((int) owspPacketHeader.getPacket_length() - 4) + "bytes ==================");
 			//System.out.println("=================== get packet end ==================");
@@ -166,6 +173,7 @@ public class H264StreamReceiver implements Runnable {
 				
 				//System.out.println("=================== get another packet  start ==================");
 				
+				tlvContent = makesureBufferEnough(tlvContent, (int)owspPacketHeader.getPacket_length() - 4);
 				
 				/* 重置数据数组 */
 				//resetArray(tlvContent);
@@ -235,6 +243,19 @@ public class H264StreamReceiver implements Runnable {
 		} else {
 			ViewManager.getInstance().setHelpMsg(R.string.IDS_Unknown);
 		}
+	}
+	
+	private byte[] makesureBufferEnough(byte[] buffer, int realSize) {
+		byte[] result = buffer;
+		int size = buffer.length;
+		
+		if (size < realSize) {
+			buffer = null;
+			buffer = new byte[(int) (realSize * 1.2)];
+			result = buffer;
+		}
+		
+		return result;
 	}
 
 }

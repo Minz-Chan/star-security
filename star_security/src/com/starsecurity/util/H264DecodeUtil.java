@@ -24,7 +24,7 @@ import com.starsecurity.h264.VideoView;
  */
 public class H264DecodeUtil {
 	H264Decoder decoder = new H264Decoder();       
-	byte [] NalBuf = new byte[65536]; // 64k
+	byte [] NalBuf = new byte[65535]; // 64K
 	int NalBufUsed = 0;
 	boolean bFirst = true;
 	boolean bFindPPS = true;
@@ -51,6 +51,9 @@ public class H264DecodeUtil {
 	 */
 	public int decodePacket(byte[] packet, int len, byte[] byteBitmap)   
     {   
+		
+		NalBuf = makesureBufferEnough(NalBuf, NalBufUsed + len);
+		
 		int result = 0;
     	int iTemp = 0;
     	int nalLen;
@@ -119,8 +122,9 @@ public class H264DecodeUtil {
 					} else if (bFirst == true) {
 						bFirst = false;
 					}
+					
 					// decode nal unit when there exists a complete NAL unit in NalBuf
-					// the second parameter is the length of NAL unit
+					// the second parameter is the length of NAL unit					
 					iTemp = decoder.decode(NalBuf, NalBufUsed - 4, byteBitmap);   
 				
 		            if(iTemp > 0) {
@@ -196,4 +200,19 @@ public class H264DecodeUtil {
 	}
     
     
+	private byte[] makesureBufferEnough(byte[] buffer, int realSize) {
+		byte[] result = buffer;
+		int size = buffer.length;
+		
+		if (size < realSize) {
+			byte[] new_buffer = new byte[(int) (realSize * 1.2)];
+			
+			System.arraycopy(buffer, 0, new_buffer, 0, size);
+			buffer = null;
+			result = new_buffer;
+		}
+		
+		return result;
+	}
+	
 }
